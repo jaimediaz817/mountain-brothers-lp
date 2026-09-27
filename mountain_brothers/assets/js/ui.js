@@ -326,15 +326,33 @@
         nodes.forEach(function (video) {
           video.removeAttribute('autoplay');
           video.pause();
+          /* Sin movimiento: el póster ya comunica; quitar el <video>
+             evita un frame negro si el autoplay fue bloqueado. */
+          if (video.getAttribute('data-video') === 'heroBg') {
+            video.style.display = 'none';
+          }
         });
         return;
       }
 
-      if (!('IntersectionObserver' in window)) { return; }
+      if (!('IntersectionObserver' in window)) {
+        /* Sin observer: forzar play directo en el hero. */
+        nodes.forEach(function (video) {
+          video.muted = true;
+          var playing = video.play();
+          if (playing && typeof playing.catch === 'function') {
+            playing.catch(function () {});
+          }
+        });
+        return;
+      }
 
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
+            /* muted = true por JS además del atributo: algunos navegadores
+               exigen la propiedad para permitir autoplay sin gesto. */
+            entry.target.muted = true;
             var playing = entry.target.play();
             if (playing && typeof playing.catch === 'function') {
               /* Autoplay bloqueado por el navegador: se queda el póster. */
