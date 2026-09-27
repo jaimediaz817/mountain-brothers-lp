@@ -39,18 +39,21 @@
   background-color: var(--color-obsidian);
 }
 
-/* El <img> es solo respaldo pre-play: en cuanto el video puede mostrar
-   su primer frame, se oculta para que no parpadee encima/debajo. */
+/* El video manda: va encima del img. El <img> es solo respaldo pre-play:
+   en cuanto el video puede mostrar su primer frame, el img se oculta
+   para que no parpadee encima/debajo. */
 .hero__bg.is-playing img {
   opacity: 0;
   visibility: hidden;
 }
 
 .hero__bg img {
+  z-index: 0;
   transition: opacity 0.45s ease, visibility 0s linear 0.45s;
 }
 
 .hero__bg video {
+  z-index: 1;
   opacity: 0;
   transition: opacity 0.45s ease;
 }

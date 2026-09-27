@@ -397,17 +397,19 @@
       if (heroVideo) {
         debugMsg('observando hero, readyState=' + heroVideo.readyState);
         /* Crossfade sin parpadeo: el <img> de respaldo se oculta solo cuando
-           el video YA puede mostrar frames (canplay), no antes. */
-        heroVideo.addEventListener('canplay', function () {
-          var bg = heroVideo.closest('.hero__bg');
-          if (bg) { bg.classList.add('is-playing'); }
-          debugMsg('canplay → crossfade (readyState=' + heroVideo.readyState + ')');
-        });
-        heroVideo.addEventListener('playing', function () {
-          var bg = heroVideo.closest('.hero__bg');
-          if (bg) { bg.classList.add('is-playing'); }
-          debugMsg('evento playing ✓');
-        });
+           el video YA puede mostrar frames (canplay), no antes.
+           Fallback: si en 4 s no hay canplay (red lenta), se muestra el
+           video igual para no dejar el hero congelado parpadeando. */
+        var heroBg = heroVideo.closest('.hero__bg');
+        function heroCrossfade(origen) {
+          if (heroBg) { heroBg.classList.add('is-playing'); }
+          debugMsg(origen + ' → crossfade (readyState=' + heroVideo.readyState + ')');
+        }
+        heroVideo.addEventListener('canplay', function () { heroCrossfade('canplay'); });
+        heroVideo.addEventListener('playing', function () { heroCrossfade('playing'); });
+        window.setTimeout(function () {
+          if (heroVideo.readyState >= 2) { heroCrossfade('fallback-timeout'); }
+        }, 4000);
         heroVideo.addEventListener('error', function () {
           var e = heroVideo.error;
           debugMsg('evento error: code=' + (e && e.code), true);
