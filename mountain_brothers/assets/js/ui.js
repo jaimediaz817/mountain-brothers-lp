@@ -322,27 +322,14 @@
       var nodes = util.qsa('video[data-autoplay]');
       if (!nodes.length) { return; }
 
-      /* Diagnóstico visible: ?mb-debug=video muestra por qué el hero
-         reproduce o no. Se quita solo, no afecta producción. */
-      var debugVideo = /[?&]mb-debug=video/.test(window.location.search);
       var heroVideo = null;
       nodes.forEach(function (v) {
         if (v.getAttribute('data-video') === 'heroBg') { heroVideo = v; }
       });
-      function debugMsg(msg, isError) {
-        if (!debugVideo) { return; }
-        var box = document.getElementById('mb-video-debug');
-        if (!box) {
-          box = document.createElement('div');
-          box.id = 'mb-video-debug';
-          box.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;max-width:92vw;max-height:40vh;overflow:auto;background:rgba(0,0,0,.88);color:#7CFC98;font:12px/1.5 monospace;padding:10px 12px;border-radius:8px;white-space:pre-wrap;';
-          document.body.appendChild(box);
-        }
-        box.textContent += (isError ? '[ERROR] ' : '[OK] ') + msg + '\n';
-      }
 
+      /* heroVideoMode: 'auto' respeta prefers-reduced-motion (póster);
+         'always' reproduce siempre. Ver config.js. */
       if (util.reducedMotion() && MB.config.heroVideoMode !== 'always') {
-        debugMsg('prefers-reduced-motion = REDUCE → video pausado a propósito. Desactívalo en el SO para verlo.', true);
         nodes.forEach(function (video) {
           video.removeAttribute('autoplay');
           video.pause();
@@ -354,17 +341,11 @@
         });
         return;
       }
-      debugMsg('prefers-reduced-motion = no-reduce (bien)');
-
       if (!('IntersectionObserver' in window)) {
-        debugMsg('Sin IntersectionObserver: play directo', true);
         /* Sin observer: forzar play directo en el hero. */
         nodes.forEach(function (video) {
           video.muted = true;
-          var playing = video.play();
-          if (playing && typeof playing.catch === 'function') {
-            playing.catch(function (err) { debugMsg('play() rechazado: ' + err, true); });
-          }
+          video.play().catch(function () {});
         });
         return;
       }
@@ -380,31 +361,21 @@
             var target = entry.target;
             target.muted = true;
             observer.unobserve(target);
-            debugMsg('hero visible → play(), src=' + target.currentSrc);
-            function tryPlay(origen) {
-              if (!target.paused && !target.ended) {
-                debugMsg('ya reproduciendo (' + origen + ') ✓');
-                return;
-              }
+            function tryPlay() {
+              if (!target.paused && !target.ended) { return; }
               target.muted = true;
               var playing = target.play();
-              if (playing && typeof playing.then === 'function') {
-                playing.then(function () {
-                  debugMsg('reproduciendo ✓ (' + origen + ') paused=' + target.paused);
-                });
-                if (typeof playing.catch === 'function') {
-                  /* Autoplay bloqueado por el navegador: se queda el póster. */
-                  playing.catch(function (err) { debugMsg('play() rechazado (' + origen + '): ' + err, true); });
-                }
+              if (playing && typeof playing.catch === 'function') {
+                /* Autoplay bloqueado por el navegador: se queda el póster. */
+                playing.catch(function () {});
               }
             }
             if (target.readyState >= 2) {
-              tryPlay('inmediato');
+              tryPlay();
             } else {
-              debugMsg('readyState=' + target.readyState + ' → espero canplay');
               target.addEventListener('canplay', function onCanplay() {
                 target.removeEventListener('canplay', onCanplay);
-                tryPlay('canplay');
+                tryPlay();
               });
               /* Carga explícita por si el preload la retrasó. */
               try { target.load(); } catch (e) {}
@@ -418,45 +389,19 @@
 
       nodes.forEach(function (video) { observer.observe(video); });
       if (heroVideo) {
-        debugMsg('observando hero, readyState=' + heroVideo.readyState);
         /* Crossfade sin parpadeo: el <img> de respaldo se oculta solo cuando
            el video YA puede mostrar frames (canplay), no antes.
            Fallback: si en 4 s no hay canplay (red lenta), se muestra el
            video igual para no dejar el hero congelado parpadeando. */
         var heroBg = heroVideo.closest('.hero__bg');
-        function heroCrossfade(origen) {
+        function heroCrossfade() {
           if (heroBg) { heroBg.classList.add('is-playing'); }
-          debugMsg(origen + ' → crossfade (readyState=' + heroVideo.readyState + ')');
         }
-        heroVideo.addEventListener('canplay', function () { heroCrossfade('canplay'); });
-        heroVideo.addEventListener('playing', function () { heroCrossfade('playing'); });
+        heroVideo.addEventListener('canplay', heroCrossfade);
+        heroVideo.addEventListener('playing', heroCrossfade);
         window.setTimeout(function () {
-          if (heroVideo.readyState >= 2) { heroCrossfade('fallback-timeout'); }
+          if (heroVideo.readyState >= 2) { heroCrossfade(); }
         }, 4000);
-        heroVideo.addEventListener('error', function () {
-          var e = heroVideo.error;
-          debugMsg('evento error: code=' + (e && e.code), true);
-        });
-        /* Trazas extra: si el navegador lo pausa/bloquea, queda registrado. */
-        heroVideo.addEventListener('pause', function () {
-          debugMsg('evento pause (paused=' + heroVideo.paused + ' readyState=' + heroVideo.readyState + ')', true);
-        });
-        heroVideo.addEventListener('stalled', function () {
-          debugMsg('evento stalled (red lenta o Range fallido)', true);
-        });
-        heroVideo.addEventListener('suspend', function () {
-          debugMsg('evento suspend (navegador pausó la descarga)');
-        });
-        /* Click-to-play de emergencia: si el autoplay fue bloqueado, un clic
-           en el hero lo arranca (gesto = permiso). Solo con debug activo. */
-        if (debugVideo && heroBg) {
-          heroBg.style.cursor = 'pointer';
-          heroBg.addEventListener('click', function () {
-            debugMsg('click en hero → play manual');
-            heroVideo.muted = true;
-            heroVideo.play();
-          });
-        }
       }
     }
   };

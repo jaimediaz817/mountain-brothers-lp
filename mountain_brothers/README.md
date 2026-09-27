@@ -216,8 +216,6 @@ matchMedia('(prefers-reduced-motion: reduce)').matches
 
 Si devuelve `true`, windows lo tiene activado en
 `Configuracion > Accesibilidad > Efectos visuales > Efectos de animacion`.
-Diagnostico asistido: `http://127.0.0.1:8010/?mb-debug=video` muestra un panel
-con la razon exacta por la que el hero reproduce o no.
 
 
 ### 4.4 Imágenes de metadatos (no pasan por `config.js`)
