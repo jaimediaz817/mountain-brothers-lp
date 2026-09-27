@@ -277,13 +277,15 @@
 
         <!-- Video de fondo del hero: silenciado y en bucle. Si no carga o el
              navegador bloquea el autoplay, queda la imagen de respaldo.
-             Con prefers-reduced-motion, MB.video lo pausa y manda el póster. -->
+             Con prefers-reduced-motion, MB.video lo pausa y manda el póster.
+             OJO: muted debe ir ANTES de autoplay en el HTML para que el
+             autoplay-policy lo acepte desde el parseo. -->
         <video
           data-video="heroBg"
           data-autoplay
           src="assets/videos/fondo-lp.mp4"
           poster="assets/images/fondo-lp-poster.jpg"
-          autoplay muted loop playsinline preload="metadata"
+          muted autoplay loop playsinline preload="metadata" disablepictureinpicture
           aria-hidden="true" tabindex="-1"></video>
       </div>
       <div class="hero__scrim" aria-hidden="true"></div>

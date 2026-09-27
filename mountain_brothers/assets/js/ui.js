@@ -373,20 +373,43 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             /* muted = true por JS además del atributo: algunos navegadores
-               exigen la propiedad para permitir autoplay sin gesto. */
-            entry.target.muted = true;
-            debugMsg('hero visible → play(), src=' + entry.target.currentSrc);
-            var playing = entry.target.play();
-            if (playing && typeof playing.then === 'function') {
-              playing.then(function () {
-                debugMsg('reproduciendo ✓ paused=' + entry.target.paused);
-              });
-              if (typeof playing.catch === 'function') {
-                /* Autoplay bloqueado por el navegador: se queda el póster. */
-                playing.catch(function (err) { debugMsg('play() rechazado: ' + err, true); });
+               exigen la propiedad para permitir autoplay sin gesto.
+               Play diferido: si readyState < 2, esperar a canplay antes de
+               pedir play() — pedirlo antes lo deja en limbo (paused=true,
+               readyState=4, sin evento playing). */
+            var target = entry.target;
+            target.muted = true;
+            observer.unobserve(target);
+            debugMsg('hero visible → play(), src=' + target.currentSrc);
+            function tryPlay(origen) {
+              if (!target.paused && !target.ended) {
+                debugMsg('ya reproduciendo (' + origen + ') ✓');
+                return;
+              }
+              target.muted = true;
+              var playing = target.play();
+              if (playing && typeof playing.then === 'function') {
+                playing.then(function () {
+                  debugMsg('reproduciendo ✓ (' + origen + ') paused=' + target.paused);
+                });
+                if (typeof playing.catch === 'function') {
+                  /* Autoplay bloqueado por el navegador: se queda el póster. */
+                  playing.catch(function (err) { debugMsg('play() rechazado (' + origen + '): ' + err, true); });
+                }
               }
             }
-            if (heroVideo && heroVideo !== entry.target) { return; }
+            if (target.readyState >= 2) {
+              tryPlay('inmediato');
+            } else {
+              debugMsg('readyState=' + target.readyState + ' → espero canplay');
+              target.addEventListener('canplay', function onCanplay() {
+                target.removeEventListener('canplay', onCanplay);
+                tryPlay('canplay');
+              });
+              /* Carga explícita por si el preload la retrasó. */
+              try { target.load(); } catch (e) {}
+            }
+            if (heroVideo && heroVideo !== target) { return; }
             return;
           }
           entry.target.pause();
