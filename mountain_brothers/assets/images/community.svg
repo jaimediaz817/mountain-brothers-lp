@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Ilustración de un grupo de caminantes con mochila avanzando en fila sobre una cresta al atardecer">
+  <title>community.svg · placeholder editorial de comunidad en la montaña</title>
+  <defs>
+    <linearGradient id="m-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22312a"/>
+      <stop offset="55%" stop-color="#31423a"/>
+      <stop offset="100%" stop-color="#4a5343"/>
+    </linearGradient>
+    <radialGradient id="m-sun" cx="0.52" cy="0.86" r="0.5">
+      <stop offset="0" stop-color="#b6a58b" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#b6a58b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="m-ridge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1d2a23"/>
+      <stop offset="100%" stop-color="#0d1412"/>
+    </linearGradient>
+    <linearGradient id="m-mist" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e4e0d4" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#e4e0d4" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#e4e0d4" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Caminante con mochila y bastón: se reutiliza con transformaciones -->
+    <g id="m-walker">
+      <path d="M9 -62 L22 -12" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <circle cx="0" cy="-74" r="8"/>
+      <path d="M-8 -66 Q -8 -70 -2 -70 L 3 -70 Q 9 -70 9 -65 L 9 -40 L -8 -40 Z"/>
+      <path d="M-9 -66 L-19 -66 Q -22 -66 -22 -62 L-22 -42 Q -22 -38 -19 -38 L-9 -38 Z"/>
+      <path d="M-7 -40 L-13 0 L-4 0 L-1 -28 L1 -28 L4 0 L13 0 L7 -40 Z"/>
+    </g>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#m-sky)"/>
+  <rect width="1600" height="1000" fill="url(#m-sun)"/>
+
+  <!-- Cordillera de fondo -->
+  <path fill="#1b2723" opacity="0.7" d="M0 596 L150 512 L300 588 L460 496 L620 592 L780 508 L940 596 L1100 516 L1260 598 L1420 522 L1600 596 L1600 1000 L0 1000 Z"/>
+
+  <rect y="560" width="1600" height="140" fill="url(#m-mist)"/>
+
+  <!-- Cresta principal -->
+  <path fill="url(#m-ridge)" d="M0 760 L220 690 L440 752 L660 676 L880 748 L1100 682 L1320 750 L1600 690 L1600 1000 L0 1000 Z"/>
+
+  <!-- Fila de caminantes, de derecha a izquierda, avanzando hacia la luz -->
+  <g color="#0a0f0e">
+    <g transform="translate(1020,700) scale(0.72)"><use href="#m-walker"/></g>
+    <g transform="translate(880,706) scale(0.78)"><use href="#m-walker"/></g>
+    <g transform="translate(716,698) scale(0.86)"><use href="#m-walker"/></g>
+    <g transform="translate(536,694) scale(0.95)"><use href="#m-walker"/></g>
+    <g transform="translate(330,706) scale(1.06)"><use href="#m-walker"/></g>
+  </g>
+
+  <!-- Silueta de páramo muy al frente -->
+  <path fill="#080c0b" d="M0 902 L240 872 L520 906 L820 868 L1120 908 L1400 874 L1600 900 L1600 1000 L0 1000 Z"/>
+</svg>

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Ilustración lineal de equipo básico de montaña: mochila, botas, bastones, botella, linterna frontal y brújula">
+  <title>equipment.svg · placeholder editorial de equipo y preparación</title>
+  <defs>
+    <linearGradient id="e-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b2823"/>
+      <stop offset="100%" stop-color="#111817"/>
+    </linearGradient>
+    <radialGradient id="e-glow" cx="0.5" cy="0.2" r="0.7">
+      <stop offset="0" stop-color="#b6a58b" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#b6a58b" stop-opacity="0"/>
+    </radialGradient>
+    <g id="e-icon" fill="none" stroke="#b6a58b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#e-bg)"/>
+  <rect width="1600" height="1000" fill="url(#e-glow)"/>
+
+  <!-- Rejilla editorial -->
+  <g stroke="#f3f0e8" stroke-opacity="0.1" stroke-width="2" fill="none">
+    <path d="M100 500 H1500"/>
+    <path d="M100 490 V510 M1500 490 V510 M800 480 V520"/>
+    <path d="M566 100 V900" stroke-opacity="0.07"/>
+    <path d="M1033 100 V900" stroke-opacity="0.07"/>
+  </g>
+
+  <g fill="none" stroke="#b6a58b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Mochila -->
+    <g transform="translate(233,250)">
+      <path d="M-80 200 L-80 20 Q-80 -80 0 -80 Q80 -80 80 20 L80 200 Z"/>
+      <path d="M-80 -20 Q-80 -140 0 -140 Q80 -140 80 -20"/>
+      <path d="M-40 -140 L-40 -190 M40 -140 L40 -190"/>
+      <path d="M-80 80 L80 80"/>
+      <path d="M-80 130 L-60 130 M-80 168 L-60 168"/>
+    </g>
+
+    <!-- Botas -->
+    <g transform="translate(800,250)">
+      <path d="M-90 200 L-90 60 Q-90 10 -40 0 L20 0 Q70 12 90 60 L110 130 Q118 176 78 190 L-20 200"/>
+      <path d="M-90 60 Q-60 40 -20 34 L40 34"/>
+      <path d="M-20 200 L-20 140 L60 140"/>
+      <path d="M100 160 L60 190"/>
+    </g>
+
+    <!-- Bastones -->
+    <g transform="translate(1360,250)">
+      <path d="M-40 -160 L-90 200"/>
+      <path d="M-40 -160 L-56 -136"/>
+      <path d="M-96 168 L-88 200 L-110 200 L-70 186"/>
+      <path d="M40 -140 L100 200"/>
+      <path d="M40 -140 L24 -118"/>
+      <path d="M96 168 L104 200 L82 200 L122 186"/>
+    </g>
+
+    <!-- Botella -->
+    <g transform="translate(233,660)">
+      <path d="M-56 200 L-56 -60 Q-56 -110 0 -110 Q56 -110 56 -60 L56 200 Z"/>
+      <path d="M-30 -110 L-30 -160 L30 -160 L30 -110"/>
+      <path d="M-56 20 L56 20"/>
+    </g>
+
+    <!-- Linterna frontal -->
+    <g transform="translate(800,660)">
+      <path d="M-110 120 Q-110 0 0 0 Q110 0 110 120"/>
+      <path d="M-70 96 Q-70 36 0 36 Q70 36 70 96"/>
+      <circle cx="0" cy="96" r="52"/>
+      <circle cx="0" cy="96" r="24" stroke-opacity="0.55"/>
+    </g>
+
+    <!-- Brújula -->
+    <g transform="translate(1360,660)">
+      <circle r="160"/>
+      <path d="M0 -240 L0 -206 M0 240 L0 206 M-240 0 L-206 0 M240 0 L206 0"/>
+      <path d="M0 -104 L24 0 L0 104 L-24 0 Z" fill="#b6a58b" fill-opacity="0.4"/>
+      <path d="M0 -104 L0 104" stroke-opacity="0.45"/>
+    </g>
+  </g>
+
+  <text x="100" y="960" fill="#f3f0e8" fill-opacity="0.42" font-family="Segoe UI, system-ui, sans-serif" font-size="26" font-weight="600" letter-spacing="6">
+    EQUIPO · PREPARACIÓN · SEGURIDAD
+  </text>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Ilustración de picos nevados de alta montaña con nieve y glaciar">
+  <title>nevados.svg · placeholder editorial de alta montaña nevada</title>
+  <defs>
+    <linearGradient id="n-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a3b33"/>
+      <stop offset="55%" stop-color="#1d2b26"/>
+      <stop offset="100%" stop-color="#0e1513"/>
+    </linearGradient>
+    <linearGradient id="n-rock" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3c4c46"/>
+      <stop offset="100%" stop-color="#1a2622"/>
+    </linearGradient>
+    <linearGradient id="n-rock2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f3f39"/>
+      <stop offset="100%" stop-color="#141d1b"/>
+    </linearGradient>
+    <linearGradient id="n-snow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3f0e8"/>
+      <stop offset="70%" stop-color="#d8d4c8"/>
+      <stop offset="100%" stop-color="#a9a89e"/>
+    </linearGradient>
+    <linearGradient id="n-ice" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8e6dd" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#9aa39b" stop-opacity="0.35"/>
+    </linearGradient>
+    <radialGradient id="n-glow" cx="0.62" cy="0.3" r="0.55">
+      <stop offset="0" stop-color="#e4e0d4" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#e4e0d4" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="n-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#n-sky)"/>
+  <rect width="1600" height="1000" fill="url(#n-glow)"/>
+
+  <!-- Cadena secundaria -->
+  <path fill="url(#n-rock2)" opacity="0.85"
+    d="M0 620 L170 486 L300 592 L470 452 L640 606 L800 470 L980 612 L1150 486 L1320 606 L1470 500 L1600 592 L1600 1000 L0 1000 Z"/>
+
+  <!-- Pico principal con nevero y glaciar -->
+  <path fill="url(#n-rock)"
+    d="M300 1000 L700 250 L840 470 L940 350 L1240 1000 Z"/>
+  <path fill="url(#n-snow)"
+    d="M700 250 L840 470 L800 470 L742 360 L700 420 L660 356 L612 470 L590 470 Z"/>
+  <path fill="url(#n-ice)"
+    d="M700 250 L742 360 L700 420 L660 356 Z" opacity="0.85"/>
+  <path fill="url(#n-snow)" opacity="0.9"
+    d="M940 350 L1010 452 L982 452 L950 400 L920 452 L892 452 Z"/>
+
+  <!-- Lengua de glaciar descendiendo por la ladera -->
+  <path fill="url(#n-ice)"
+    d="M760 470 C 782 560 792 660 806 780 L744 780 C 736 660 726 560 712 470 Z" opacity="0.55"/>
+
+  <!-- Picos satélite -->
+  <path fill="url(#n-rock2)" d="M1240 1000 L1392 596 L1560 900 L1600 1000 Z"/>
+  <path fill="url(#n-snow)" opacity="0.85" d="M1392 596 L1450 700 L1424 700 L1398 660 L1370 704 L1346 700 Z"/>
+
+  <path fill="url(#n-rock2)" d="M0 1000 L120 700 L300 1000 Z" opacity="0.9"/>
+
+  <!-- Base rocosa -->
+  <path fill="#0a0f0e" d="M0 940 L320 900 L640 948 L980 902 L1300 950 L1600 910 L1600 1000 L0 1000 Z"/>
+  <rect width="1600" height="1000" filter="url(#n-grain)" opacity="0.06"/>
+</svg>

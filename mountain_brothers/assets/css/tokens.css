@@ -1,0 +1,200 @@
+/* ==========================================================================
+   MOUNTAIN BROTHERS · tokens.css
+   FASE 2 — Sistema visual. Fuente única de verdad:
+   color, tipografía, espaciado, radios, sombras, movimiento y capas.
+   Ningún componente declara valores primitivos: todos consumen tokens.
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------
+     COLOR · Paleta de marca (únicas constantes cromáticas permitidas)
+     ------------------------------------------------------------------ */
+  --color-obsidian: #111817;
+  --color-mountain: #26372d;
+  --color-moss: #53604d;
+  --color-sand: #b6a58b;
+  --color-warm-white: #f3f0e8;
+  --color-white: #ffffff;
+
+  /* ------------------------------------------------------------------
+     COLOR · Derivados (mezclas/luminancias de la propia paleta)
+     No introducen croma nuevo: solo profundidad y atmósfera.
+     ------------------------------------------------------------------ */
+  --color-obsidian-soft: #16201d;
+  --color-obsidian-deep: #0a0f0e;
+  --color-mountain-deep: #1b2823;
+  --color-sand-soft: #cfc0a8;
+  --color-warm-white-dim: #e4e0d4;
+
+  /* ------------------------------------------------------------------
+     COLOR · Vivo (acento saturado, uso puntual)
+     Única concesión cromática fuera de la paleta terrosa. Reservado a la
+     cinta que abre la sección de Territorio y a los indicadores del
+     carrusel: nunca sobre texto largo ni como fondo de sección.
+     ------------------------------------------------------------------ */
+  --color-vivo-leaf: #35d6a4;
+  --color-vivo-sun: #ffd166;
+  --color-vivo-clay: #ff7a59;
+
+  /* ------------------------------------------------------------------
+     COLOR · Semántico (lo que consumen los componentes)
+     Se invierten automáticamente con las clases .is-dark / .is-forest
+     ------------------------------------------------------------------ */
+  --bg-base: var(--color-warm-white);
+  --bg-sunken: var(--color-warm-white-dim);
+  --text-base: var(--color-obsidian);
+  /* Contraste WCAG verificado sobre bg-base/surface/sunken:
+     muted 7.19:1 · faint 4.81:1 (mínimo exigido 4.5:1) */
+  --text-muted: rgba(17, 24, 23, 0.74);
+  --text-faint: rgba(17, 24, 23, 0.62);
+  --accent: var(--color-moss);
+  --accent-strong: var(--color-mountain);
+  --accent-contrast: var(--color-warm-white);
+  --line: rgba(17, 24, 23, 0.14);
+  --line-strong: rgba(17, 24, 23, 0.28);
+  --surface: rgba(17, 24, 23, 0.03);
+  --surface-raised: rgba(255, 255, 255, 0.72);
+  --overlay: rgba(11, 16, 15, 0.52);
+  --shadow-soft: 0 1px 2px rgba(17, 24, 23, 0.04), 0 12px 32px -18px rgba(17, 24, 23, 0.28);
+  --shadow-lift: 0 2px 6px rgba(17, 24, 23, 0.06), 0 28px 60px -28px rgba(17, 24, 23, 0.42);
+
+  /* ------------------------------------------------------------------
+     TIPOGRAFÍA
+     Display: Sora (geométrica contemporánea) · Body: Inter (alta legibilidad)
+     Fallbacks de sistema: si no hay red, el layout no se rompe.
+     ------------------------------------------------------------------ */
+  --font-display: "Sora", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+
+  --text-eyebrow: 0.6875rem;   /* 11px · labels uppercase */
+  --text-xs: 0.75rem;          /* 12px */
+  --text-sm: 0.8125rem;        /* 13px */
+  --text-base: 0.9375rem;      /* 15px */
+  --text-md: 1.0625rem;        /* 17px */
+  --text-lg: clamp(1.125rem, 0.4vw + 1.05rem, 1.3rem);
+  --text-xl: clamp(1.375rem, 0.8vw + 1.2rem, 1.75rem);
+  --text-2xl: clamp(1.625rem, 1.4vw + 1.35rem, 2.375rem);
+  --text-3xl: clamp(2rem, 2.2vw + 1.55rem, 3.25rem);
+  --text-4xl: clamp(2.5rem, 3.4vw + 1.8rem, 4.5rem);
+  --text-display: clamp(2.75rem, 6vw + 1rem, 6.5rem);
+
+  --leading-tight: 1.06;
+  --leading-snug: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.68;
+
+  --tracking-tight: -0.03em;
+  --tracking-snug: -0.015em;
+  --tracking-wide: 0.08em;
+  --tracking-label: 0.2em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ------------------------------------------------------------------
+     ESPACIADO · escala base 4 · todo el ritmo vertical viene de aquí
+     ------------------------------------------------------------------ */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 8rem;
+
+  /* Ritmo vertical de sección (fluido) */
+  --section-y: clamp(4.5rem, 9vw, 9.5rem);
+  --section-y-sm: clamp(3.25rem, 6vw, 6rem);
+
+  /* ------------------------------------------------------------------
+     LAYOUT
+     ------------------------------------------------------------------ */
+  --container-max: 1280px;
+  --container-wide: 1440px;
+  --container-pad: clamp(1.25rem, 4vw, 3.5rem);
+  --measure: 62ch;
+  --measure-tight: 46ch;
+  --grid-gap: clamp(1.25rem, 2.5vw, 2.25rem);
+
+  /* ------------------------------------------------------------------
+     RADIOS · convención: pill = interactivo, rect = contenedor
+     (evita el exceso de cards redondeadas)
+     ------------------------------------------------------------------ */
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  --hairline: 1px;
+
+  /* ------------------------------------------------------------------
+     MOVIMIENTO · discreto, refuerza progreso; nunca protagonista
+     ------------------------------------------------------------------ */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0.05, 0.36, 1);
+  --dur-xs: 140ms;
+  --dur-sm: 240ms;
+  --dur-md: 420ms;
+  --dur-lg: 700ms;
+  --dur-reveal: 900ms;
+
+  /* ------------------------------------------------------------------
+     CAPAS
+     ------------------------------------------------------------------ */
+  --z-base: 1;
+  --z-sticky: 100;
+  --z-nav: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-skip: 500;
+}
+
+/* --------------------------------------------------------------------------
+   TEMA INVERTIDO
+   Un componente escrito una sola vez funciona en sección clara u oscura.
+   -------------------------------------------------------------------------- */
+.is-dark {
+  --bg-base: var(--color-obsidian);
+  --bg-sunken: var(--color-obsidian-deep);
+  --text-base: var(--color-warm-white);
+  /* Contraste WCAG verificado con faint = 0.54:
+     base 5.35:1 · sunken 5.45:1 · surface 5.11:1 · raised 4.86:1 */
+  --text-muted: rgba(243, 240, 232, 0.68);
+  --text-faint: rgba(243, 240, 232, 0.54);
+  --accent: var(--color-sand);
+  --accent-strong: var(--color-warm-white);
+  --accent-contrast: var(--color-obsidian);
+  --line: rgba(243, 240, 232, 0.16);
+  --line-strong: rgba(243, 240, 232, 0.32);
+  --surface: rgba(243, 240, 232, 0.045);
+  --surface-raised: rgba(243, 240, 232, 0.08);
+  --overlay: rgba(10, 15, 14, 0.62);
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -18px rgba(0, 0, 0, 0.7);
+  --shadow-lift: 0 2px 6px rgba(0, 0, 0, 0.34), 0 28px 60px -28px rgba(0, 0, 0, 0.8);
+}
+
+/* Variante con verde de montaña como base (secciones "bosque") */
+.is-forest {
+  --bg-base: var(--color-mountain);
+  --bg-sunken: var(--color-mountain-deep);
+  --text-base: var(--color-warm-white);
+  /* Contraste WCAG verificado con faint = 0.62 (antes 0.46 = 3.64:1):
+     base 5.31:1 · sunken 6.05:1 · surface 4.70:1
+     (el único par sin cubrir es faint sobre raised, que no se usa) */
+  --text-muted: rgba(243, 240, 232, 0.7);
+  --text-faint: rgba(243, 240, 232, 0.62);
+  --accent: var(--color-sand);
+  --accent-strong: var(--color-warm-white);
+  --accent-contrast: var(--color-mountain);
+  --line: rgba(243, 240, 232, 0.18);
+  --line-strong: rgba(243, 240, 232, 0.34);
+  --surface: rgba(243, 240, 232, 0.06);
+  --surface-raised: rgba(243, 240, 232, 0.1);
+  --overlay: rgba(11, 16, 15, 0.6);
+}

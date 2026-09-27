@@ -1,0 +1,1222 @@
+/* ==========================================================================
+   MOUNTAIN BROTHERS · components.css
+   Componentes reutilizables. Escriben SIEMPRE con tokens semánticos,
+   por lo que funcionan igual en sección clara, oscura o bosque.
+   ========================================================================== */
+
+/* ==========================================================================
+   BOTONES
+   Convención: pill = interactivo. Sin sombras de color, sin gradientes.
+   ========================================================================== */
+
+.btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--text-base);
+  --btn-border: var(--line-strong);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  padding: 0.95rem 1.6rem;
+  min-height: 3rem;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--btn-fg);
+  background-color: var(--btn-bg);
+  border: var(--hairline) solid var(--btn-border);
+  border-radius: var(--radius-pill);
+  transition:
+    background-color var(--dur-sm) var(--ease-out),
+    border-color var(--dur-sm) var(--ease-out),
+    color var(--dur-sm) var(--ease-out),
+    transform var(--dur-sm) var(--ease-out);
+}
+
+.btn svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+}
+
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+/* Primario: contraste máximo, es el único botón "pesado" de la página */
+.btn--primary {
+  --btn-bg: var(--color-warm-white);
+  --btn-fg: var(--color-obsidian);
+  --btn-border: var(--color-warm-white);
+}
+
+.btn--primary:hover {
+  --btn-bg: var(--color-white);
+  --btn-border: var(--color-white);
+}
+
+/* Invertido: para usar sobre fotografías oscuras */
+.btn--on-image {
+  --btn-bg: var(--color-obsidian);
+  --btn-fg: var(--color-warm-white);
+  --btn-border: rgba(243, 240, 232, 0.28);
+}
+
+.btn--on-image:hover { --btn-border: var(--color-warm-white); }
+
+/* Fantasma: borde sutil, se intensifica al hover */
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--text-base);
+  --btn-border: var(--line-strong);
+}
+
+.btn--ghost:hover {
+  --btn-bg: var(--surface-raised);
+  --btn-border: var(--accent);
+}
+
+.btn--sm {
+  padding: 0.6rem 1.1rem;
+  min-height: 2.4rem;
+  font-size: var(--text-xs);
+}
+
+.btn--lg {
+  padding: 1.1rem 2rem;
+  min-height: 3.4rem;
+  font-size: var(--text-base);
+}
+
+/* Enlace con flecha: microinteracción de desplazamiento */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding-block: 0.35rem;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-base);
+  border-bottom: var(--hairline) solid transparent;
+  transition: border-color var(--dur-sm) var(--ease-out), color var(--dur-sm) var(--ease-out);
+}
+
+.link-arrow svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform var(--dur-sm) var(--ease-out);
+}
+
+.link-arrow:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.link-arrow:hover svg { transform: translateX(4px); }
+
+/* Botón icono (cerrar, menú) */
+.btn-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--text-base);
+  background-color: transparent;
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-pill);
+  transition:
+    background-color var(--dur-sm) var(--ease-out),
+    border-color var(--dur-sm) var(--ease-out);
+}
+
+.btn-icon svg { width: 1.15rem; height: 1.15rem; }
+
+.btn-icon:hover {
+  background-color: var(--surface-raised);
+  border-color: var(--line-strong);
+}
+
+/* ==========================================================================
+   TAGS · LABELS · PRODUCT TAGS
+   ========================================================================== */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background-color: var(--surface);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-pill);
+}
+
+.tag--demo {
+  color: var(--accent);
+  border-style: dashed;
+}
+
+.tag svg { width: 0.85rem; height: 0.85rem; }
+
+/* Etiqueta de producto (MOUNTAIN AI GUIDE, MOUNTAIN KNOWLEDGE...) */
+.product-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: 0.4rem 0.85rem;
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent);
+  border: var(--hairline) solid var(--line-strong);
+  border-radius: var(--radius-pill);
+}
+
+.product-tag::before {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+/* ==========================================================================
+   MEDIA FRAME · contenedor de imagen con proporción fija (evita CLS)
+   ========================================================================== */
+
+.media {
+  --media-ratio: 4 / 3;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-sunken);
+}
+
+.media > img,
+.media > video {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: var(--media-ratio);
+  object-fit: cover;
+  transition: transform var(--dur-lg) var(--ease-out);
+}
+
+.media--landscape { --media-ratio: 16 / 10; }
+.media--vertical { --media-ratio: 3 / 4; max-height: 26rem; }
+.media__video { background-color: var(--bg-sunken); }
+.media--cinema { --media-ratio: 21 / 9; }
+
+/* ==========================================================================
+   SECTION HEADER · patrón único para titulares de sección
+   ========================================================================== */
+
+.section-head {
+  display: grid;
+  gap: var(--space-md);
+  max-width: 68ch;
+}
+
+.section-head--center {
+  justify-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-head__title { max-width: 20ch; }
+.section-head--center .section-head__title { max-width: 24ch; }
+
+.section-head__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* ==========================================================================
+   CARD · contenedor base. Borde fino + radio discreto (12px), nunca pomposo.
+   ========================================================================== */
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--surface);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--dur-sm) var(--ease-out),
+    background-color var(--dur-sm) var(--ease-out),
+    transform var(--dur-md) var(--ease-out),
+    box-shadow var(--dur-md) var(--ease-out);
+}
+
+.card__body {
+  display: grid;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-md) var(--space-lg);
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+  line-height: var(--leading-snug);
+}
+
+.card__text {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+}
+
+.card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* Icono minimalista de card */
+.card__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--accent);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-pill);
+}
+
+.card__icon svg { width: 1.15rem; height: 1.15rem; }
+
+/* Card interactiva: hover contenido, sin saltos exagerados */
+.card--interactive:hover,
+.card--interactive:focus-within {
+  transform: translateY(-4px);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-soft);
+}
+
+.card--interactive:hover .media > img,
+.card--interactive:hover .media > video { transform: scale(1.04); }
+
+/* ==========================================================================
+   NAVBAR
+   Siempre "claro sobre oscuro": transparente sobre el hero y, al hacer
+   scroll, barra translúcida con blur. Evita el parpadeo de invertir
+   colores según la sección.
+   ========================================================================== */
+
+.site-nav {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: var(--z-nav);
+  color: var(--color-warm-white);
+  background-color: transparent;
+  border-bottom: var(--hairline) solid transparent;
+  transition:
+    background-color var(--dur-md) var(--ease-out),
+    border-color var(--dur-md) var(--ease-out),
+    backdrop-filter var(--dur-md) var(--ease-out);
+}
+
+.site-nav[data-state="scrolled"] {
+  background-color: rgba(11, 16, 15, 0.78);
+  border-bottom-color: rgba(243, 240, 232, 0.12);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+.site-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  min-height: 5rem;
+}
+
+/* --- Marca --- */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex: none;
+}
+
+/* Logotipo completo (PNG con fondo transparente y tinta blanca): el emblema
+   ya incluye nombre y tagline, así que va solo, sin texto al lado. La nav y
+   el pie son siempre fondos oscuros, así que la tinta blanca siempre se ve. */
+.brand__mark {
+  display: block;
+  height: 3.5rem;
+  width: auto;
+  flex: none;
+}
+
+/* --- Menú desktop --- */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.nav-links__item {
+  position: relative;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: rgba(243, 240, 232, 0.78);
+  padding-block: 0.4rem;
+  transition: color var(--dur-sm) var(--ease-out);
+}
+
+.nav-links__item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--hairline);
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-sm) var(--ease-out);
+}
+
+.nav-links__item:hover { color: var(--color-warm-white); }
+.nav-links__item:hover::after { transform: scaleX(1); }
+
+.site-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* El botón del menú móvil solo aparece en pantallas pequeñas */
+.nav-toggle { display: none; }
+
+/* El icono del botón cambia entre hamburguesa y cerrar */
+.nav-toggle [data-icon-close] { display: none; }
+
+.nav-toggle[aria-expanded="true"] [data-icon-menu] { display: none; }
+.nav-toggle[aria-expanded="true"] [data-icon-close] { display: block; }
+
+/* --- Drawer móvil --- */
+/* Queda por DEBAJO de la navbar para que el botón de cierre siga visible
+   y accesible: nunca dejamos al usuario encerrado en un menú. */
+.nav-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 190;
+  display: grid;
+  align-content: start;
+  gap: var(--space-lg);
+  padding: 6.5rem var(--container-pad) var(--space-2xl);
+  color: var(--color-warm-white);
+  background-color: rgba(11, 16, 15, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-1.5rem);
+  transition:
+    opacity var(--dur-md) var(--ease-out),
+    transform var(--dur-md) var(--ease-out),
+    visibility var(--dur-md);
+}
+
+.nav-drawer[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.nav-drawer__list {
+  display: grid;
+  gap: var(--space-2xs);
+  border-top: var(--hairline) solid rgba(243, 240, 232, 0.14);
+}
+
+.nav-drawer__link {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding-block: var(--space-md);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  border-bottom: var(--hairline) solid rgba(243, 240, 232, 0.14);
+  transition: color var(--dur-sm) var(--ease-out), padding-left var(--dur-sm) var(--ease-out);
+}
+
+.nav-drawer__link:hover,
+.nav-drawer__link:focus-visible {
+  color: var(--color-sand);
+  padding-left: var(--space-2xs);
+}
+
+.nav-drawer__index {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  color: var(--color-sand);
+}
+
+.nav-drawer__foot {
+  display: grid;
+  gap: var(--space-sm);
+  justify-items: start;
+}
+
+/* Scroll bloqueado cuando el drawer está abierto */
+body[data-nav-open="true"] { overflow: hidden; }
+
+/* ==========================================================================
+   PROGRESO · barras y líneas
+   Un solo mecanismo: --value (0-100) + .is-visible para animar el llenado.
+   ========================================================================== */
+
+.progress-bar {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.progress-bar__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.progress-bar__value {
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.progress-bar__track {
+  position: relative;
+  height: 4px;
+  overflow: hidden;
+  background-color: var(--line);
+  border-radius: var(--radius-pill);
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background-color: var(--accent);
+  border-radius: inherit;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1.3s var(--ease-out);
+  transition-delay: var(--fill-delay, 0ms);
+}
+
+.is-visible .progress-bar__fill {
+  transform: scaleX(calc(var(--value, 0) / 100));
+}
+
+/* ==========================================================================
+   CAMPO DE BÚSQUEDA
+   ========================================================================== */
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.35rem 0.35rem 0.35rem 1.15rem;
+  background-color: var(--surface);
+  border: var(--hairline) solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  transition: border-color var(--dur-sm) var(--ease-out), background-color var(--dur-sm) var(--ease-out);
+}
+
+.field:focus-within {
+  border-color: var(--accent);
+  background-color: var(--surface-raised);
+}
+
+.field__icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: none;
+  color: var(--text-faint);
+}
+
+.field__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-block: 0.75rem;
+  font-size: var(--text-base);
+  color: var(--text-base);
+  background: none;
+  border: 0;
+}
+
+.field__input::placeholder { color: var(--text-muted); }
+.field__input:focus { outline: none; }
+
+/* ==========================================================================
+   QUIZ · perfiles de aventurero
+   Inputs reales (radio) ocultos visualmente → accesible por teclado y lector.
+   ========================================================================== */
+
+.quiz__step-label {
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.quiz__question {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.quiz__question-title {
+  margin-bottom: var(--space-md);
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+}
+
+.quiz-options {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.quiz-option {
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+  padding: var(--space-md);
+  cursor: pointer;
+  background-color: var(--surface);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--dur-sm) var(--ease-out),
+    background-color var(--dur-sm) var(--ease-out),
+    transform var(--dur-sm) var(--ease-out);
+}
+
+.quiz-option:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+
+/* El input sigue siendo el control real: se oculta, no se elimina */
+.quiz-option__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.quiz-option__marker {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  display: grid;
+  place-items: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: var(--hairline) solid var(--line-strong);
+  border-radius: 50%;
+  transition: border-color var(--dur-sm) var(--ease-out);
+}
+
+.quiz-option__marker::after {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background-color: var(--accent);
+  transform: scale(0);
+  transition: transform var(--dur-sm) var(--ease-out);
+}
+
+.quiz-option__label {
+  padding-right: 2rem;
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+}
+
+.quiz-option__hint {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.quiz-option:has(.quiz-option__input:checked) {
+  border-color: var(--accent);
+  background-color: var(--surface-raised);
+}
+
+.quiz-option:has(.quiz-option__input:checked) .quiz-option__marker {
+  border-color: var(--accent);
+}
+
+.quiz-option:has(.quiz-option__input:checked) .quiz-option__marker::after {
+  transform: scale(1);
+}
+
+.quiz-option:has(.quiz-option__input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.quiz__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+.quiz__panel[hidden] { display: none; }
+
+/* --- Resultado --- */
+.quiz-result {
+  display: grid;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background-color: var(--surface);
+  border: var(--hairline) solid var(--line-strong);
+  border-radius: var(--radius-md);
+}
+
+.quiz-result__name {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.quiz-result__meters {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+/* ==========================================================================
+   CHAT · Mountain AI Guide
+   ========================================================================== */
+
+.chat {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+  background-color: var(--surface);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.chat__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: var(--hairline) solid var(--line);
+  background-color: var(--surface-raised);
+}
+
+.chat__avatar {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: none;
+  color: var(--accent-contrast);
+  background-color: var(--color-sand);
+  border-radius: var(--radius-pill);
+}
+
+.chat__avatar svg { width: 1.15rem; height: 1.15rem; }
+
+.chat__identity {
+  display: grid;
+  gap: 0.1rem;
+  line-height: 1.2;
+}
+
+.chat__name {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.chat__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+.chat__status::before {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background-color: var(--accent);
+}
+
+/* Flujo de mensajes */
+.chat__stream {
+  display: grid;
+  gap: var(--space-md);
+  align-content: start;
+  padding: var(--space-md);
+  max-height: 22rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.chat__stream:focus-visible { outline-offset: -3px; }
+
+.chat__msg {
+  display: grid;
+  gap: var(--space-2xs);
+  max-width: 92%;
+}
+
+.chat__msg--ai { justify-self: start; }
+.chat__msg--user { justify-self: end; justify-items: end; }
+
+.chat__bubble {
+  padding: 0.85rem 1.05rem;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  border-radius: var(--radius-md);
+}
+
+.chat__msg--ai .chat__bubble {
+  color: var(--text-base);
+  background-color: var(--surface-raised);
+  border: var(--hairline) solid var(--line);
+  border-bottom-left-radius: var(--radius-xs);
+}
+
+.chat__msg--user .chat__bubble {
+  color: var(--accent-contrast);
+  background-color: var(--color-sand);
+  border-bottom-right-radius: var(--radius-xs);
+}
+
+.chat__author {
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* Checklist de respuesta de la IA (✓ Nivel actual, ✓ Próximo reto...) */
+.chat__findings {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: var(--hairline) solid var(--line);
+}
+
+.chat__finding {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: var(--text-sm);
+}
+
+.chat__finding svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: none;
+  margin-top: 0.22rem;
+  color: var(--accent);
+}
+
+.chat__finding b { font-weight: var(--weight-semibold); }
+
+/* Indicador de escritura */
+.chat__typing {
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
+  padding: 0.85rem 1.05rem;
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-xs);
+  background-color: var(--surface-raised);
+}
+
+.chat__typing span {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background-color: var(--text-faint);
+  animation: mb-typing 1.2s var(--ease-in-out) infinite;
+}
+
+.chat__typing span:nth-child(2) { animation-delay: 0.15s; }
+.chat__typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes mb-typing {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+/* Pie del chat: sugerencias + entrada */
+.chat__footer {
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-top: var(--hairline) solid var(--line);
+  background-color: var(--surface-raised);
+}
+
+.chat__prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+/* Chip: botón pequeño de acción rápida */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+  background-color: transparent;
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-pill);
+  transition:
+    color var(--dur-sm) var(--ease-out),
+    border-color var(--dur-sm) var(--ease-out),
+    background-color var(--dur-sm) var(--ease-out);
+}
+
+.chip:hover {
+  color: var(--text-base);
+  border-color: var(--accent);
+  background-color: var(--surface);
+}
+
+.chip[aria-pressed="true"],
+.chip[data-active="true"] {
+  color: var(--accent-contrast);
+  background-color: var(--color-sand);
+  border-color: var(--color-sand);
+}
+
+.chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Campo de entrada de chat (solo lectura: es una demostración) */
+.chat__input {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.3rem 0.3rem 0.3rem 1.1rem;
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-base);
+}
+
+.chat__input input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-block: 0.7rem;
+  font-size: var(--text-sm);
+  color: var(--text-base);
+  background: none;
+  border: 0;
+}
+
+.chat__input input::placeholder { color: var(--text-muted); }
+.chat__input input:focus { outline: none; }
+
+/* ==========================================================================
+   PRIMITIVAS DE COMPOSICIÓN
+   ========================================================================== */
+
+/* Dos columnas asimétricas: el bloque de texto nunca compite con la imagen */
+.split {
+  display: grid;
+  gap: var(--grid-gap);
+  align-items: center;
+  grid-template-columns: 1fr;
+}
+
+/* Lista separada por hairlines: más editorial que una card */
+.hairline-list {
+  display: grid;
+}
+
+.hairline-list > li + li { border-top: var(--hairline) solid var(--line); }
+.hairline-list > li { padding-block: var(--space-md); }
+
+/* Rejilla de ubicaciones (SALENTO · COCORA · ...) */
+.fact-grid {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+}
+
+.fact {
+  display: grid;
+  gap: var(--space-2xs);
+  padding-top: var(--space-md);
+  border-top: var(--hairline) solid var(--line-strong);
+}
+
+.fact__label {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+  text-transform: uppercase;
+}
+
+.fact__note {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   PERFILES DE AVENTURERO · presentación de los 4 niveles
+   ========================================================================== */
+
+.profile-grid {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.profile {
+  display: grid;
+  gap: var(--space-2xs);
+  padding: var(--space-md);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-md);
+  background-color: var(--surface);
+  transition: border-color var(--dur-sm) var(--ease-out), transform var(--dur-sm) var(--ease-out);
+}
+
+.profile:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+}
+
+/* Perfil coincidente con el resultado del test */
+.profile[data-match="true"] {
+  border-color: var(--color-sand);
+  background-color: var(--surface-raised);
+}
+
+.profile[data-match="true"] .profile__name { color: var(--accent); }
+
+.profile[data-match="true"] .profile__note::before {
+  content: "Tu resultado · ";
+  font-weight: var(--weight-semibold);
+  color: var(--accent);
+}
+
+.profile__level {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2xs);
+}
+
+.profile__name {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+/* Marca de nivel: 1 a 4 puntos, sin colores semáforo */
+.profile__dots {
+  display: inline-flex;
+  gap: 0.2rem;
+}
+
+.profile__dots i {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background-color: var(--line-strong);
+}
+
+.profile__dots i[data-on="true"] { background-color: var(--color-sand); }
+
+.profile__claim {
+  font-size: var(--text-sm);
+  color: var(--text-base);
+}
+
+.profile__note {
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+/* ==========================================================================
+   KNOWLEDGE · resultados de la búsqueda demostrativa
+   ========================================================================== */
+
+.knowledge-results {
+  display: grid;
+  gap: 0;
+  border-top: var(--hairline) solid var(--line);
+}
+
+.knowledge-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border-bottom: var(--hairline) solid var(--line);
+  transition: color var(--dur-sm) var(--ease-out);
+}
+
+.knowledge-item > summary {
+  display: grid;
+  gap: 0.35rem;
+  padding-block: var(--space-md);
+  cursor: pointer;
+  list-style: none;
+  transition: padding-left var(--dur-sm) var(--ease-out);
+}
+
+.knowledge-item > summary::-webkit-details-marker { display: none; }
+.knowledge-item > summary::marker { content: ""; }
+
+.knowledge-item:hover > summary,
+.knowledge-item[open] > summary {
+  padding-left: var(--space-2xs);
+  color: var(--accent);
+}
+
+.knowledge-item[open] > summary { color: var(--text-base); }
+
+.knowledge-item__topic {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+}
+
+.knowledge-item__topic svg {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  color: var(--text-faint);
+  transition: transform var(--dur-sm) var(--ease-out);
+}
+
+.knowledge-item[open] .knowledge-item__topic svg { transform: rotate(180deg); }
+
+.knowledge-item__cat {
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.knowledge-item__body {
+  max-width: 58ch;
+  padding-bottom: var(--space-md);
+  padding-left: var(--space-2xs);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+}
+
+.knowledge-empty {
+  padding-block: var(--space-lg);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   MEDIA QUERIES DE COMPONENTES
+   Mobile no es un desktop comprimido: se reorganiza la composición.
+   ========================================================================== */
+
+@media (min-width: 48rem) {
+  .site-nav__inner { min-height: 5.5rem; }
+  .brand__mark { height: 4.5rem; }
+}
+
+@media (min-width: 60rem) {
+  /* Composición asimétrica: 1fr / 1.25fr, con la visual dominando */
+  .split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 5vw, 5.5rem);
+  }
+
+  .chat__stream { max-height: 26rem; }
+}
+
+@media (max-width: 59.99rem) {
+  /* Navegación móvil: se oculta el menú, aparece el hamburger y el drawer */
+  .nav-links { display: none; }
+  .nav-toggle { display: inline-grid; }
+  .site-nav__cta { display: none; }
+
+  .nav-drawer { display: grid; }
+}
+
+@media (min-width: 60rem) {
+  .nav-drawer { display: none; }
+}
+
+
+
+
+
+
+

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Ilustración de un volcán nevado de gran altura con glaciar, niebla y páramo en primer plano">
+  <title>tolima.svg · placeholder editorial de cumbre nevada aspiracional</title>
+  <defs>
+    <linearGradient id="t-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#31423a"/>
+      <stop offset="45%" stop-color="#22312a"/>
+      <stop offset="100%" stop-color="#101817"/>
+    </linearGradient>
+    <linearGradient id="t-cone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d4d47"/>
+      <stop offset="60%" stop-color="#26332e"/>
+      <stop offset="100%" stop-color="#141d1b"/>
+    </linearGradient>
+    <linearGradient id="t-snow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3f0e8"/>
+      <stop offset="100%" stop-color="#b4b2a6"/>
+    </linearGradient>
+    <linearGradient id="t-plume" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e4e0d4" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#e4e0d4" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="t-glow" cx="0.5" cy="0.28" r="0.5">
+      <stop offset="0" stop-color="#b6a58b" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#b6a58b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="t-mist" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e4e0d4" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#e4e0d4" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#e4e0d4" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#t-sky)"/>
+  <rect width="1600" height="1000" fill="url(#t-glow)"/>
+
+  <!-- Fumarola: la montaña está viva, pero no se dramatiza -->
+  <path fill="url(#t-plume)" d="M812 250 C 900 214 1050 202 1230 226 L1230 268 C 1040 246 906 258 812 292 Z"/>
+  <path fill="url(#t-plume)" opacity="0.6" d="M812 300 C 880 282 1010 276 1150 292 L1150 320 C 1010 306 884 312 812 330 Z"/>
+
+  <!-- Cuerpo del volcán -->
+  <path fill="url(#t-cone)" d="M180 1000 L770 236 L800 236 L1420 1000 Z"/>
+
+  <!-- Casquete glaciar -->
+  <path fill="url(#t-snow)" d="M785 236 C 830 248 856 288 872 330 L726 356 C 742 300 756 258 785 236 Z"/>
+  <path fill="url(#t-snow)" opacity="0.8" d="M770 236 C 762 262 752 296 744 322 L760 358 L742 400 L720 372 L700 404 L690 358 C 704 306 726 258 752 236 Z"/>
+
+  <!-- Lenguas de glaciar -->
+  <path fill="#e8e6dd" opacity="0.42" d="M812 356 C 828 470 838 596 848 720 L788 720 C 778 596 772 470 766 356 Z"/>
+  <path fill="#e8e6dd" opacity="0.26" d="M866 400 C 890 510 906 620 918 726 L884 726 C 872 620 856 510 844 400 Z"/>
+
+  <!-- Crestas laterales -->
+  <path fill="#1b2624" opacity="0.9" d="M0 1000 L120 780 L420 1000 Z"/>
+  <path fill="#182422" opacity="0.9" d="M1180 1000 L1420 806 L1600 1000 Z"/>
+
+  <!-- Franja de niebla al pie del cono -->
+  <rect y="640" width="1600" height="160" fill="url(#t-mist)"/>
+
+  <!-- Páramo en primer plano -->
+  <path fill="#0d1412" d="M0 872 L200 840 L420 880 L640 838 L860 882 L1080 842 L1300 884 L1520 848 L1600 866 L1600 1000 L0 1000 Z"/>
+  <path fill="#080c0b" d="M0 940 L260 916 L540 944 L820 914 L1100 946 L1380 918 L1600 942 L1600 1000 L0 1000 Z"/>
+</svg>

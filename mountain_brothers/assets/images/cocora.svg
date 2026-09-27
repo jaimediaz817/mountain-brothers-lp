@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" width="1600" height="1200" role="img" aria-label="Ilustración de palmas de cera del Valle de Cocora entre capas de neblina de montaña">
+  <title>cocora.svg · placeholder editorial de palmas de cera</title>
+  <defs>
+    <linearGradient id="c-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#31443a"/>
+      <stop offset="55%" stop-color="#243329"/>
+      <stop offset="100%" stop-color="#16201d"/>
+    </linearGradient>
+    <linearGradient id="c-ridge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2c3e33"/>
+      <stop offset="100%" stop-color="#1d2a23"/>
+    </linearGradient>
+    <linearGradient id="c-floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16201d"/>
+      <stop offset="100%" stop-color="#0a0f0e"/>
+    </linearGradient>
+    <radialGradient id="c-glow" cx="0.5" cy="0.42" r="0.55">
+      <stop offset="0" stop-color="#b6a58b" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="#b6a58b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="c-mist" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfc0a8" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#cfc0a8" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#cfc0a8" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Hoja de palma: se reutiliza rotada alrededor del centro de la corona -->
+    <path id="c-frond" d="M0 0 C 16 -13 44 -22 78 -16" fill="none" stroke="#8d9b7e" stroke-width="5" stroke-linecap="round"/>
+
+    <!-- Palma de cera: tronco largo y delgado + corona radiada -->
+    <g id="c-palm">
+      <path d="M-4.5 4 C -2 -150 0 -300 3.5 -430 L -3.5 -430 C -6 -300 -8 -150 -11 4 Z" fill="#7d8a70" opacity="0.85"/>
+      <g transform="translate(0,-430)">
+        <g stroke-linecap="round">
+          <use href="#c-frond" transform="rotate(0)"/>
+          <use href="#c-frond" transform="rotate(30)"/>
+          <use href="#c-frond" transform="rotate(60)"/>
+          <use href="#c-frond" transform="rotate(90)"/>
+          <use href="#c-frond" transform="rotate(120)"/>
+          <use href="#c-frond" transform="rotate(150)"/>
+          <use href="#c-frond" transform="rotate(180)"/>
+          <use href="#c-frond" transform="rotate(210)"/>
+          <use href="#c-frond" transform="rotate(240)"/>
+          <use href="#c-frond" transform="rotate(270)"/>
+          <use href="#c-frond" transform="rotate(300)"/>
+          <use href="#c-frond" transform="rotate(330)"/>
+        </g>
+      </g>
+    </g>
+  </defs>
+
+  <rect width="1600" height="1200" fill="url(#c-sky)"/>
+  <rect width="1600" height="1200" fill="url(#c-glow)"/>
+
+  <!-- Cordillera de fondo -->
+  <path fill="url(#c-ridge)" opacity="0.75"
+    d="M0 560 L150 480 L280 548 L430 452 L580 540 L740 462 L900 552 L1060 470 L1220 556 L1380 486 L1600 566 L1600 1200 L0 1200 Z"/>
+
+  <!-- Palmas lejanas (pequeñas, más claras por la neblina) -->
+  <g opacity="0.34" transform="translate(120,1010) scale(0.44)"><use href="#c-palm"/></g>
+  <g opacity="0.3" transform="translate(330,1024) scale(0.38)"><use href="#c-palm"/></g>
+  <g opacity="0.28" transform="translate(1330,1016) scale(0.4)"><use href="#c-palm"/></g>
+  <g opacity="0.32" transform="translate(1500,1030) scale(0.36)"><use href="#c-palm"/></g>
+
+  <rect y="620" width="1600" height="170" fill="url(#c-mist)"/>
+
+  <!-- Palmas principales -->
+  <g transform="translate(430,1090) scale(0.72)" opacity="0.62"><use href="#c-palm"/></g>
+  <g transform="translate(880,1110) scale(0.8)" opacity="0.7"><use href="#c-palm"/></g>
+  <g transform="translate(1265,1100) scale(0.68)" opacity="0.6"><use href="#c-palm"/></g>
+
+  <rect y="820" width="1600" height="190" fill="url(#c-mist)" opacity="0.8"/>
+
+  <!-- Palmas en primer plano: recortan el encuadre y dan profundidad -->
+  <g transform="translate(196,1230) scale(1.22)" opacity="0.95"><use href="#c-palm"/></g>
+  <g transform="translate(1424,1250) scale(1.32)" opacity="1"><use href="#c-palm"/></g>
+
+  <!-- Suelo del valle -->
+  <path fill="url(#c-floor)" d="M0 1118 L220 1092 L460 1122 L720 1088 L980 1124 L1240 1092 L1600 1120 L1600 1200 L0 1200 Z"/>
+</svg>

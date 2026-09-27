@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ======================================================================
+       SEO
+       ====================================================================== -->
+  <title>Mountain Brothers | Explora. Aprende. Avanza.</title>
+  <meta name="description" content="Mountain Brothers es una plataforma digital para descubrir, aprender y prepararte para experiencias de montaña desde el Quindío, Colombia.">
+  <meta name="author" content="Mountain Brothers">
+  <meta name="theme-color" content="#111817">
+  <meta name="color-scheme" content="dark light">
+
+  <!-- Open Graph / Twitter.
+       NOTA: al publicar en un dominio real, og:image debe ser una URL absoluta. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mountain Brothers">
+  <meta property="og:locale" content="es_CO">
+  <meta property="og:title" content="Mountain Brothers | Explora. Aprende. Avanza.">
+  <meta property="og:description" content="Una nueva forma de aprender, explorar y prepararte para la montaña. Del Quindío, Colombia, a las grandes montañas.">
+  <meta property="og:image" content="assets/images/og-cover.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mountain Brothers | Explora. Aprende. Avanza.">
+  <meta name="twitter:description" content="Una nueva forma de aprender, explorar y prepararte para la montaña.">
+  <meta name="twitter:image" content="assets/images/og-cover.svg">
+
+  <!-- ======================================================================
+       ICONOS
+       ====================================================================== -->
+  <link rel="icon" href="assets/images/favicon.png" type="image/png" sizes="256x256">
+  <link rel="apple-touch-icon" href="assets/images/favicon.png">
+
+  <!-- ======================================================================
+       TIPOGRAFÍA
+       Sora (display) + Inter (texto). Si no hay red, el sistema de fuentes
+       declarado en tokens.css mantiene el layout intacto.
+       ====================================================================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap">
+
+  <!-- ======================================================================
+       ESTILOS · orden obligatorio: tokens → base → componentes → secciones
+       ====================================================================== -->
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/sections.css">
+
+  <!-- Marca de JS disponible antes del primer pintado (evita flashes) -->
+  <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <!-- ========================================================================
+       SPRITE DE ICONOGRAFÍA
+       Set minimalista de trazo (equivalente Lucide) embebido en el documento:
+       cero peticiones de red, cero dependencias y funciona sin conexión.
+       Uso: <svg aria-hidden="true"><use href="#i-check"></use></svg>
+       ======================================================================== -->
+  <svg hidden aria-hidden="true" focusable="false">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4.5 12h15M13 5.5l6.5 6.5-6.5 6.5"/>
+    </symbol>
+
+    <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19.5 12h-15M11 18.5 4.5 12 11 5.5"/>
+    </symbol>
+
+    <symbol id="i-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 4.5v15M5.5 13l6.5 6.5L18.5 13"/>
+    </symbol>
+
+    <symbol id="i-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9.5 5.5v13M14.5 5.5v13"/>
+    </symbol>
+
+    <symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7.8 5.4 18.6 12 7.8 18.6z"/>
+    </symbol>
+
+    <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m6 9.5 6 6 6-6"/>
+    </symbol>
+
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m4.5 12.5 5 5 10-11"/>
+    </symbol>
+
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M12 11v5.5M12 7.6v.6"/>
+    </symbol>
+
+    <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/>
+      <path d="M21 3.5V9h-5.5"/>
+    </symbol>
+
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+      <path d="M4 7h16M4 12h16M4 17h16"/>
+    </symbol>
+
+    <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+      <path d="M6 6l12 12M18 6L6 18"/>
+    </symbol>
+
+    <symbol id="i-mountain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2.5 19.5 12 6l4.2 6.2L18.6 9.4l3 10.1z"/>
+      <path d="m9 19.5 3-4.4"/>
+    </symbol>
+
+    <symbol id="i-route" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="5.5" cy="18.5" r="2.5"/>
+      <circle cx="18.5" cy="5.5" r="2.5"/>
+      <path d="M8 18.5h5.5A4.5 4.5 0 0 0 18 14V8"/>
+    </symbol>
+
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4.5 5.5a2 2 0 0 1 2-2h12.5v15H6.5a2 2 0 0 0-2 2z"/>
+      <path d="M4.5 18.5a2 2 0 0 1 2-2h12.5"/>
+    </symbol>
+
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3.4 20 6.4v5.8c0 4.4-3.3 7.4-8 8.6-4.7-1.2-8-4.2-8-8.6V6.4z"/>
+      <path d="m9.2 12.1 2 2 3.7-4.1"/>
+    </symbol>
+
+    <symbol id="i-trending" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3.5 17.5 9.8 11l4 4L21 7.2"/>
+      <path d="M15 7.2h6v6"/>
+    </symbol>
+
+    <symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 4.3 3 6.7v13.6l6-2.4 6 2.4 6-2.4V4.3l-6 2.4z"/>
+      <path d="M9 4.3v13.6M15 6.7v13.6"/>
+    </symbol>
+
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9.2" cy="8.2" r="3.4"/>
+      <path d="M3 19.2c0-3.4 2.8-5.6 6.2-5.6s6.2 2.2 6.2 5.6"/>
+      <path d="M16.4 5.2a3.4 3.4 0 0 1 0 6.4M17.8 14c2.1.7 3.4 2.5 3.4 5.2"/>
+    </symbol>
+
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="6.5"/>
+      <path d="m16 16 4.5 4.5"/>
+    </symbol>
+
+    <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m11.5 3.5 1.8 5.5 5.5 1.8-5.5 1.8-1.8 5.5-1.8-5.5-5.5-1.8 5.5-1.8z"/>
+      <path d="M18.6 3.2v3.4M16.9 4.9h3.4"/>
+    </symbol>
+
+    <symbol id="i-backpack" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 9a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v11.5H6z"/>
+      <path d="M9.5 4.2V3a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 14.5 3v1.2"/>
+      <path d="M9.2 13.5h5.6"/>
+    </symbol>
+
+    <symbol id="i-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 12.5h4l2.6-6.2 4 12.4 2.5-6.2H21"/>
+    </symbol>
+
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="8.5"/>
+      <circle cx="12" cy="12" r="3.6"/>
+    </symbol>
+
+    <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 21V4.5M6 5.2h11l-2.2 4 2.2 4H6"/>
+    </symbol>
+
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 3.5 3.2 10.6l6.7 2.6 2.6 6.8z"/>
+      <path d="M21 3.5 9.9 13.2"/>
+    </symbol>
+
+    <symbol id="i-audio" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9.5 4.5v15L4.5 14H2.5"/>
+      <path d="M14.5 4.5v15l5-5.5h2"/>
+      <circle cx="12" cy="12" r="3"/>
+    </symbol>
+
+    <symbol id="i-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 7l4 5-4 5V7z"/>
+      <rect x="3" y="6" width="13" height="12" rx="2"/>
+    </symbol>
+
+  </svg>
+
+
+  <!-- ========================================================================
+       NAVEGACIÓN
+       Transparente sobre el hero; al hacer scroll se vuelve translúcida con
+       blur. Siempre "claro sobre oscuro": sin parpadeos al cambiar de sección.
+       ======================================================================== -->
+  <header class="site-nav is-dark" data-nav data-state="top">
+    <div class="container site-nav__inner">
+      <a class="brand" href="#top">
+        <img
+          class="brand__mark"
+          src="assets/images/logo-mb.png"
+          data-image="logo"
+          alt="Mountain Brothers · Explora · Aprende · Avanza"
+          width="1708" height="921" decoding="async">
+        <span class="sr-only">— ir al inicio</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a class="nav-links__item" href="#explorar">Explorar</a>
+        <a class="nav-links__item" href="#aprender">Aprender</a>
+        <a class="nav-links__item" href="#relatos">Relatos</a>
+        <a class="nav-links__item" href="#camino">Tu camino</a>
+        <a class="nav-links__item" href="#recorridos">Recorridos</a>
+        <a class="nav-links__item" href="#comunidad">Comunidad</a>
+      </nav>
+
+      <div class="site-nav__actions">
+        <a class="btn btn--primary btn--sm site-nav__cta" href="#primer-paso">Comenzar</a>
+        <button
+          class="btn-icon nav-toggle"
+          type="button"
+          data-nav-toggle
+          aria-expanded="false"
+          aria-controls="menu-movil"
+          aria-label="Abrir menú de navegación">
+          <svg data-icon-menu aria-hidden="true"><use href="#i-menu"></use></svg>
+          <svg data-icon-close aria-hidden="true"><use href="#i-close"></use></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div
+    class="nav-drawer is-dark"
+    id="menu-movil"
+    data-nav-drawer
+    data-open="false"
+    aria-hidden="true"
+    aria-label="Menú de navegación móvil">
+    <nav class="nav-drawer__list" aria-label="Secciones">
+<a class="nav-drawer__link" href="#explorar"><span class="nav-drawer__index">01</span>Explorar</a>
+        <a class="nav-drawer__link" href="#aprender"><span class="nav-drawer__index">02</span>Aprender</a>
+        <a class="nav-drawer__link" href="#relatos"><span class="nav-drawer__index">03</span>Relatos</a>
+        <a class="nav-drawer__link" href="#camino"><span class="nav-drawer__index">04</span>Tu camino</a>
+        <a class="nav-drawer__link" href="#recorridos"><span class="nav-drawer__index">05</span>Recorridos</a>
+        <a class="nav-drawer__link" href="#comunidad"><span class="nav-drawer__index">06</span>Comunidad</a>
+    </nav>
+    <div class="nav-drawer__foot">
+      <a class="btn btn--primary" href="#primer-paso">
+        Comenzar
+        <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+      </a>
+      <p class="meta">Quindío · Colombia</p>
+    </div>
+  </div>
+
+  <main id="contenido">
+
+    <!-- ======================================================================
+         1 · HERO
+         ====================================================================== -->
+    <section class="hero is-dark" id="top" aria-labelledby="hero-title">
+      <div class="hero__bg" data-parallax>
+        <!-- Respaldo: si el video no carga o el navegador lo bloquea, el hero
+             conserva su imagen. -->
+        <img
+          src="assets/images/hero-mountain.svg"
+          data-image="hero-mountain"
+          alt="Cordillera de páramo colombiano al amanecer, con capas de niebla entre las montañas y una ladera oscura en primer plano."
+          width="1600" height="1000" decoding="async" fetchpriority="high">
+
+        <!-- Video intro oficial: silenciado y en bucle. El mismo archivo se
+             reproduce con control y audio en la sección de intro. -->
+        <video
+          data-video="intro"
+          data-autoplay
+          src="assets/videos/intro-mb.mp4"
+          poster="assets/images/hero-mountain.svg"
+          autoplay muted loop playsinline preload="auto"
+          aria-hidden="true" tabindex="-1"></video>
+      </div>
+      <div class="hero__scrim" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="hero__inner">
+          <div class="hero__label">
+            <span class="eyebrow eyebrow--bare">Mountain Brothers</span>
+            <span class="tag">Quindío · Colombia</span>
+          </div>
+
+          <h1 class="hero__title" id="hero-title">Todo comienza con un primer paso.</h1>
+
+          <p class="hero__subhead">
+            Una nueva forma de aprender, explorar y prepararte para la montaña.
+            Un ecosistema donde el hábito se construye caminando.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary btn--lg" href="#primer-paso">
+              Comenzar la aventura
+              <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+            </a>
+            <a class="btn btn--on-image btn--lg" href="#explorar">Explorar Mountain Brothers</a>
+          </div>
+        </div>
+
+        <div class="hero__foot">
+          <ul class="hero__badges">
+            <li class="tag">Senderismo</li>
+            <li class="tag">Aprendizaje progresivo</li>
+            <li class="tag">Buenos hábitos</li>
+            <li class="tag">Guía con IA</li>
+          </ul>
+
+          <a class="scroll-cue" href="#primer-paso">
+            Desliza para explorar
+            <svg aria-hidden="true"><use href="#i-arrow-down"></use></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         2 · INTRO · "Esto no es solo llegar a la cima"
+         ====================================================================== -->
+    <section class="section" id="primer-paso" aria-labelledby="intro-title">
+      <div class="container">
+        <div class="split">
+          <div class="stack stack--xl">
+            <div class="section-head">
+              <p class="eyebrow">El punto de partida</p>
+              <h2 class="section-head__title" id="intro-title">Esto no es solo llegar a la cima.</h2>
+              <p class="lede">
+                Mountain Brothers nace para acompañarte desde ese primer sendero hasta
+                experiencias de montaña cada vez más exigentes.
+              </p>
+            </div>
+
+            <p class="body-text">
+              Aquí la montaña no es un destino que se visita: es un proceso que se
+              construye. Terreno, equipo, seguridad, hábitos y criterio se aprenden
+              en orden, y ese aprendizaje es lo que convierte una caminata en
+              experiencia.
+            </p>
+
+            <div class="section-head__foot">
+              <a class="link-arrow" href="#camino">
+                Ver tu camino
+                <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </a>
+              <a class="link-arrow" href="#guia">
+                Conocer el guía
+                <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="intro__visual" data-reveal>
+            <p class="eyebrow eyebrow--bare">Camino de progresión</p>
+
+            <div class="path">
+              <div class="path-step">
+                <span class="path-step__marker" aria-hidden="true"></span>
+                <span class="path-step__index">01</span>
+                <span class="path-step__label">Primer paso</span>
+              </div>
+              <div class="path-step">
+                <span class="path-step__marker" aria-hidden="true"></span>
+                <span class="path-step__index">02</span>
+                <span class="path-step__label">Senderismo</span>
+              </div>
+              <div class="path-step">
+                <span class="path-step__marker" aria-hidden="true"></span>
+                <span class="path-step__index">03</span>
+                <span class="path-step__label">Altitud</span>
+              </div>
+              <div class="path-step">
+                <span class="path-step__marker" aria-hidden="true"></span>
+                <span class="path-step__index">04</span>
+                <span class="path-step__label">Páramo</span>
+              </div>
+              <div class="path-step">
+                <span class="path-step__marker" aria-hidden="true"></span>
+                <span class="path-step__index">05</span>
+                <span class="path-step__label">Montaña</span>
+              </div>
+              <div class="path-step path-step--goal">
+                <span class="path-step__marker" aria-hidden="true"></span>
+                <span class="path-step__index">06</span>
+                <span class="path-step__label">Cumbre</span>
+              </div>
+            </div>
+
+            <p class="meta">
+              Progresión conceptual. No es una certificación ni garantiza preparación
+              física para una montaña real.
+            </p>
+          </div>
+        </div>
+
+        <!-- Video intro oficial: el mismo archivo que el fondo del hero, aquí
+             con control y audio para poderlo mostrar completo. -->
+        <figure class="intro-video" data-reveal>
+          <div class="intro-video__head">
+            <p class="eyebrow eyebrow--bare">Video intro oficial</p>
+            <p class="meta">10 s · 720p · con audio al reproducir</p>
+          </div>
+
+          <div class="intro-video__frame">
+            <video
+              class="intro-video__player"
+              data-video="intro"
+              src="assets/videos/intro-mb.mp4"
+              poster="assets/images/og-cover.svg"
+              controls playsinline preload="metadata">
+              Tu navegador no puede reproducir este video.
+              <a href="assets/videos/intro-mb.mp4">Descargar el archivo MP4</a>.
+            </video>
+          </div>
+
+          <figcaption class="meta">
+            Pieza de presentación de Mountain Brothers · Quindío, Colombia.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         3 · QUIZ · "Primero conócete"
+         ====================================================================== -->
+    <section class="section is-dark section--textured" id="perfil" aria-labelledby="quiz-title">
+      <div class="container">
+        <div class="section-head section-head--center">
+          <span class="product-tag">Mountain Quiz</span>
+          <h2 class="section-head__title" id="quiz-title">Primero conócete.</h2>
+          <p class="lede">No todos empiezan desde el mismo lugar. Saber dónde estás es la primera decisión inteligente que puedes tomar.</p>
+        </div>
+
+        <div class="quiz-section__profiles">
+          <ul class="profile-grid">
+            <li class="profile" data-profile="explorador" data-reveal style="--reveal-delay:0ms">
+              <div class="profile__level">
+                <span class="profile__name">Explorador</span>
+                <span class="profile__dots" aria-hidden="true">
+                  <i data-on="true"></i><i></i><i></i><i></i>
+                </span>
+              </div>
+              <p class="profile__claim">Quiero empezar.</p>
+              <p class="profile__note">Perfil orientativo</p>
+            </li>
+
+            <li class="profile" data-profile="trekker" data-reveal style="--reveal-delay:90ms">
+              <div class="profile__level">
+                <span class="profile__name">Trekker</span>
+                <span class="profile__dots" aria-hidden="true">
+                  <i data-on="true"></i><i data-on="true"></i><i></i><i></i>
+                </span>
+              </div>
+              <p class="profile__claim">Ya camino y quiero avanzar.</p>
+              <p class="profile__note">Perfil orientativo</p>
+            </li>
+
+            <li class="profile" data-profile="montanista" data-reveal style="--reveal-delay:180ms">
+              <div class="profile__level">
+                <span class="profile__name">Montañista en formación</span>
+                <span class="profile__dots" aria-hidden="true">
+                  <i data-on="true"></i><i data-on="true"></i><i data-on="true"></i><i></i>
+                </span>
+              </div>
+              <p class="profile__claim">Quiero prepararme para retos mayores.</p>
+              <p class="profile__note">Perfil orientativo</p>
+            </li>
+
+            <li class="profile" data-profile="cumbre" data-reveal style="--reveal-delay:270ms">
+              <div class="profile__level">
+                <span class="profile__name">Aspirante a cumbre</span>
+                <span class="profile__dots" aria-hidden="true">
+                  <i data-on="true"></i><i data-on="true"></i><i data-on="true"></i><i data-on="true"></i>
+                </span>
+              </div>
+              <p class="profile__claim">Quiero convertir una meta en un proceso.</p>
+              <p class="profile__note">Perfil orientativo</p>
+            </li>
+          </ul>
+
+          <div class="section-head--center">
+            <button class="btn btn--primary btn--lg" type="button" data-quiz-launch>
+              Descubrir mi perfil
+              <svg aria-hidden="true"><use href="#i-arrow-down"></use></svg>
+            </button>
+          </div>
+
+          <!-- MiniApp del test: inline (no modal) para no secuestrar el foco
+               ni romper el flujo narrativo de la página. -->
+          <div class="quiz-card" data-quiz tabindex="-1">
+            <div class="quiz-card__top">
+              <p class="quiz__step-label" data-quiz-step>Test del aventurero</p>
+              <div class="quiz-progress progress-bar" data-quiz-progress data-observe hidden>
+                <div class="progress-bar__track">
+                  <div class="progress-bar__fill" data-quiz-bar style="--value:0"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz__panel quiz-intro" data-quiz-panel="intro">
+              <p class="body-text">
+                Seis preguntas sobre tu experiencia y tu momento actual. El resultado
+                ordena tu punto de partida; no mide capacidades ni reemplaza una
+                valoración profesional.
+              </p>
+
+              <div class="quiz-intro__meta">
+                <span class="tag">6 preguntas</span>
+                <span class="tag">Sin registro</span>
+                <span class="tag">Tus respuestas no se envían</span>
+              </div>
+
+              <button class="btn btn--primary" type="button" data-quiz-start>
+                Comenzar el test
+                <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </button>
+
+              <p class="js-required">
+                El test es una experiencia interactiva y necesita JavaScript.
+                El resto de la página funciona sin él.
+              </p>
+            </div>
+
+            <div class="quiz__panel" data-quiz-panel="questions" hidden></div>
+            <div class="quiz__panel" data-quiz-panel="result" hidden></div>
+
+            <p class="sr-only" role="status" aria-live="polite" data-quiz-status></p>
+          </div>
+
+          <div class="disclaimer" data-reveal>
+            <svg aria-hidden="true"><use href="#i-info"></use></svg>
+            <span>
+              Los perfiles son orientativos: no son certificaciones, no son
+              diagnósticos médicos y no afirman que estés físicamente preparado para
+              una montaña real. Una salida de montaña depende del terreno, del clima,
+              de la logística y de condiciones que solo se evalúan en el momento.
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         4 · MOUNTAIN AI GUIDE
+         ====================================================================== -->
+    <section class="section section--sunken" id="guia" aria-labelledby="guia-title">
+      <div class="container">
+        <div class="ai__grid">
+          <div class="stack stack--xl">
+            <div class="section-head">
+              <span class="product-tag">Mountain AI Guide</span>
+              <h2 class="section-head__title" id="guia-title">Tu montaña. Tu camino. Tu guía.</h2>
+              <p class="lede">
+                Un asistente inteligente que entiende tu experiencia, tus objetivos y
+                tu progreso para ayudarte a dar el siguiente paso.
+              </p>
+            </div>
+
+            <div class="ai__capabilities">
+              <p class="ai__capability">
+                <svg aria-hidden="true"><use href="#i-check"></use></svg>
+                Evalúa tu punto de partida desde lo que ya sabes hacer.
+              </p>
+              <p class="ai__capability">
+                <svg aria-hidden="true"><use href="#i-check"></use></svg>
+                Propone un siguiente paso concreto, no una meta lejana.
+              </p>
+              <p class="ai__capability">
+                <svg aria-hidden="true"><use href="#i-check"></use></svg>
+                Ajusta preparación, equipo y seguridad a tu contexto.
+              </p>
+              <p class="ai__capability">
+                <svg aria-hidden="true"><use href="#i-check"></use></svg>
+                Consulta una base de conocimiento propia de Mountain Brothers.
+              </p>
+              <p class="ai__capability">
+                <svg aria-hidden="true"><use href="#i-check"></use></svg>
+                Convierte tu avance en un progreso visible por dimensiones.
+              </p>
+            </div>
+
+            <div class="disclaimer">
+              <svg aria-hidden="true"><use href="#i-info"></use></svg>
+              <span>
+                Lo que sigue es una <b>demostración de producto</b>: la interfaz real
+                del guía con escenarios preparados. En la siguiente fase se conectará
+                a la Knowledge Base del proyecto y a un modelo de lenguaje.
+              </span>
+            </div>
+          </div>
+
+          <div class="ai__stack" data-guide>
+            <div class="chat">
+              <div class="chat__header">
+                <span class="chat__avatar" aria-hidden="true">
+                  <svg><use href="#i-sparkles"></use></svg>
+                </span>
+                <span class="chat__identity">
+                  <span class="chat__name">Mountain AI Guide</span>
+                  <span class="chat__status">Demostración · escenarios preparados</span>
+                </span>
+              </div>
+
+              <div
+                class="chat__stream"
+                role="log"
+                tabindex="0"
+                aria-label="Conversación con el guía"
+                data-guide-stream>
+                <p class="js-required body-text">
+                  El guía es una demostración con escenarios preparados: necesita
+                  JavaScript y no envía nada a ningún servidor. El resto de la página
+                  funciona sin él.
+                </p>
+              </div>
+
+              <div class="chat__footer">
+                <div class="chat__prompts" data-guide-prompts></div>
+
+                <form class="chat__input" data-guide-form>
+                  <label class="sr-only" for="guide-input">Escribe tu pregunta al guía</label>
+                  <input
+                    id="guide-input"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="Escribe tu pregunta… (demostración)"
+                    data-guide-input>
+                  <button class="btn btn--primary btn--sm" type="submit" data-guide-submit>
+                    <span class="sr-only">Enviar</span>
+                    <svg aria-hidden="true"><use href="#i-send"></use></svg>
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <div class="ai__panel">
+              <div class="ai__panel-head">
+                <span class="ai__panel-title">Mountain Progress</span>
+                <span class="ai__panel-note">Perfil de ejemplo</span>
+              </div>
+
+              <div class="ai__meters" data-guide-meters></div>
+
+              <p class="ai__demo-note">
+                <svg aria-hidden="true"><use href="#i-info"></use></svg>
+                <span>
+                  Las cinco dimensiones son una vista previa del producto. Los valores
+                  se cargan con los escenarios de la demostración y no miden tu
+                  condición física.
+                </span>
+              </p>
+            </div>
+
+            <p class="sr-only" role="status" aria-live="polite" data-guide-status></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         5 · TU CAMINO
+         Mobile: carrusel horizontal con snap. Desktop: una sola fila.
+         ====================================================================== -->
+    <section class="section" id="camino" aria-labelledby="camino-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Tu camino</p>
+          <h2 class="section-head__title" id="camino-title">De tu primera caminata a tu primera cumbre.</h2>
+          <p class="lede">
+            Seis etapas que se recorren en orden. Ninguna se salta: cada una
+            desbloquea conocimiento, experiencia y criterio para la siguiente.
+          </p>
+        </div>
+
+        <div class="stages" data-reveal>
+          <article class="stage">
+            <p class="stage__index">01</p>
+            <h3 class="stage__title">Descubrir</h3>
+            <p class="stage__text">Conocer la montaña y entender qué significa caminarla.</p>
+          </article>
+
+          <article class="stage">
+            <p class="stage__index">02</p>
+            <h3 class="stage__title">Empezar</h3>
+            <p class="stage__text">Primera experiencia real sobre un sendero, sin exigencias.</p>
+          </article>
+
+          <article class="stage">
+            <p class="stage__index">03</p>
+            <h3 class="stage__title">Aprender</h3>
+            <p class="stage__text">Técnica, equipo y seguridad: lo que evita los sustos.</p>
+          </article>
+
+          <article class="stage">
+            <p class="stage__index">04</p>
+            <h3 class="stage__title">Avanzar</h3>
+            <p class="stage__text">Más distancia, más desnivel y más altitud, de a poco.</p>
+          </article>
+
+          <article class="stage">
+            <p class="stage__index">05</p>
+            <h3 class="stage__title">Prepararse</h3>
+            <p class="stage__text">Planificación, lectura de terreno y experiencia acumulada.</p>
+          </article>
+
+          <article class="stage stage--goal">
+            <p class="stage__index">06</p>
+            <h3 class="stage__title">Cumbre</h3>
+            <p class="stage__text">Convertir un objetivo en un proceso largo y consciente.</p>
+            <p class="stage__note">Meta aspiracional</p>
+          </article>
+        </div>
+
+        <div class="journey__foot">
+          <div class="disclaimer">
+            <svg aria-hidden="true"><use href="#i-info"></use></svg>
+            <span>
+              El Nevado del Tolima aparece aquí como <b>meta aspiracional</b>, no como
+              una ruta para principiantes ni como una promesa de cumbre. Ninguna etapa
+              virtual acredita preparación física real.
+            </span>
+          </div>
+
+          <a class="link-arrow" href="#reto">
+            Ver el reto de cumbre
+            <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6 · TERRITORIO · Quindío, Colombia
+         ====================================================================== -->
+    <section class="territory is-dark" id="territorio" aria-labelledby="territorio-title">
+      <!-- Cinta de color vivo: única concesión cromática saturada de la página
+           (tokens --color-vivo-*). Abre la sección antes del texto. -->
+      <div class="territory__vivo" aria-hidden="true"></div>
+
+      <!-- Carrusel de flora: apertura visual de Territorio -->
+      <div class="territory__gallery">
+        <div class="container">
+          <div
+            class="carousel"
+            data-carousel
+            role="region"
+            aria-roledescription="carrusel"
+            aria-label="Flora y paisaje del Quindío">
+
+            <div class="carousel__head">
+              <p class="eyebrow eyebrow--bare">Flora del territorio</p>
+              <p class="carousel__counter" aria-hidden="true">
+                <span data-carousel-index>01</span> / 03
+              </p>
+            </div>
+
+            <div class="carousel__viewport" data-carousel-viewport>
+              <ul class="carousel__track" data-carousel-track>
+                <li
+                  class="carousel__slide is-active"
+                  data-carousel-slide
+                  role="group"
+                  aria-roledescription="diapositiva"
+                  aria-label="1 de 3"
+                  aria-hidden="false">
+                  <img
+                    src="assets/images/palma-cera.jpg"
+                    data-image="palma-cera"
+                    alt="Valle verde con palmas de cera de tronco alto, una cabaña de teja y tres caminantes en un sendero, con montañas y nubes al fondo."
+                    width="1600" height="892" fetchpriority="high" decoding="async">
+                  <div class="carousel__caption">
+                    <p class="carousel__kicker">Valle de Cocora</p>
+                    <p class="carousel__name">Palma de cera</p>
+                    <p class="carousel__note">El paisaje que da nombre a este territorio.</p>
+                  </div>
+                </li>
+
+                <li
+                  class="carousel__slide"
+                  data-carousel-slide
+                  role="group"
+                  aria-roledescription="diapositiva"
+                  aria-label="2 de 3"
+                  aria-hidden="true">
+                  <img
+                    src="assets/images/frailejon-1.jpg"
+                    data-image="frailejon-1"
+                    alt="Puesto de frailejones con hojas plateadas sobre terreno de musgos y rocas, con niebla descendiendo entre montañas rocosas."
+                    width="1600" height="892" loading="lazy" decoding="async">
+                  <div class="carousel__caption">
+                    <p class="carousel__kicker">Páramo</p>
+                    <p class="carousel__name">Frailejón</p>
+                    <p class="carousel__note">Vegetación propia de la alta montaña, por encima del bosque.</p>
+                  </div>
+                </li>
+
+                <li
+                  class="carousel__slide"
+                  data-carousel-slide
+                  role="group"
+                  aria-roledescription="diapositiva"
+                  aria-label="3 de 3"
+                  aria-hidden="true">
+                  <img
+                    src="assets/images/frailejon-2.jpg"
+                    data-image="frailejon-2"
+                    alt="Frailejones en primer plano sobre rocas cubiertas de líquenes, con niebla y nubes doradas sobre la cordillera."
+                    width="1600" height="892" loading="lazy" decoding="async">
+                  <div class="carousel__caption">
+                    <p class="carousel__kicker">Alta montaña</p>
+                    <p class="carousel__name">Cordillera entre nubes</p>
+                    <p class="carousel__note">El terreno que acompaña la aproximación a los Nevados.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="carousel__bar">
+              <div class="carousel__dots" data-carousel-dots>
+                <button type="button" class="carousel__dot is-active" data-carousel-dot="0" aria-label="Mostrar imagen 1 de 3: Palma de cera" aria-current="true"></button>
+                <button type="button" class="carousel__dot" data-carousel-dot="1" aria-label="Mostrar imagen 2 de 3: Frailejón"></button>
+                <button type="button" class="carousel__dot" data-carousel-dot="2" aria-label="Mostrar imagen 3 de 3: Cordillera entre nubes"></button>
+              </div>
+
+              <div class="carousel__controls">
+                <button type="button" class="carousel__btn" data-carousel-prev aria-label="Imagen anterior">
+                  <svg aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+                </button>
+                <button type="button" class="carousel__btn" data-carousel-toggle aria-label="Pausar la reproducción automática" aria-pressed="false">
+                  <svg class="carousel__icon-pause" aria-hidden="true"><use href="#i-pause"></use></svg>
+                  <svg class="carousel__icon-play" aria-hidden="true"><use href="#i-play"></use></svg>
+                </button>
+                <button type="button" class="carousel__btn" data-carousel-next aria-label="Imagen siguiente">
+                  <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                </button>
+              </div>
+            </div>
+
+            <p class="js-required">
+              Sin JavaScript solo se ve la primera foto: el carrusel necesita JS
+              para cambiar de imagen y para pausar el avance automático.
+            </p>
+
+            <p class="sr-only" role="status" aria-live="polite" data-carousel-status></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="territory__figure">
+        <img
+          src="assets/images/cocora.svg"
+          data-image="cocora"
+          alt="Valle entre montañas con palmas de cera de tronco alto y corona radiada, entre capas de neblina."
+          width="1600" height="1200" loading="lazy" decoding="async">
+        <div class="territory__scrim" aria-hidden="true"></div>
+
+        <div class="container territory__content">
+          <p class="eyebrow">Territorio · Quindío, Colombia</p>
+          <h2 class="territory__headline" id="territorio-title">Empezamos aquí.</h2>
+          <p class="lede">
+            Entre palmas de cera, bosques, páramos y grandes montañas comienza
+            nuestro camino. Este no es un punto de partida decorativo: es el
+            territorio que nos forma.
+          </p>
+
+          <ul class="fact-grid territory__places">
+            <li class="fact">
+              <span class="fact__label">Salento</span>
+              <span class="fact__note">Punto de partida de la cultura caminante del Quindío.</span>
+            </li>
+            <li class="fact">
+              <span class="fact__label">Cocora</span>
+              <span class="fact__note">El paisaje de palma de cera que nos identifica.</span>
+            </li>
+            <li class="fact">
+              <span class="fact__label">Los Nevados</span>
+              <span class="fact__note">El salto a la alta montaña y al terreno de páramo.</span>
+            </li>
+            <li class="fact">
+              <span class="fact__label">Nevado del Tolima</span>
+              <span class="fact__note">Meta aspiracional. Nunca el punto de partida.</span>
+            </li>
+          </ul>
+
+          <p class="meta">
+            Ubicaciones mencionadas como territorio narrativo. No incluyen rutas,
+            horarios, permisos ni condiciones actuales: esa información se verifica
+            siempre con las autoridades y operadores correspondientes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         7 · RECORRIDOS
+         ====================================================================== -->
+    <section class="section section--sunken" id="recorridos" aria-labelledby="rec-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Recorridos</p>
+          <h2 class="section-head__title" id="rec-title">Del sendero a la cumbre.</h2>
+          <p class="lede">
+            Recorridos del territorio, en orden de exigencia. Cada uno trae su
+            dificultad, su equipo y sus medidas de seguridad, para que decidas
+            con datos y no solo con ganas.
+          </p>
+        </div>
+
+        <!-- 01 · Morrogacho -->
+        <article class="guide" id="recorrido-morrogacho" data-reveal>
+          <div class="guide__media">
+            <figure class="guide__figure">
+              <img
+                src="assets/images/morrogacho.png"
+                data-image="morrogacho"
+                alt="Infografía de la ruta Morrogacho: preparación física y técnica, equipamiento necesario, descripción del terreno natural de tierra y rocas, y medidas de seguridad."
+                width="794"
+                height="664"
+                loading="lazy"
+                decoding="async">
+              <figcaption class="meta">
+                Infografía de apoyo · el detalle está en el texto.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="guide__body">
+            <div class="guide__meta">
+              <span class="tag">Recorrido 01</span>
+              <span class="meta">Salento · Quindío</span>
+            </div>
+
+            <h3 class="guide__title">Morrogacho</h3>
+
+            <ul class="fact-grid">
+              <li class="fact">
+                <span class="fact__label">Moderado</span>
+                <span class="fact__note">Nivel de dificultad</span>
+              </li>
+<li class="fact">
+                <span class="fact__label">Sendero natural</span>
+                <span class="fact__note">Terreno con tramos de tierra y rocas</span>
+              </li>
+            </ul>
+
+            <div class="guide__cols">
+              <div class="guide__col">
+                <h4 class="guide__col-title">
+                  <svg aria-hidden="true"><use href="#i-activity"></use></svg>
+                  Preparación
+                </h4>
+                <ul class="guide__list">
+                  <li>Conocimientos básicos de senderismo.</li>
+                  <li>Buen estado físico.</li>
+                </ul>
+              </div>
+
+              <div class="guide__col">
+                <h4 class="guide__col-title">
+                  <svg aria-hidden="true"><use href="#i-backpack"></use></svg>
+                  Equipo
+                </h4>
+                <ul class="guide__list">
+                  <li>Botas de senderismo.</li>
+                  <li>Ropa adecuada para clima variable.</li>
+                  <li>Agua (2 litros).</li>
+                  <li>Snacks energéticos.</li>
+                  <li>Mapa o GPS.</li>
+                </ul>
+              </div>
+
+              <div class="guide__col">
+                <h4 class="guide__col-title">
+                  <svg aria-hidden="true"><use href="#i-shield"></use></svg>
+                  Seguridad
+                </h4>
+                <ul class="guide__list">
+                  <li>Informar a alguien sobre tu ruta.</li>
+                  <li>Llevar un botiquín básico.</li>
+                  <li>Evitar caminar solo.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 · Paramillo del Quindío -->
+        <article class="guide guide--reverse" id="recorrido-paramillo" data-reveal style="--reveal-delay:120ms">
+          <div class="guide__media">
+            <figure class="guide__figure">
+              <img
+                src="assets/images/paramillo.png"
+                data-image="paramillo"
+                alt="Infografía de la ruta al Paramillo del Quindío: preparación física y técnica, equipamiento necesario, terreno rocoso con secciones empinadas, y protocolos de seguridad."
+                width="784"
+                height="673"
+                loading="lazy"
+                decoding="async">
+              <figcaption class="meta">
+                Infografía de apoyo · el detalle está en el texto.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="guide__body">
+            <div class="guide__meta">
+              <span class="tag">Recorrido 02</span>
+            </div>
+
+            <h3 class="guide__title">Paramillo del Quindío</h3>
+
+            <ul class="fact-grid">
+              <li class="fact">
+                <span class="fact__label">Alto</span>
+                <span class="fact__note">Nivel de dificultad</span>
+              </li>
+<li class="fact">
+                <span class="fact__label">Rocoso</span>
+                <span class="fact__note">Terreno con secciones empinadas y barro en época de lluvias</span>
+              </li>
+            </ul>
+
+            <div class="guide__cols">
+              <div class="guide__col">
+                <h4 class="guide__col-title">
+                  <svg aria-hidden="true"><use href="#i-activity"></use></svg>
+                  Preparación
+                </h4>
+                <ul class="guide__list">
+                  <li>Experiencia previa en montañismo.</li>
+                  <li>Buen estado físico y aclimatación a la altitud.</li>
+                </ul>
+              </div>
+
+              <div class="guide__col">
+                <h4 class="guide__col-title">
+                  <svg aria-hidden="true"><use href="#i-backpack"></use></svg>
+                  Equipo
+                </h4>
+                <ul class="guide__list">
+                  <li>Botas de alta montaña.</li>
+                  <li>Ropa térmica y de lluvia.</li>
+                  <li>Agua (3 litros).</li>
+                  <li>Comida deshidratada.</li>
+                  <li>Bastones de trekking.</li>
+                  <li>Sistema de navegación (GPS).</li>
+                </ul>
+              </div>
+
+              <div class="guide__col">
+                <h4 class="guide__col-title">
+                  <svg aria-hidden="true"><use href="#i-shield"></use></svg>
+                  Seguridad
+                </h4>
+                <ul class="guide__list">
+                  <li>Monitorear el clima antes de salir.</li>
+                  <li>Llevar un teléfono satelital en caso de emergencia.</li>
+                  <li>Acostumbrarse a la altitud antes de la ascensión.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 03 · Nevado del Tolima · meta aspiracional -->
+        <article class="guide" id="recorrido-tolima" data-reveal style="--reveal-delay:120ms">
+          <div class="guide__media">
+            <figure class="guide__figure">
+              <img
+                src="assets/images/nevado-tolima.png"
+                data-image="nevado-tolima"
+                alt="Infografía de la ascensión al Nevado del Tolima: preparación técnica y física, equipamiento necesario, terreno glaciar, rocoso y con nieve, y protocolos de seguridad."
+                width="754"
+                height="685"
+                loading="lazy"
+                decoding="async">
+              <figcaption class="meta">
+                Infografía de apoyo · el detalle está en el texto.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="guide__body">
+            <div class="guide__meta">
+              <span class="tag">Recorrido 03</span>
+              <span class="tag">Meta aspiracional</span>
+            </div>
+
+            <h3 class="guide__title">Nevado del Tolima</h3>
+
+            <ul class="fact-grid">
+              <li class="fact">
+                <span class="fact__label">Muy alto</span>
+                <span class="fact__note">Nivel de dificultad</span>
+              </li>
+<li class="fact">
+                <span class="fact__label">Glaciar</span>
+                <span class="fact__note">Terreno rocoso con secciones de nieve</span>
+              </li>
+            </ul>
+
+            <p class="disclaimer">
+              <svg aria-hidden="true"><use href="#i-info"></use></svg>
+              <span>
+                <b>Meta aspiracional.</b> En Mountain Brothers el Nevado del
+                Tolima es el objetivo que se persigue, no una ruta de salida.
+                Esta ficha describe la ascensión para prepararse hacia ella:
+                cualquier intento real requiere preparación verificada,
+                acompañamiento experto y condiciones confirmadas con las
+                autoridades correspondientes.
+              </span>
+            </p>
+
+            <div class="guide__cols">
+              <div class="guide__col">
+                <h4 class="guide__col-title">
+                  <svg aria-hidden="true"><use href="#i-activity"></use></svg>
+                  Preparación
+                </h4>
+                <ul class="guide__list">
+                  <li>Experiencia en alta montaña.</li>
+                  <li>Aclimatación previa a altitudes elevadas.</li>
+                </ul>
+              </div>
+
+              <div class="guide__col">
+                <h4 class="guide__col-title">
+                  <svg aria-hidden="true"><use href="#i-backpack"></use></svg>
+                  Equipo
+                </h4>
+                <ul class="guide__list">
+                  <li>Botas de montaña con crampones.</li>
+                  <li>Ropa técnica para frío extremo.</li>
+                  <li>Agua (4 litros).</li>
+                  <li>Comida energética.</li>
+                  <li>Equipo de escalada (si es necesario).</li>
+                  <li>Kit de primeros auxilios.</li>
+                </ul>
+              </div>
+
+              <div class="guide__col">
+                <h4 class="guide__col-title">
+                  <svg aria-hidden="true"><use href="#i-shield"></use></svg>
+                  Seguridad
+                </h4>
+                <ul class="guide__list">
+                  <li>Realizar un chequeo médico antes de la ascensión.</li>
+                  <li>No subestimar el clima y estar preparado para cambios bruscos.</li>
+                  <li>Ascender en grupo y mantener comunicación constante.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div class="guide__foot">
+          <p class="disclaimer">
+            <svg aria-hidden="true"><use href="#i-info"></use></svg>
+            <span>
+              <b>Datos de referencia.</b> Dificultad, distancia, duración y
+              demás datos de estos recorridos son material aportado para este
+              prototipo: no sustituyen una consulta a guías locales ni a las
+              autoridades de cada área. Las condiciones reales cambian con la
+              temporada; verifica siempre antes de salir.
+            </span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         8 · EXPERIENCIAS
+         ====================================================================== -->
+    <section class="section" id="explorar" aria-labelledby="exp-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Experiencias</p>
+          <h2 class="section-head__title" id="exp-title">Todo lo que puedes hacer aquí.</h2>
+          <p class="lede">
+            Cinco formas de avanzar. Cada una alimenta a las demás: lo que
+            aprendes se convierte en experiencia, y la experiencia cambia lo que
+            te atreves a intentar.
+          </p>
+        </div>
+
+        <div class="exp-grid">
+          <article class="card card--interactive" data-reveal>
+            <div class="media media--cinema">
+              <img
+                src="assets/images/hiking.svg" data-image="hiking"
+                alt="Mapa topográfico con curva de nivel, un sendero marcado con línea discontinua y puntos de referencia hasta la cumbre."
+                width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <div class="card__body">
+              <div class="exp-card__icon-row">
+                <h3 class="card__title">Explora</h3>
+                <span class="card__icon" aria-hidden="true">
+                  <svg><use href="#i-route"></use></svg>
+                </span>
+              </div>
+              <p class="card__text">
+                Senderos y naturaleza. Aprende a leer el terreno antes de caminarlo.
+              </p>
+            </div>
+          </article>
+
+          <article class="card card--interactive" data-reveal style="--reveal-delay:90ms">
+            <div class="media media--cinema">
+              <img
+                src="assets/images/cocora.svg" data-image="cocora"
+                alt="Valle con palmas de cera entre montañas y neblina, paisaje del Quindío."
+                width="1600" height="1200" loading="lazy" decoding="async">
+            </div>
+            <div class="card__body">
+              <div class="exp-card__icon-row">
+                <h3 class="card__title">Aprende</h3>
+                <span class="card__icon" aria-hidden="true">
+                  <svg><use href="#i-book"></use></svg>
+                </span>
+              </div>
+              <p class="card__text">
+                Guías y conocimiento. Explicaciones claras, sin tecnicismos
+                innecesarios y sin promesas.
+              </p>
+            </div>
+          </article>
+
+          <article class="card card--interactive" data-reveal style="--reveal-delay:180ms">
+            <div class="media media--landscape">
+              <img
+                src="assets/images/equipment.svg" data-image="equipment"
+                alt="Composición lineal de equipo de montaña: mochila, botas, bastones, botella, linterna frontal y brújula."
+                width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <div class="card__body">
+              <div class="exp-card__icon-row">
+                <h3 class="card__title">Prepárate</h3>
+                <span class="card__icon" aria-hidden="true">
+                  <svg><use href="#i-backpack"></use></svg>
+                </span>
+              </div>
+              <p class="card__text">
+                Equipo, planificación y seguridad. Lo que se decide antes de salir
+                sostiene la salida completa.
+              </p>
+            </div>
+          </article>
+
+          <article class="card card--interactive" data-reveal style="--reveal-delay:270ms">
+            <div class="media media--landscape">
+              <img
+                src="assets/images/paramo.svg" data-image="paramo"
+                alt="Laderas de páramo con frailejones y neblina entre capas de montaña."
+                width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <div class="card__body">
+              <div class="exp-card__icon-row">
+                <h3 class="card__title">Descubre</h3>
+                <span class="card__icon" aria-hidden="true">
+                  <svg><use href="#i-map"></use></svg>
+                </span>
+              </div>
+              <p class="card__text">
+                Nuevos lugares. Territorio colombiano contado con criterio y con
+                respeto por quien lo habita.
+              </p>
+            </div>
+          </article>
+
+          <article class="card card--interactive" data-reveal style="--reveal-delay:360ms">
+            <div class="media media--landscape">
+              <img
+                src="assets/images/nevados.svg" data-image="nevados"
+                alt="Picos nevados de alta montaña con glaciar y lenguas de nieve descendiendo por la ladera."
+                width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <div class="card__body">
+              <div class="exp-card__icon-row">
+                <h3 class="card__title">Avanza</h3>
+                <span class="card__icon" aria-hidden="true">
+                  <svg><use href="#i-trending"></use></svg>
+                </span>
+              </div>
+              <p class="card__text">
+                Construye experiencia. Cada salida deja algo aprendido para la
+                siguiente.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         9 · MOUNTAIN KNOWLEDGE
+         ====================================================================== -->
+    <section class="section is-forest section--textured" id="aprender" aria-labelledby="know-title" data-knowledge>
+      <div class="container">
+        <div class="section-head">
+          <span class="product-tag">Mountain Knowledge</span>
+          <h2 class="section-head__title" id="know-title">Una biblioteca viva para aprender antes de salir a la montaña.</h2>
+          <p class="lede">
+            Temas ordenados por categoría, escritos en lenguaje claro. Busca por
+            lo que te preocupa hoy, no por lo que se supone que deberías saber.
+          </p>
+        </div>
+
+        <div class="knowledge__layout">
+          <div class="knowledge__search">
+            <div class="field">
+              <svg class="field__icon" aria-hidden="true"><use href="#i-search"></use></svg>
+              <label class="sr-only" for="knowledge-input">Buscar un tema en Mountain Knowledge</label>
+              <input
+                class="field__input"
+                id="knowledge-input"
+                type="search"
+                autocomplete="off"
+                placeholder="¿Qué quieres aprender?"
+                data-knowledge-input>
+            </div>
+
+            <div class="knowledge__cats" data-knowledge-cats role="group" aria-label="Filtrar por categoría"></div>
+
+            <p class="ai__capability">
+              <svg aria-hidden="true"><use href="#i-sparkles"></use></svg>
+              Vista previa funcional del buscador. En la versión final responderá
+              consultando la Knowledge Base del proyecto: documentos, guías,
+              infografías y podcast.
+            </p>
+          </div>
+
+          <div>
+            <div class="knowledge__results-head">
+              <p class="eyebrow eyebrow--bare">Temas</p>
+              <span class="knowledge__count" data-knowledge-count></span>
+            </div>
+
+            <div class="knowledge-results" data-knowledge-results>
+              <p class="js-required body-text">
+                El catálogo completo y el filtro de categorías necesitan JavaScript.
+                Sin él, el resto de la página sigue funcionando con normalidad.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <p class="sr-only" role="status" aria-live="polite" data-knowledge-status></p>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         10 · CUMBRE CHALLENGE
+         La ruta es conceptual: distingue lo que el producto ofrece hoy de lo
+         que sigue en construcción, sin prometer preparación física.
+         ====================================================================== -->
+    <section class="section is-dark section--textured" id="reto" aria-labelledby="reto-title">
+      <div class="container">
+        <div class="challenge__grid">
+          <div class="challenge__side">
+            <span class="product-tag">Cumbre Challenge</span>
+            <h2 class="section-head__title" id="reto-title">El camino hacia la cumbre.</h2>
+            <p class="lede">
+              Una representación del crecimiento, no una lista de logros. Cada
+              etapa desbloquea conocimiento, experiencia, preparación y seguridad.
+            </p>
+
+            <ul class="stack stack--lg">
+              <li class="community__item">
+                <svg aria-hidden="true"><use href="#i-book"></use></svg>
+                <span><b>Conocimiento:</b> qué cambia en el terreno, el clima y el cuerpo en cada etapa.</span>
+              </li>
+              <li class="community__item">
+                <svg aria-hidden="true"><use href="#i-activity"></use></svg>
+                <span><b>Preparación:</b> entrenamiento y hábitos sostenidos en el tiempo.</span>
+              </li>
+              <li class="community__item">
+                <svg aria-hidden="true"><use href="#i-backpack"></use></svg>
+                <span><b>Equipo:</b> lo necesario en cada nivel y por qué cambia.</span>
+              </li>
+              <li class="community__item">
+                <svg aria-hidden="true"><use href="#i-shield"></use></svg>
+                <span><b>Seguridad:</b> criterio para decidir, incluida la decisión de no subir.</span>
+              </li>
+            </ul>
+
+            <div class="disclaimer">
+              <svg aria-hidden="true"><use href="#i-info"></use></svg>
+              <span>
+                Completar etapas aquí <b>no certifica</b> preparación y <b>no garantiza</b>
+                alcanzar ninguna cumbre. La alta montaña requiere acompañamiento
+                profesional, condiciones verificadas y decisiones tomadas en el momento.
+              </span>
+            </div>
+          </div>
+
+          <div class="challenge__side">
+            <p class="eyebrow eyebrow--bare">Ruta conceptual</p>
+
+            <ol class="route" data-observe>
+              <li class="route__step route__step--live">
+                <span class="route__label">Primer sendero</span>
+                <span class="route__status">Contenido disponible</span>
+              </li>
+              <li class="route__step route__step--live">
+                <span class="route__label">Cocora</span>
+                <span class="route__status">Contenido disponible</span>
+              </li>
+              <li class="route__step route__step--live">
+                <span class="route__label">Páramo</span>
+                <span class="route__status">Contenido disponible</span>
+              </li>
+              <li class="route__step">
+                <span class="route__label">Los Nevados</span>
+                <span class="route__status">Próximamente</span>
+              </li>
+              <li class="route__step">
+                <span class="route__label">Alta montaña</span>
+                <span class="route__status">Próximamente</span>
+              </li>
+              <li class="route__step route__step--goal">
+                <span class="route__label">Nevado del Tolima</span>
+                <span class="route__status">Meta aspiracional</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         11 · COMUNIDAD
+         Contenido demostrativo: no son testimonios reales ni grupos activos.
+         ====================================================================== -->
+    <section class="section" id="comunidad" aria-labelledby="com-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Comunidad</p>
+          <h2 class="section-head__title" id="com-title">La montaña se disfruta más cuando se comparte.</h2>
+          <p class="lede">
+            Nadie debería hacer su primera caminata solo. El progreso es
+            individual, pero se sostiene en compañía: alguien que ya caminó eso
+            y puede contarlo sin exagerar.
+          </p>
+        </div>
+
+        <div class="community__grid">
+          <article class="card card--interactive" data-reveal>
+            <div class="media media--vertical">
+              <video
+                class="media__video"
+                data-image="comunidad-cocora" data-video="comunidad"
+                data-autoplay
+                src="assets/videos/comunidad-cocora.mp4"
+                poster="assets/images/comunidad-cocora.jpg"
+                autoplay muted loop playsinline preload="metadata"
+                aria-label="Video: cuatro caminantes avanzando por un sendero en el valle de Cocora, entre palmas de cera, con un nevado al fondo.">
+                Tu navegador no puede reproducir este video.
+                <a href="assets/videos/comunidad-cocora.mp4">Descargar el archivo MP4</a>.
+              </video>
+            </div>
+            <div class="card__body">
+              <p class="card__meta">
+                <svg aria-hidden="true"><use href="#i-users"></use></svg>Grupo
+              </p>
+              <h3 class="card__title">Grupos de caminata</h3>
+              <p class="card__text">
+                Salidas organizadas por nivel, para que nadie camine solo su
+                primera vez.
+              </p>
+            </div>
+          </article>
+
+          <article class="card card--interactive" data-reveal style="--reveal-delay:90ms">
+            <div class="media media--landscape">
+              <img
+                src="assets/images/hiking.svg" data-image="hiking"
+                alt="Mapa topográfico con curvas de nivel y un sendero marcado hasta la cumbre."
+                width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <div class="card__body">
+              <p class="card__meta">
+                <svg aria-hidden="true"><use href="#i-book"></use></svg>Historia
+              </p>
+              <h3 class="card__title">Historias de proceso</h3>
+              <p class="card__text">
+                Espacio para relatos de quienes empezaron sin experiencia y
+                siguen avanzando.
+              </p>
+            </div>
+          </article>
+
+          <article class="card card--interactive" data-reveal style="--reveal-delay:180ms">
+            <div class="media media--landscape">
+              <img
+                src="assets/images/tolima.svg" data-image="tolima"
+                alt="Volcán nevado de gran altura con glaciar y niebla al pie, en el páramo."
+                width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <div class="card__body">
+              <p class="card__meta">
+                <svg aria-hidden="true"><use href="#i-flag"></use></svg>Reto
+              </p>
+              <h3 class="card__title">Retos de progresión</h3>
+              <p class="card__text">
+                Metas compartidas que se construyen por etapas, no por impulsos.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <div class="community__list">
+          <p class="community__item">
+            <svg aria-hidden="true"><use href="#i-target"></use></svg>
+            <span>Grupos por nivel, no por ego: cada quien camina donde puede.</span>
+          </p>
+          <p class="community__item">
+            <svg aria-hidden="true"><use href="#i-route"></use></svg>
+            <span>Rutas y experiencias compartidas con información verificada.</span>
+          </p>
+          <p class="community__item">
+            <svg aria-hidden="true"><use href="#i-users"></use></svg>
+            <span>Historias reales cuando existan: sin inventar testimonios.</span>
+          </p>
+          <p class="community__item">
+            <svg aria-hidden="true"><use href="#i-shield"></use></svg>
+            <span>Buenas prácticas siempre: no dejar rastro y cuidar el páramo.</span>
+          </p>
+        </div>
+
+        <p class="tag tag--demo" style="margin-top: var(--space-lg)">
+          Contenido demostrativo · ejemplos de formato, no testimonios reales
+        </p>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         12 · RELATOS DE LA MONTAÑA
+         Programa de relatos: podcast + video. Pieza de audio inmersiva y
+         registro visual del terreno. Ambos son demostración de formato.
+         ====================================================================== -->
+    <section class="section is-forest section--textured" id="relatos" aria-labelledby="relatos-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="product-tag">Relatos de la Montaña</span>
+          <h2 class="section-head__title" id="relatos-title">Historias que se cuentan desde la montaña.</h2>
+          <p class="lede">
+            Un programa con voces de montañistas y senderistas: lo que siente el
+            cuerpo, lo que decide el criterio, lo que cambia cuando se camina
+            mucho tiempo. Escucha y mira, sin prisa.
+          </p>
+        </div>
+
+        <!-- Podcast: audio que simula una episodio -->
+        <div class="story" data-reveal>
+          <div class="story__media">
+            <div class="story__cover" aria-hidden="true">
+              <svg><use href="#i-audio"></use></svg>
+              <span class="story__cover__badge">Podcast</span>
+            </div>
+          </div>
+
+          <div class="story__body">
+            <div class="story__meta">
+              <span class="tag">Episodio 01</span>
+              <span class="tag tag--demo">Demostración</span>
+              <span class="meta">· 21 min</span>
+            </div>
+
+            <h3 class="story__title">Supervivencia y catarsis en el Nevado del Tolima.</h3>
+            <p class="story__text">
+              Un relato desde la alta montaña sobre lo que cambia cuando el cuerpo
+              llega a su límite y la mente sigue. No es un manual: es una historia
+              contada con voz propia, con silencios y con ruido de ventisca.
+            </p>
+
+            <figure class="podcast">
+              <div class="podcast__head">
+                <span class="podcast__live" aria-hidden="true">
+                  <span></span>
+                </span>
+                <span class="podcast__label">Audio</span>
+                <span class="meta" id="relatos-time">0:00 / 20:57</span>
+              </div>
+
+              <div class="podcast__player" data-relatos-audio>
+                <audio
+                  id="relatos-audio-el"
+                  src="assets/audios/Supervivencia_y_catarsis_en_el_Nevado_Tolima.m4a"
+                  preload="metadata"
+                  controls>
+                  Tu navegador no puede reproducir este archivo de audio.
+                  <a href="assets/audios/Supervivencia_y_catarsis_en_el_Nevado_Tolima.m4a">Descargar el audio (M4A)</a>.
+                </audio>
+              </div>
+
+              <figcaption class="meta">
+                Pieza de audio demostrativa del programa Relatos de la Montaña.
+                Formato de referencia, no contenido final.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <!-- Video: registro visual del terreno -->
+        <div class="story story--reverse" data-reveal style="--reveal-delay:120ms">
+          <div class="story__media">
+            <div class="story__video" data-relatos-video>
+              <video
+                src="assets/videos/escalando_mb_escalada_tolima_1.mp4"
+                poster="assets/images/tolima.svg"
+                controls
+                playsinline
+                preload="metadata">
+                Tu navegador no puede reproducir este video.
+                <a href="assets/videos/escalando_mb_escalada_tolima_1.mp4">Descargar el MP4</a>.
+              </video>
+            </div>
+          </div>
+
+          <div class="story__body">
+            <div class="story__meta">
+              <span class="tag">Registro visual</span>
+              <span class="tag tag--demo">Demostración</span>
+            </div>
+
+            <h3 class="story__title">Escalando: lo que se ve cuando se sube.</h3>
+            <p class="story__text">
+              Un corte del registro de alguien subiendo. No es un tutorial: es una
+              mirada al terreno real, al ritmo de la subida y a lo que cambia en el
+              cuerpo a medida que asciende. Muestra, no explica.
+            </p>
+
+            <ul class="story__notes">
+              <li class="story__note">
+                <svg aria-hidden="true"><use href="#i-video"></use></svg>
+                <span>Video con control: se reproduce por decisión del visitante.</span>
+              </li>
+              <li class="story__note">
+                <svg aria-hidden="true"><use href="#i-info"></use></svg>
+                <span>Registro de formato: no incluye guión, narración ni evaluación.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="story__foot">
+          <p class="disclaimer">
+            <svg aria-hidden="true"><use href="#i-info"></use></svg>
+            <span>
+              <b>Relatos de la Montaña</b> es un programa en construcción. El audio y
+              el video aquí mostrados son <b>demostraciones de formato</b>: no son
+              episodios finales ni testimonios verificados. La alta montaña requiere
+              acompañamiento profesional, condiciones verificadas y decisiones
+              tomadas en el momento.
+            </span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================================
+       13 · CTA FINAL
+       Reutiliza intencionalmente la imagen del hero: cierra el círculo
+       narrativo volviendo al punto de partida.
+       ====================================================================== -->
+  <section class="final-cta is-dark" aria-labelledby="cta-title">
+    <div class="final-cta__bg">
+      <img
+        src="assets/images/hero-mountain.svg" data-image="hero-mountain"
+        alt="" aria-hidden="true" loading="lazy" width="1600" height="1000">
+    </div>
+    <div class="final-cta__scrim" aria-hidden="true"></div>
+
+    <div class="container final-cta__inner">
+      <p class="eyebrow eyebrow--bare">Tu primer paso</p>
+      <h2 class="final-cta__title" id="cta-title">¿Cuál será tu primer paso?</h2>
+
+      <p class="final-cta__lines">
+        <span>La montaña no empieza en la cumbre.</span>
+        <span>Empieza cuando decides caminar.</span>
+      </p>
+
+      <a class="btn btn--primary btn--lg" href="#perfil">
+        Comenzar mi camino
+        <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+      </a>
+
+      <div class="final-cta__signature">
+        <span class="final-cta__brand">Mountain Brothers</span>
+        <span class="final-cta__place">Quindío · Colombia</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       13 · MOMENTOS · clips verticales inmersivos
+       ====================================================================== -->
+  <section class="momentos section--textured" id="momentos" aria-labelledby="momentos-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Momentos</p>
+        <h2 class="section-head__title" id="momentos-title">La montaña se vive en vertical.</h2>
+        <p class="lede">
+          Tres miradas breves, grabadas en formato nativo móvil. Se reproducen
+          solas cuando entran en pantalla y se pausan al salir: así se siente
+          la montaña — siempre en movimiento, siempre a tu ritmo.
+        </p>
+      </div>
+
+      <div class="momentos__grid" data-momentos>
+        <figure class="momento" data-momento data-momento-src="momento1" data-reveal>
+          <video
+            class="momento__video" data-image="momento-1"
+            playsinline
+            muted
+            loop
+            preload="none"
+            poster="assets/images/momento-1.jpg"
+            aria-label="Momento 1: volcán al amanecer, caminata en grupo y fogata nocturna">
+          </video>
+          <figcaption class="momento__caption">
+            <span class="momento__number">01</span>
+            <span class="momento__label">Volcán, grupo y fogata</span>
+          </figcaption>
+        </figure>
+
+        <figure class="momento" data-momento data-momento-src="momento2" data-reveal style="--reveal-delay:120ms">
+          <video
+            class="momento__video" data-image="momento-2"
+            playsinline
+            muted
+            loop
+            preload="none"
+            poster="assets/images/momento-2.jpg"
+            aria-label="Momento 2: sendero al atardecer, caminata nocturna y fogata bajo las estrellas">
+          </video>
+          <figcaption class="momento__caption">
+            <span class="momento__number">02</span>
+            <span class="momento__label">Sendero, noche y estrellas</span>
+          </figcaption>
+        </figure>
+
+        <figure class="momento" data-momento data-momento-src="momento3" data-reveal style="--reveal-delay:240ms">
+          <video
+            class="momento__video" data-image="momento-3"
+            playsinline
+            muted
+            loop
+            preload="none"
+            poster="assets/images/momento-3.jpg"
+            aria-label="Momento 3: caminata entre palmas de cera, grupo en el sendero y fogata nocturna">
+          </video>
+          <figcaption class="momento__caption">
+            <span class="momento__number">03</span>
+            <span class="momento__label">Palmas, sendero y fogata</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <p class="disclaimer">
+        <svg aria-hidden="true"><use href="#i-info"></use></svg>
+        <span>
+          <b>Reproducción automática inteligente.</b> Los vídeos solo se
+          descargan y reproducen cuando entran en el viewport y se pausan al
+          salir. En dispositivos con <i>prefers-reduced-motion</i> se muestra
+          solo la imagen estática.
+        </span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       14 · FOOTER
+       ====================================================================== -->
+  <footer class="site-footer is-dark">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div class="site-footer__brand">
+          <a class="brand" href="#top">
+            <img
+              class="brand__mark"
+              src="assets/images/logo-mb.png"
+              data-image="logo"
+              alt="Mountain Brothers · Explora · Aprende · Avanza"
+              width="1708" height="921" decoding="async">
+            <span class="sr-only">— volver al inicio</span>
+          </a>
+          <p class="site-footer__statement">
+            Construido para quienes quieren descubrir la montaña. Un ecosistema de
+            aprendizaje, comunidad y progresión que empieza en el Quindío, Colombia.
+          </p>
+          <p class="meta">La montaña también es un camino interior.</p>
+        </div>
+
+        <nav aria-label="Explorar">
+          <p class="site-footer__heading">Explorar</p>
+          <ul class="site-footer__list">
+            <li><a class="site-footer__link" href="#explorar">Experiencias</a></li>
+            <li><a class="site-footer__link" href="#territorio">Territorio</a></li>
+            <li><a class="site-footer__link" href="#reto">Cumbre Challenge</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Aprender">
+          <p class="site-footer__heading">Aprender</p>
+          <ul class="site-footer__list">
+            <li><a class="site-footer__link" href="#aprender">Mountain Knowledge</a></li>
+            <li><a class="site-footer__link" href="#guia">Guía con IA</a></li>
+            <li><a class="site-footer__link" href="#camino">Tu camino</a></li>
+            <li><a class="site-footer__link" href="#comunidad">Comunidad</a></li>
+            <li><a class="site-footer__link" href="#primer-paso">Sobre Mountain Brothers</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>© <span data-year>2026</span> Mountain Brothers · Quindío, Colombia</p>
+
+        <p class="site-footer__legal">
+          <b>Entregable del curso de Inteligencia Artificial</b> con el profesor
+          Nicolás · Comfenalco Armenia.
+        </p>
+
+        <p class="site-footer__legal">
+          Proyecto conceptual en desarrollo. Los perfiles, porcentajes y respuestas
+          del guía son demostrativos: no constituyen diagnóstico médico,
+          certificación ni garantía de preparación física.
+        </p>
+
+        <a class="link-arrow site-footer__top" href="#top">
+          <svg aria-hidden="true"><use href="#i-mountain"></use></svg>
+          Volver al inicio
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================================
+       SCRIPTS
+       Scripts clásicos con defer: respetan el orden y funcionan abriendo
+       index.html directamente (file://), sin servidor ni build.
+       ====================================================================== -->
+  <script src="assets/js/config.js" defer></script>
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/quiz.js" defer></script>
+  <script src="assets/js/guide.js" defer></script>
+  <script src="assets/js/knowledge.js" defer></script>
+  <script src="assets/js/momentos.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

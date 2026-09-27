@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Ilustración de mapa topográfico con curva de nivel, sendero marcado y puntos de referencia">
+  <title>hiking.svg · placeholder editorial de sendero y orientación</title>
+  <defs>
+    <linearGradient id="k-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26372d"/>
+      <stop offset="100%" stop-color="#111817"/>
+    </linearGradient>
+    <radialGradient id="k-glow" cx="0.62" cy="0.4" r="0.6">
+      <stop offset="0" stop-color="#b6a58b" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#b6a58b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#k-bg)"/>
+  <rect width="1600" height="1000" fill="url(#k-glow)"/>
+
+  <!-- Curvas de nivel: la lectura del terreno -->
+  <g fill="none" stroke="#8d9b7e" stroke-opacity="0.22" stroke-width="1.6">
+    <path d="M-40 900 C 200 780 300 900 520 820 C 760 730 900 860 1140 760 C 1340 676 1500 780 1660 700"/>
+    <path d="M-40 820 C 190 706 320 812 540 736 C 780 652 920 776 1160 682 C 1360 604 1500 700 1660 626"/>
+    <path d="M-40 740 C 180 636 340 726 560 656 C 800 578 940 692 1180 606 C 1380 534 1500 620 1660 552"/>
+    <path d="M-40 660 C 170 570 360 640 580 580 C 820 512 960 608 1200 530 C 1400 464 1500 540 1660 478"/>
+    <path d="M-40 580 C 160 504 380 556 600 504 C 840 448 980 524 1220 456 C 1420 398 1500 462 1660 404"/>
+    <path d="M-40 500 C 150 440 400 472 620 432 C 860 388 1000 440 1240 384 C 1440 336 1500 384 1660 330"/>
+    <path d="M-40 420 C 140 376 420 390 640 358 C 880 324 1020 356 1260 312 C 1460 276 1500 306 1660 256"/>
+    <path d="M-40 340 C 130 314 440 308 660 286 C 900 262 1040 274 1280 240 C 1480 212 1500 228 1660 184"/>
+    <path d="M-40 260 C 120 252 460 226 680 214 C 920 200 1060 194 1300 168 C 1500 148 1500 150 1660 112"/>
+    <path d="M-40 180 C 110 190 480 144 700 142 C 940 140 1080 114 1320 96 C 1520 82 1500 72 1660 40"/>
+  </g>
+
+  <!-- Cumbre marcada -->
+  <g transform="translate(700,214)">
+    <circle r="34" fill="none" stroke="#b6a58b" stroke-opacity="0.5" stroke-width="1.6"/>
+    <circle r="16" fill="none" stroke="#b6a58b" stroke-opacity="0.7" stroke-width="1.6"/>
+    <path d="M-11 6 L0 -8 L11 6 Z" fill="#b6a58b"/>
+  </g>
+
+  <!-- Sendero: línea discontinua entre puntos de referencia -->
+  <path d="M120 902 C 300 830 360 706 520 640 C 660 582 700 470 640 380 C 606 328 620 268 700 214"
+        fill="none" stroke="#f3f0e8" stroke-opacity="0.85" stroke-width="3" stroke-linecap="round" stroke-dasharray="16 12"/>
+
+  <!-- Puntos de referencia -->
+  <g fill="#f3f0e8">
+    <circle cx="120" cy="902" r="7" fill-opacity="0.55"/>
+    <circle cx="520" cy="640" r="7" fill-opacity="0.7"/>
+    <circle cx="640" cy="380" r="7" fill-opacity="0.85"/>
+  </g>
+
+  <!-- Etiquetas conceptuales de los hitos -->
+  <g fill="#f3f0e8" fill-opacity="0.5" font-family="Segoe UI, system-ui, sans-serif" font-size="26" font-weight="600" letter-spacing="4">
+    <text x="150" y="948">INICIO</text>
+    <text x="550" y="682">PÁRAMO</text>
+    <text x="672" y="426">ALTITUD</text>
+    <text x="742" y="208">CUMBRE</text>
+  </g>
+
+  <!-- Rosa de orientación -->
+  <g transform="translate(1430,180)" fill="none" stroke="#b6a58b" stroke-opacity="0.5" stroke-width="1.6">
+    <circle r="58"/>
+    <path d="M0 -78 L14 0 L0 78 L-14 0 Z" fill="#b6a58b" fill-opacity="0.35" stroke="none"/>
+    <path d="M0 -78 L0 78" stroke-opacity="0.28"/>
+  </g>
+</svg>

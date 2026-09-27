@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Ilustración de cordillera de páramo colombiano al amanecer con capas de niebla">
+  <title>hero-mountain.svg · placeholder editorial de montaña de páramo</title>
+  <defs>
+    <linearGradient id="h-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26372d"/>
+      <stop offset="45%" stop-color="#1b2a24"/>
+      <stop offset="100%" stop-color="#111817"/>
+    </linearGradient>
+    <linearGradient id="h-far" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a5c4c"/>
+      <stop offset="100%" stop-color="#324238"/>
+    </linearGradient>
+    <linearGradient id="h-mid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#33463a"/>
+      <stop offset="100%" stop-color="#25342c"/>
+    </linearGradient>
+    <linearGradient id="h-near" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1f2e27"/>
+      <stop offset="100%" stop-color="#16201d"/>
+    </linearGradient>
+    <linearGradient id="h-front" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#131b19"/>
+      <stop offset="100%" stop-color="#0a0f0e"/>
+    </linearGradient>
+    <radialGradient id="h-glow" cx="0.52" cy="0.72" r="0.62">
+      <stop offset="0" stop-color="#b6a58b" stop-opacity="0.42"/>
+      <stop offset="55%" stop-color="#b6a58b" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#b6a58b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="h-mist" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfc0a8" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#cfc0a8" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#cfc0a8" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="h-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#h-sky)"/>
+  <rect width="1600" height="1000" fill="url(#h-glow)"/>
+
+  <!-- Cordillera lejana, aún con niebla -->
+  <path fill="url(#h-far)" opacity="0.72"
+    d="M0 604 L96 552 L172 596 L268 512 L352 578 L452 498 L556 566 L652 486 L748 558 L846 500 L952 572 L1064 522 L1160 596 L1264 534 L1368 604 L1472 542 L1600 612 L1600 1000 L0 1000 Z"/>
+
+  <!-- Cresta media -->
+  <path fill="url(#h-mid)"
+    d="M0 700 L120 638 L232 690 L340 616 L470 686 L580 622 L700 694 L820 628 L940 696 L1060 634 L1180 702 L1300 640 L1420 706 L1520 656 L1600 700 L1600 1000 L0 1000 Z"/>
+
+  <!-- Cresta cercana, ya más oscura -->
+  <path fill="url(#h-near)"
+    d="M0 812 L140 744 L262 806 L400 726 L520 800 L660 738 L790 812 L920 742 L1060 814 L1200 748 L1330 816 L1460 760 L1600 820 L1600 1000 L0 1000 Z"/>
+
+  <!-- Franjas de niebla entre capas -->
+  <rect y="628" width="1600" height="120" fill="url(#h-mist)"/>
+  <rect y="746" width="1600" height="130" fill="url(#h-mist)" opacity="0.85"/>
+
+  <!-- Primer plano: la ladera donde comienza el camino -->
+  <path fill="url(#h-front)"
+    d="M0 918 L180 878 L360 906 L560 862 L760 904 L960 866 L1160 908 L1360 872 L1600 906 L1600 1000 L0 1000 Z"/>
+
+  <!-- Grano fino: evita el look "vectorial plano" -->
+  <rect width="1600" height="1000" filter="url(#h-grain)" opacity="0.075"/>
+</svg>

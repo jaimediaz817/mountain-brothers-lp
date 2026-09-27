@@ -1,0 +1,1670 @@
+/* ==========================================================================
+   MOUNTAIN BROTHERS · sections.css
+   Cada sección se compone con primitivas + componentes. Aquí solo vive
+   lo específico de cada composición.
+   ========================================================================== */
+
+/* ==========================================================================
+   HERO · cinematográfico, 92svh, imagen de montaña a sangre
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  display: grid;
+  align-content: end;
+  min-height: clamp(36rem, 92svh, 62rem);
+  padding-top: 8rem;
+  padding-bottom: var(--space-xl);
+  overflow: hidden;
+  color: var(--color-warm-white);
+  background-color: var(--color-obsidian);
+}
+
+.hero__bg {
+  position: absolute;
+  inset: -8% 0 -8% 0;
+  z-index: 0;
+  will-change: transform;
+}
+
+.hero__bg img,
+.hero__bg video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+  background-color: var(--color-obsidian);
+}
+
+/* Doble capa: degradado vertical + velo lateral para el bloque de texto */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to bottom, rgba(10, 15, 14, 0.74) 0%, rgba(10, 15, 14, 0.24) 42%, rgba(10, 15, 14, 0.9) 100%),
+    linear-gradient(to right, rgba(10, 15, 14, 0.62) 0%, transparent 62%);
+  pointer-events: none;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: var(--space-lg);
+  max-width: 52rem;
+}
+
+.hero__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.hero__label .tag {
+  color: rgba(243, 240, 232, 0.82);
+  border-color: rgba(243, 240, 232, 0.26);
+  background-color: rgba(243, 240, 232, 0.06);
+}
+
+.hero__title {
+  font-size: var(--text-display);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  max-width: 16ch;
+}
+
+.hero__subhead {
+  max-width: 40ch;
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: rgba(243, 240, 232, 0.78);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-2xs);
+}
+
+.hero__foot {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-md);
+  border-top: var(--hairline) solid rgba(243, 240, 232, 0.18);
+}
+
+.hero__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+/* Indicador de scroll: discreto, animado muy despacio */
+.scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: rgba(243, 240, 232, 0.7);
+}
+
+.scroll-cue svg {
+  width: 1rem;
+  height: 1rem;
+  animation: mb-cue 2.8s var(--ease-in-out) infinite;
+}
+
+@keyframes mb-cue {
+
+  0%,
+  100% {
+    transform: translateY(-2px);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: translateY(3px);
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   INTRO · "Esto no es solo llegar a la cima"
+   ========================================================================== */
+
+.intro__visual {
+  display: grid;
+  gap: var(--space-md);
+}
+
+/* Sendero de progresión 01 → 06 (lectura vertical, como un camino) */
+.path {
+  position: relative;
+  display: grid;
+  counter-reset: path;
+}
+
+.path::before {
+  content: "";
+  position: absolute;
+  left: 0.33rem;
+  top: 1.4rem;
+  bottom: 1.4rem;
+  width: var(--hairline);
+  background-color: var(--line-strong);
+}
+
+.path-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.7rem 2.5rem 1fr;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding-block: 0.7rem;
+}
+
+.path-step__marker {
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-top: 0.35rem;
+  border: var(--hairline) solid var(--line-strong);
+  border-radius: 50%;
+  background-color: var(--bg-base);
+}
+
+.path-step__index {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
+}
+
+.path-step__label {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--dur-sm) var(--ease-out);
+}
+
+.path-step:hover .path-step__label {
+  color: var(--text-base);
+}
+
+/* El último hito se marca: es la aspiración, no un nivel ya alcanzado */
+.path-step--goal .path-step__marker {
+  background-color: var(--color-sand);
+  border-color: var(--color-sand);
+}
+
+.path-step--goal .path-step__index,
+.path-step--goal .path-step__label {
+  color: var(--accent);
+}
+
+.path-step--goal .path-step__label::after {
+  content: " · meta";
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-normal);
+  text-transform: none;
+  color: var(--text-faint);
+}
+
+/* ==========================================================================
+   VIDEO INTRO OFICIAL
+   Bloque a ancho de columna dentro de la sección de intro, con control y
+   audio. El mismo archivo sirve de fondo del hero, pero ahí va silenciado.
+   ========================================================================== */
+
+.intro-video {
+  display: grid;
+  gap: var(--space-sm);
+  margin-top: var(--space-3xl);
+}
+
+.intro-video__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.intro-video__frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-obsidian);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lift);
+}
+
+.intro-video__player {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   QUIZ · "Primero conócete"
+   ========================================================================== */
+
+.quiz-section__profiles {
+  display: grid;
+  gap: var(--space-lg);
+  margin-top: var(--space-2xl);
+}
+
+.quiz-card {
+  max-width: 64rem;
+  margin-inline: auto;
+  padding: clamp(1.5rem, 3vw, 2.75rem);
+  background-color: var(--surface);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-lg);
+}
+
+.quiz-card__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.quiz-progress {
+  flex: 1 1 12rem;
+  min-width: 8rem;
+}
+
+/* Pantalla de inicio del test */
+.quiz-intro {
+  display: grid;
+  gap: var(--space-md);
+  justify-items: start;
+}
+
+.quiz-intro__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+/* ==========================================================================
+   AI GUIDE · "Tu montaña. Tu camino. Tu guía."
+   ========================================================================== */
+
+.ai__grid {
+  display: grid;
+  gap: var(--grid-gap);
+  margin-top: var(--space-2xl);
+  align-items: start;
+}
+
+/* Columna de producto: chat + panel de progreso */
+.ai__stack {
+  display: grid;
+  gap: var(--grid-gap);
+  align-content: start;
+}
+
+.ai__capabilities {
+  display: grid;
+  gap: var(--space-2xs);
+  margin-top: var(--space-md);
+}
+
+.ai__capability {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.ai__capability svg {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  margin-top: 0.2rem;
+  color: var(--accent);
+}
+
+/* Panel de progreso (Mountain Progress) */
+.ai__panel {
+  display: grid;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-md);
+  background-color: var(--surface);
+}
+
+.ai__panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2xs);
+  padding-bottom: var(--space-sm);
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.ai__panel-title {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.ai__panel-note {
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+.ai__meters {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.ai__demo-note {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: flex-start;
+  padding-top: var(--space-sm);
+  border-top: var(--hairline) solid var(--line);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+.ai__demo-note svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: none;
+  margin-top: 0.15rem;
+  color: var(--accent);
+}
+
+@media (min-width: 62rem) {
+  .ai__grid {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+}
+
+/* ==========================================================================
+   TU CAMINO · timeline de etapas
+   Mobile: carrusel horizontal con snap (no es un desktop comprimido).
+   Desktop: una sola fila, como un sendero.
+   ========================================================================== */
+
+.stages {
+  display: grid;
+  gap: var(--space-md);
+  margin-top: var(--space-2xl);
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(14rem, 76%);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-sm);
+  scrollbar-width: thin;
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  gap: var(--space-xs);
+  align-content: start;
+  padding-top: var(--space-md);
+  border-top: var(--hairline) solid var(--line);
+  scroll-snap-align: start;
+}
+
+/* Nodo del sendero */
+.stage::before {
+  content: "";
+  position: absolute;
+  top: -0.22rem;
+  left: 0;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background-color: var(--line-strong);
+}
+
+.stage__index {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
+}
+
+.stage__title {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  line-height: var(--leading-snug);
+}
+
+.stage__text {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+}
+
+/* Etapa aspiracional: se distingue sin prometer nada */
+.stage--goal::before {
+  background-color: var(--color-sand);
+}
+
+.stage--goal .stage__index,
+.stage--goal .stage__title {
+  color: var(--accent);
+}
+
+.stage--goal .stage__note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.stage--goal .stage__note::before {
+  content: "";
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.journey__foot {
+  display: grid;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+@media (min-width: 60rem) {
+  .stages {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+    overflow: visible;
+    padding-bottom: 0;
+  }
+}
+
+/* ==========================================================================
+   TERRITORIO · "Empezamos aquí." Quindío, Colombia
+   ========================================================================== */
+
+.territory {
+  position: relative;
+  padding-block: 0;
+  color: var(--color-warm-white);
+  background-color: var(--color-obsidian);
+}
+
+.territory__figure {
+  position: relative;
+  display: grid;
+  align-items: end;
+  min-height: clamp(28rem, 74svh, 46rem);
+  overflow: hidden;
+}
+
+.territory__figure img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: var(--color-obsidian);
+}
+
+.territory__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(10, 15, 14, 0.92) 0%, rgba(10, 15, 14, 0.34) 55%, rgba(10, 15, 14, 0.6) 100%);
+  pointer-events: none;
+}
+
+.territory__content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--space-lg);
+  padding-block: var(--space-3xl) var(--space-2xl);
+  width: 100%;
+}
+
+.territory__headline {
+  max-width: 18ch;
+  font-size: var(--text-4xl);
+  letter-spacing: -0.035em;
+}
+
+.territory__places {
+  padding-top: var(--space-lg);
+  border-top: var(--hairline) solid rgba(243, 240, 232, 0.22);
+}
+
+.territory .fact__label {
+  color: var(--color-warm-white);
+}
+
+.territory .fact__note {
+  color: rgba(243, 240, 232, 0.66);
+}
+
+.territory .fact {
+  border-top-color: rgba(243, 240, 232, 0.22);
+}
+
+/* --- Cinta de color vivo: abre la sección con el único croma saturado --- */
+.territory__vivo {
+  height: 4px;
+  background-image: linear-gradient(
+    90deg,
+    var(--color-vivo-leaf) 0%,
+    var(--color-vivo-sun) 52%,
+    var(--color-vivo-clay) 100%
+  );
+}
+
+/* --- Carrusel de flora -------------------------------------------------- */
+.territory__gallery {
+  padding-block: var(--space-3xl) var(--space-2xl);
+}
+
+.carousel {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.carousel__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.carousel__counter {
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  font-variant-numeric: tabular-nums;
+  color: rgba(243, 240, 232, 0.7);
+}
+
+.carousel__counter span { color: var(--color-vivo-leaf); }
+
+.carousel__viewport {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-obsidian-deep);
+  border: var(--hairline) solid rgba(243, 240, 232, 0.14);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lift);
+}
+
+.carousel__track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  will-change: transform;
+  transition: transform 640ms var(--ease-out);
+}
+
+.carousel__slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 0;
+  height: 100%;
+}
+
+.carousel__slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Leyenda: velo inferior para que el texto se lea sobre cualquier foto */
+.carousel__caption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: grid;
+  gap: 0.15rem;
+  padding: clamp(4rem, 10vw, 6rem) var(--space-lg) var(--space-md);
+  background-image: linear-gradient(
+    to top,
+    rgba(10, 15, 14, 0.9) 0%,
+    rgba(10, 15, 14, 0.4) 62%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.carousel__kicker {
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-vivo-leaf);
+}
+
+.carousel__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.4vw, 1.75rem);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.02em;
+}
+
+.carousel__note {
+  max-width: 46ch;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: rgba(243, 240, 232, 0.76);
+}
+
+/* --- Barra de control --------------------------------------------------- */
+.carousel__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.carousel__dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.carousel__dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background-color: rgba(243, 240, 232, 0.32);
+  cursor: pointer;
+  transition:
+    width var(--dur-sm) var(--ease-out),
+    background-color var(--dur-sm) var(--ease-out);
+}
+
+/* El punto activo se alarga en píldora: se ve cuál es y es más de tocar */
+.carousel__dot.is-active {
+  width: 1.85rem;
+  background-color: var(--color-vivo-leaf);
+}
+
+.carousel__dot:focus-visible {
+  outline: 2px solid var(--color-vivo-sun);
+  outline-offset: 3px;
+}
+
+.carousel__controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.carousel__btn {
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  color: var(--color-warm-white);
+  background-color: rgba(243, 240, 232, 0.08);
+  border: var(--hairline) solid rgba(243, 240, 232, 0.24);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-sm) var(--ease-out),
+    border-color var(--dur-sm) var(--ease-out),
+    transform var(--dur-sm) var(--ease-out);
+}
+
+.carousel__btn:hover {
+  background-color: rgba(243, 240, 232, 0.16);
+  border-color: var(--color-vivo-leaf);
+  transform: translateY(-1px);
+}
+
+.carousel__btn:focus-visible {
+  outline: 2px solid var(--color-vivo-sun);
+  outline-offset: 3px;
+}
+
+.carousel__btn svg { width: 1.05rem; height: 1.05rem; }
+
+/* aria-pressed="true" = reproducción en pausa → se muestra el icono de play */
+.carousel__icon-play { display: none; }
+.carousel__btn[aria-pressed="true"] .carousel__icon-pause { display: none; }
+.carousel__btn[aria-pressed="true"] .carousel__icon-play { display: block; }
+
+/* Objetivo táctil más grande donde hay dedo, no puntero */
+@media (pointer: coarse) {
+  .carousel__dot { width: 0.85rem; height: 0.85rem; }
+  .carousel__dot.is-active { width: 2.1rem; }
+}
+
+/* Sin JS los controles no harían nada: se ocultan y habla .js-required */
+.no-js .carousel__bar { display: none; }
+
+@media (max-width: 47.99rem) {
+  .carousel__viewport { aspect-ratio: 4 / 3; }
+  .carousel__bar { justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel__track { transition: none; }
+}
+
+/* ==========================================================================
+   EXPERIENCIAS · cards
+   Composición asimétrica en desktop (2 grandes + 3 medianas), una sola
+   columna en mobile. Nunca una parrilla uniforme de 5 bloques iguales.
+   ========================================================================== */
+
+.exp-grid {
+  display: grid;
+  gap: var(--space-md);
+  margin-top: var(--space-2xl);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+@media (min-width: 60rem) {
+  .exp-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .exp-grid>* {
+    grid-column: span 2;
+  }
+
+  .exp-grid>*:nth-child(-n + 2) {
+    grid-column: span 3;
+  }
+}
+
+.exp-card__icon-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+/* ==========================================================================
+   KNOWLEDGE BASE · "MOUNTAIN KNOWLEDGE"
+   ========================================================================== */
+
+.knowledge__layout {
+  display: grid;
+  gap: var(--grid-gap);
+  margin-top: var(--space-2xl);
+  align-items: start;
+}
+
+.knowledge__search {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.knowledge__cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+.knowledge__results-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2xs);
+  padding-bottom: var(--space-2xs);
+}
+
+.knowledge__count {
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 62rem) {
+  .knowledge__layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+}
+
+/* ==========================================================================
+   CUMBRE CHALLENGE · ruta conceptual con línea de progreso
+   ========================================================================== */
+
+.challenge__grid {
+  display: grid;
+  gap: var(--grid-gap);
+  align-items: start;
+}
+
+.route {
+  position: relative;
+  display: grid;
+  padding-left: 1.5rem;
+}
+
+.route::before {
+  content: "";
+  position: absolute;
+  left: 0.28rem;
+  top: 0.75rem;
+  bottom: 0.75rem;
+  width: var(--hairline);
+  background-color: var(--line);
+}
+
+/* Segmento de progreso que se llena al entrar en viewport */
+.route::after {
+  content: "";
+  position: absolute;
+  left: 0.28rem;
+  top: 0.75rem;
+  bottom: 0.75rem;
+  width: var(--hairline);
+  background-color: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 1.8s var(--ease-out);
+}
+
+.route.is-visible::after {
+  transform: scaleY(1);
+}
+
+.route__step {
+  position: relative;
+  display: grid;
+  gap: 0.2rem;
+  padding-block: 0.85rem;
+}
+
+.route__step::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  top: 1.2rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border: var(--hairline) solid var(--line-strong);
+  border-radius: 50%;
+  background-color: var(--bg-base);
+}
+
+/* Etapa con contenido disponible hoy dentro del producto */
+.route__step--live::before {
+  background-color: var(--color-sand);
+  border-color: var(--color-sand);
+}
+
+.route__step--goal::before {
+  background-color: var(--bg-base);
+  border-color: var(--color-sand);
+  border-width: 2px;
+}
+
+.route__label {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.route__status {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.route__step--goal .route__label {
+  color: var(--accent);
+}
+
+.challenge__side {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 62rem) {
+  .challenge__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+  }
+}
+
+/* ==========================================================================
+   COMUNIDAD
+   ========================================================================== */
+
+.community__grid {
+  display: grid;
+  gap: var(--space-md);
+  margin-top: var(--space-2xl);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+.community__list {
+  display: grid;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.community__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  padding-top: var(--space-md);
+  border-top: var(--hairline) solid var(--line);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.community__item svg {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  margin-top: 0.25rem;
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   CTA FINAL · cierre emocional
+   ========================================================================== */
+
+.final-cta {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding-block: clamp(5rem, 13vw, 11rem);
+  text-align: center;
+  color: var(--color-warm-white);
+  background-color: var(--color-obsidian);
+}
+
+.final-cta__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.final-cta__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 55%;
+  opacity: 0.38;
+  background-color: var(--color-obsidian);
+}
+
+.final-cta__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 70% 70% at 50% 50%, rgba(10, 15, 14, 0.55), rgba(10, 15, 14, 0.92)),
+    linear-gradient(to bottom, rgba(10, 15, 14, 0.85), rgba(10, 15, 14, 0.75));
+  pointer-events: none;
+}
+
+.final-cta__inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: var(--space-lg);
+  justify-items: center;
+  max-width: 46rem;
+}
+
+.final-cta__title {
+  font-size: var(--text-4xl);
+  letter-spacing: -0.035em;
+}
+
+.final-cta__lines {
+  display: grid;
+  gap: 0.25rem;
+  max-width: 34ch;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  color: rgba(243, 240, 232, 0.8);
+}
+
+.final-cta__signature {
+  display: grid;
+  gap: 0.35rem;
+  justify-items: center;
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: var(--hairline) solid rgba(243, 240, 232, 0.2);
+  width: min(22rem, 100%);
+}
+
+.final-cta__brand {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.final-cta__place {
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-sand);
+}
+
+/* ==========================================================================
+   MOMENTOS · clips verticales inmersivos (9:16)
+   Grid responsivo + IntersectionObserver para autoplay solo en viewport.
+   Respeta prefers-reduced-motion: muestra poster estático.
+   ========================================================================== */
+
+.momentos {
+  background-color: var(--bg-base);
+}
+
+.momentos__grid {
+  display: grid;
+  gap: var(--space-lg);
+  margin-top: var(--space-2xl);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 48rem) {
+  .momentos__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 72rem) {
+  .momentos__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.momento {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-obsidian);
+  border: var(--hairline) solid var(--line);
+  box-shadow: var(--shadow-soft);
+  isolation: isolate;
+}
+
+.momento::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 40%,
+    rgba(11, 16, 15, 0.6) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity var(--dur-md) var(--ease-out);
+}
+
+.momento:hover::before,
+.momento:focus-within::before {
+  opacity: 1;
+}
+
+.momento__video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  background-color: var(--color-obsidian);
+  transition: transform var(--dur-lg) var(--ease-out),
+    filter var(--dur-md) var(--ease-out);
+}
+
+.momento:hover .momento__video,
+.momento:focus-within .momento__video {
+  transform: scale(1.02);
+  filter: brightness(1.05);
+}
+
+.momento__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: var(--space-lg) var(--space-md) var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  color: var(--color-warm-white);
+}
+
+.momento__number {
+  font-family: var(--font-display);
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-sand);
+  opacity: 0.9;
+}
+
+.momento__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  text-shadow: 0 1px 2px rgba(11, 16, 15, 0.6);
+}
+
+/* Estado de carga / poster */
+.momento__video[poster] {
+  background-image: var(--momento-poster);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Reduced motion: solo poster, sin vídeo */
+@media (prefers-reduced-motion: reduce) {
+  .momento__video {
+    display: none;
+  }
+  .momento {
+    aspect-ratio: 9 / 16;
+    background-image: var(--momento-poster);
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+/* Animación de entrada escalonada */
+.momento[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--dur-lg) var(--ease-out),
+    transform var(--dur-lg) var(--ease-out);
+}
+
+.momento[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.site-footer {
+  color: var(--color-warm-white);
+  background-color: var(--color-obsidian);
+  border-top: var(--hairline) solid rgba(243, 240, 232, 0.14);
+}
+
+.site-footer__grid {
+  display: grid;
+  gap: var(--space-xl);
+  padding-block: var(--space-2xl) var(--space-xl);
+}
+
+.site-footer__brand {
+  display: grid;
+  gap: var(--space-sm);
+  max-width: 34ch;
+}
+
+/* En el pie el logotipo va más grande: el tagline del emblema se lee.
+   Se fija el ancho y no la altura para que la proporción nunca se rompa. */
+.site-footer .brand__mark {
+  width: min(13rem, 100%);
+  height: auto;
+}
+
+.site-footer__statement {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: rgba(243, 240, 232, 0.62);
+}
+
+.site-footer__heading {
+  margin-bottom: var(--space-sm);
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-sand);
+}
+
+.site-footer__list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.site-footer__link {
+  font-size: var(--text-sm);
+  color: rgba(243, 240, 232, 0.78);
+  transition: color var(--dur-sm) var(--ease-out);
+}
+
+.site-footer__link:hover {
+  color: var(--color-warm-white);
+}
+
+.site-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding-block: var(--space-md);
+  border-top: var(--hairline) solid rgba(243, 240, 232, 0.14);
+  font-size: var(--text-xs);
+  color: rgba(243, 240, 232, 0.5);
+}
+
+.site-footer__legal {
+  max-width: 62ch;
+  line-height: var(--leading-normal);
+}
+
+.site-footer__top {
+  flex: none;
+  font-size: var(--text-xs);
+}
+
+@media (min-width: 48rem) {
+  .site-footer__grid {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+}
+
+/* ==========================================================================
+   RELATOS DE LA MONTAÑA · programa de historias (podcast + video)
+   Dos bloques asimétricos invertidos: audio arriba, video abajo.
+   En desktop se cruzan para que la lectura sea cinematográfica, no repetitiva.
+   ========================================================================== */
+
+.story {
+  display: grid;
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+  align-items: center;
+}
+
+.story--reverse {
+  margin-top: var(--space-3xl);
+}
+
+.story__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-obsidian);
+  border: var(--hairline) solid var(--line);
+}
+
+/* Cover del podcast: bloque oscuro con icono y badge */
+.story__cover {
+  display: grid;
+  place-items: center;
+  gap: var(--space-sm);
+  aspect-ratio: 1 / 1;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(201, 169, 126, 0.18), transparent 55%),
+    linear-gradient(160deg, var(--surface-raised), var(--color-obsidian));
+}
+
+.story__cover svg {
+  width: clamp(3rem, 9vw, 4.5rem);
+  height: clamp(3rem, 9vw, 4.5rem);
+  color: var(--color-sand);
+}
+
+.story__cover__badge {
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.story__video {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-obsidian);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lift);
+}
+
+.story__video video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.story__body {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.story__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.story__title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+  max-width: 22ch;
+}
+
+.story__text {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+  max-width: 58ch;
+}
+
+.story__notes {
+  display: grid;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+
+.story__note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+}
+
+.story__note svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: none;
+  margin-top: 0.2rem;
+  color: var(--accent);
+}
+
+.story__foot {
+  margin-top: var(--space-3xl);
+}
+
+/* --- Podcast player --- */
+.podcast {
+  display: grid;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.podcast__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.podcast__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.podcast__live span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--accent);
+  animation: mb-pulse 1.6s var(--ease-in-out) infinite;
+}
+
+.podcast__label {
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.podcast__player {
+  background-color: var(--surface);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.podcast__player audio {
+  width: 100%;
+  height: 2rem;
+}
+
+@keyframes mb-pulse {
+
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   RECORRIDOS · guías de ruta (ficha técnica + infografía)
+   Misma retícula asimétrica que .story: media enmarcada + cuerpo con ficha.
+   En desktop la media queda sticky para acompañar la lectura de la ficha.
+   ========================================================================== */
+
+.guide {
+  display: grid;
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+  align-items: start;
+}
+
+.guide__figure {
+  display: grid;
+  gap: var(--space-sm);
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--surface-raised);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.guide__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.guide__figure figcaption {
+  padding: 0 var(--space-md) var(--space-md);
+}
+
+.guide__body {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.guide__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.guide__title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+}
+
+.guide__cols {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.guide__col {
+  display: grid;
+  gap: var(--space-sm);
+  align-content: start;
+  padding: var(--space-md);
+  background-color: var(--surface);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.guide__col-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.guide__col-title svg {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  color: var(--accent);
+}
+
+.guide__list {
+  display: grid;
+  gap: var(--space-2xs);
+  padding-left: 1.1rem;
+  list-style: disc outside;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+}
+
+.guide__list li::marker {
+  color: var(--accent);
+}
+
+.guide__foot {
+  margin-top: var(--space-3xl);
+}
+
+@media (min-width: 30rem) {
+  .guide__cols {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  }
+}
+
+@media (min-width: 62rem) {
+  .story {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2.5rem, 5vw, 5rem);
+  }
+
+  .story--reverse {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  }
+
+  .story__media {
+    order: 2;
+  }
+
+  .story--reverse .story__media {
+    order: 1;
+  }
+
+  .guide {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2.5rem, 5vw, 5rem);
+  }
+
+  .guide--reverse {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .guide__media {
+    order: 2;
+    position: sticky;
+    top: 5.5rem;
+  }
+
+  .guide--reverse .guide__media {
+    order: 0;
+  }
+}
+
+@media (max-width: 61.99rem) {
+  .story__cover {
+    aspect-ratio: 16 / 10;
+  }
+}

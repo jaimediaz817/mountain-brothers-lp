@@ -1,0 +1,18 @@
+# Windows reservado / accidente de redirección (> nul en Git Bash crea esto)
+nul
+[Nn][Uu][Ll]
+# OS / editores
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*~
+.vscode/
+# Temp del proyecto
+mb-preview/
+shots-dom.html
+shots2-dom.html
+final-top.png
+final-tall.png
+# Respaldo pesado fuera de la página (11 MB, nombre con errata)
+mountain_brothers/assets/videos/.orig-respaldo/
