@@ -18,6 +18,7 @@
       'frailejon-1': 'assets/images/frailejon-1.jpg',
       'frailejon-2': 'assets/images/frailejon-2.jpg',
       'hero-mountain': 'assets/images/hero-mountain.svg',
+      'fondo-lp-poster': 'assets/images/fondo-lp-poster.jpg',
       'momento-1': 'assets/images/momento-1.jpg',
       'momento-2': 'assets/images/momento-2.jpg',
       'momento-3': 'assets/images/momento-3.jpg',
