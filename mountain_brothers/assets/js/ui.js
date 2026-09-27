@@ -322,7 +322,27 @@
       var nodes = util.qsa('video[data-autoplay]');
       if (!nodes.length) { return; }
 
+      /* Diagnóstico visible: ?mb-debug=video muestra por qué el hero
+         reproduce o no. Se quita solo, no afecta producción. */
+      var debugVideo = /[?&]mb-debug=video/.test(window.location.search);
+      var heroVideo = null;
+      nodes.forEach(function (v) {
+        if (v.getAttribute('data-video') === 'heroBg') { heroVideo = v; }
+      });
+      function debugMsg(msg, isError) {
+        if (!debugVideo) { return; }
+        var box = document.getElementById('mb-video-debug');
+        if (!box) {
+          box = document.createElement('div');
+          box.id = 'mb-video-debug';
+          box.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;max-width:92vw;max-height:40vh;overflow:auto;background:rgba(0,0,0,.88);color:#7CFC98;font:12px/1.5 monospace;padding:10px 12px;border-radius:8px;white-space:pre-wrap;';
+          document.body.appendChild(box);
+        }
+        box.textContent += (isError ? '[ERROR] ' : '[OK] ') + msg + '\n';
+      }
+
       if (util.reducedMotion()) {
+        debugMsg('prefers-reduced-motion = REDUCE → video pausado a propósito. Desactívalo en el SO para verlo.', true);
         nodes.forEach(function (video) {
           video.removeAttribute('autoplay');
           video.pause();
@@ -334,14 +354,16 @@
         });
         return;
       }
+      debugMsg('prefers-reduced-motion = no-reduce (bien)');
 
       if (!('IntersectionObserver' in window)) {
+        debugMsg('Sin IntersectionObserver: play directo', true);
         /* Sin observer: forzar play directo en el hero. */
         nodes.forEach(function (video) {
           video.muted = true;
           var playing = video.play();
           if (playing && typeof playing.catch === 'function') {
-            playing.catch(function () {});
+            playing.catch(function (err) { debugMsg('play() rechazado: ' + err, true); });
           }
         });
         return;
@@ -353,11 +375,18 @@
             /* muted = true por JS además del atributo: algunos navegadores
                exigen la propiedad para permitir autoplay sin gesto. */
             entry.target.muted = true;
+            debugMsg('hero visible → play(), src=' + entry.target.currentSrc);
             var playing = entry.target.play();
-            if (playing && typeof playing.catch === 'function') {
-              /* Autoplay bloqueado por el navegador: se queda el póster. */
-              playing.catch(function () {});
+            if (playing && typeof playing.then === 'function') {
+              playing.then(function () {
+                debugMsg('reproduciendo ✓ paused=' + entry.target.paused);
+              });
+              if (typeof playing.catch === 'function') {
+                /* Autoplay bloqueado por el navegador: se queda el póster. */
+                playing.catch(function (err) { debugMsg('play() rechazado: ' + err, true); });
+              }
             }
+            if (heroVideo && heroVideo !== entry.target) { return; }
             return;
           }
           entry.target.pause();
@@ -365,6 +394,25 @@
       }, { threshold: 0.15 });
 
       nodes.forEach(function (video) { observer.observe(video); });
+      if (heroVideo) {
+        debugMsg('observando hero, readyState=' + heroVideo.readyState);
+        /* Crossfade sin parpadeo: el <img> de respaldo se oculta solo cuando
+           el video YA puede mostrar frames (canplay), no antes. */
+        heroVideo.addEventListener('canplay', function () {
+          var bg = heroVideo.closest('.hero__bg');
+          if (bg) { bg.classList.add('is-playing'); }
+          debugMsg('canplay → crossfade (readyState=' + heroVideo.readyState + ')');
+        });
+        heroVideo.addEventListener('playing', function () {
+          var bg = heroVideo.closest('.hero__bg');
+          if (bg) { bg.classList.add('is-playing'); }
+          debugMsg('evento playing ✓');
+        });
+        heroVideo.addEventListener('error', function () {
+          var e = heroVideo.error;
+          debugMsg('evento error: code=' + (e && e.code), true);
+        });
+      }
     }
   };
 

@@ -39,6 +39,27 @@
   background-color: var(--color-obsidian);
 }
 
+/* El <img> es solo respaldo pre-play: en cuanto el video puede mostrar
+   su primer frame, se oculta para que no parpadee encima/debajo. */
+.hero__bg.is-playing img {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.hero__bg img {
+  transition: opacity 0.45s ease, visibility 0s linear 0.45s;
+}
+
+.hero__bg video {
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+/* Crossfade: el video entra fundido, el img sale fundido. Sin flashes. */
+.hero__bg.is-playing video {
+  opacity: 1;
+}
+
 /* Doble capa: degradado vertical + velo lateral para el bloque de texto.
    Reforzado para video de fondo: el texto debe leerse sobre imagen en
    movimiento, así que la base inferior llega casi a negro sólido. */
