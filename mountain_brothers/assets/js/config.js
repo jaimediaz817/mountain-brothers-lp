@@ -48,6 +48,7 @@
     /* Mapa semántico de vídeo: clave → ruta del archivo */
     videos: {
       intro: 'assets/videos/intro-mb.mp4',
+      heroBg: 'assets/videos/fondo-lp.mp4',
       relatos: 'assets/videos/escalando_mb_escalada_tolima_1.mp4',
       momento1: 'assets/videos/video_corto_1.mp4',
       momento2: 'assets/videos/video_corto_2.mp4',

@@ -275,12 +275,13 @@
           alt="Cordillera de páramo colombiano al amanecer, con capas de niebla entre las montañas y una ladera oscura en primer plano."
           width="1600" height="1000" decoding="async" fetchpriority="high">
 
-        <!-- Video intro oficial: silenciado y en bucle. El mismo archivo se
-             reproduce con control y audio en la sección de intro. -->
+        <!-- Video de fondo del hero: silenciado y en bucle. Si no carga o el
+             navegador bloquea el autoplay, queda la imagen de respaldo.
+             Con prefers-reduced-motion, MB.video lo pausa y manda el póster. -->
         <video
-          data-video="intro"
+          data-video="heroBg"
           data-autoplay
-          src="assets/videos/intro-mb.mp4"
+          src="assets/videos/fondo-lp.mp4"
           poster="assets/images/hero-mountain.svg"
           autoplay muted loop playsinline preload="auto"
           aria-hidden="true" tabindex="-1"></video>
