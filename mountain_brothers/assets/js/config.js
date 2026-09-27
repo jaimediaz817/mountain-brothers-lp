@@ -46,6 +46,14 @@
        interfaz (etiqueta "Demostración") para no presentarlo como real. */
     demoDisclaimers: true,
 
+    /* Video de fondo del hero.
+       'auto'   → respeta prefers-reduced-motion: quien pide menos movimiento
+                  ve el póster (recomendado; accesible).
+       'always' → reproduce siempre, ignorando prefers-reduced-motion.
+       Si no ves el video en tu equipo, revisa el SO: con "reducir movimiento"
+       activado, 'auto' deja el póster a propósito. */
+    heroVideoMode: 'auto',
+
     /* Mapa semántico de vídeo: clave → ruta del archivo */
     videos: {
       intro: 'assets/videos/intro-mb.mp4',

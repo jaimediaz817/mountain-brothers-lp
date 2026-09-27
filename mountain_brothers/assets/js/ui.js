@@ -341,7 +341,7 @@
         box.textContent += (isError ? '[ERROR] ' : '[OK] ') + msg + '\n';
       }
 
-      if (util.reducedMotion()) {
+      if (util.reducedMotion() && MB.config.heroVideoMode !== 'always') {
         debugMsg('prefers-reduced-motion = REDUCE → video pausado a propósito. Desactívalo en el SO para verlo.', true);
         nodes.forEach(function (video) {
           video.removeAttribute('autoplay');
@@ -437,6 +437,26 @@
           var e = heroVideo.error;
           debugMsg('evento error: code=' + (e && e.code), true);
         });
+        /* Trazas extra: si el navegador lo pausa/bloquea, queda registrado. */
+        heroVideo.addEventListener('pause', function () {
+          debugMsg('evento pause (paused=' + heroVideo.paused + ' readyState=' + heroVideo.readyState + ')', true);
+        });
+        heroVideo.addEventListener('stalled', function () {
+          debugMsg('evento stalled (red lenta o Range fallido)', true);
+        });
+        heroVideo.addEventListener('suspend', function () {
+          debugMsg('evento suspend (navegador pausó la descarga)');
+        });
+        /* Click-to-play de emergencia: si el autoplay fue bloqueado, un clic
+           en el hero lo arranca (gesto = permiso). Solo con debug activo. */
+        if (debugVideo && heroBg) {
+          heroBg.style.cursor = 'pointer';
+          heroBg.addEventListener('click', function () {
+            debugMsg('click en hero → play manual');
+            heroVideo.muted = true;
+            heroVideo.play();
+          });
+        }
       }
     }
   };

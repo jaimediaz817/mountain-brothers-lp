@@ -170,6 +170,7 @@ Los 4 MP4 verticales que estaban sin ubicar ya estan colocados (todos 9:16, H.26
 | `assets/videos/video_corto_2.mp4` | ~1,9 MB · 464x832 · 5,2 s | Momento 02 “Sendero, noche y estrellas” | `videos.momento2` |
 | `assets/videos/video_corto_3.mp4` | ~2,1 MB · 464x832 · 5,2 s | Momento 03 “Palmas, sendero y fogata” | `videos.momento3` |
 | `assets/videos/comunidad-cocora.mp4` | ~1,8 MB · 540x960 · 10 s · sin audio | Tarjeta “Grupos de caminata” en `#comunidad` | `videos.comunidad` |
+| `assets/videos/fondo-lp.mp4` | ~1,2 MB · 770x436 · 7,4 s · sin audio · faststart | Fondo de `.hero.is-dark` | `videos.heroBg` |
 
 Detalles de implementacion:
 
@@ -177,6 +178,47 @@ Detalles de implementacion:
 - `comunidad-cocora.mp4` se recomprimió desde el original de 11,5 MB (`.orig-respaldo/personas-caminando-orig-11MB.mp4`, con errata “viedo” en el nombre, conservado como respaldo fuera de la pagina) a 540p sin pista de audio: como es autoplay silenciado en bucle, el audio era peso muerto.
 - La tarjeta usa `.media--vertical` (3/4, altura max. 26 rem) + `MB.video` (`data-autoplay`): autoplay silenciado con pausa fuera de pantalla y sin arranque con `prefers-reduced-motion`. El `poster` queda como respaldo sin JS.
 - `data-image` en los `<video>` solo existe para que el QA de manifiesto (`mb-qa.js`) no marque huérfanas las claves de poster; `applyImages()` solo toca `<img>`, así que no altera los videos.
+
+### 4.3b Video de fondo del hero
+
+`assets/videos/fondo-lp.mp4` — 1,2 MB · 770×436 · 7,4 s · **sin pista de audio**.
+Es el fondo de `.hero.is-dark`.
+
+Detalles de implementacion:
+
+- **Sin audio a proposito.** El archivo original traia AAC stereo; se elimino (`-an`) porque un fondo silenciado en bucle no lo necesita, pesa menos y evita bloqueos de autoplay en navegadores estrictos.
+- **`+faststart` obligatorio.** El `moov` va al inicio del archivo (`moov` antes de `mdat`). Sin esto el navegador debe descargar el MP4 completo antes de pintar el primer frame, y en un servidor sin *range requests* el video queda "cargando" para siempre.
+- **Servidor local con Range.** `python -m http.server` responde `200` a `Range:` en vez de `206`, y los navegadores modernos necesitan `206` para reproducir en streaming. Para desarrollo en local usa el helper del repo:
+  `python mb-serve.py 8010` → `http://127.0.0.1:8010/`. GitHub Pages sí soporta Range de serie.
+- **Respaldo `<img>`.** El `<img>` de `.hero__bg` es el primer frame del propio video (`assets/images/fondo-lp-poster.jpg`), no otra imagen: asi el cambio fijo → movimiento no produce un salto visual. Va con `z-index: 0` y el video con `z-index: 1`.
+- **Crossfade sin parpadeo.** El video nace con `opacity: 0`; cuando dispara `canplay` (o a los 4 s si ya hay `readyState >= 2`), se añade `.hero__bg.is-playing`: el video entra fundido y el img sale fundido. Nunca se ven los dos peleando.
+- **Play diferido.** `MB.video` no llama a `play()` si `readyState < 2`: espera a `canplay`. Pedirlo antes deja el video en un limbo (`paused: true`, `readyState: 4`, sin evento `playing`).
+- **`muted` antes de `autoplay`** en el atributo HTML, y `video.muted = true` tambien por JS: algunos navegadores exigen la propiedad, no solo el atributo.
+
+#### Si no ves el video en tu equipo
+
+Casi siempre es `prefers-reduced-motion`. En `config.js`:
+
+```js
+heroVideoMode: 'auto'    // respeta prefers-reduced-motion → póster (por defecto)
+heroVideoMode: 'always'  // reproduce siempre, ignora prefers-reduced-motion
+```
+
+Con `'auto'`, si el sistema operativo pide menos movimiento, el video se pausa
+**a proposito** (accesibilidad: un bucle continuo es justo lo que esa preferencia
+quiere evitar) y se ve el poster.
+
+Para comprobarlo en el navegador:
+
+```js
+matchMedia('(prefers-reduced-motion: reduce)').matches
+```
+
+Si devuelve `true`, windows lo tiene activado en
+`Configuracion > Accesibilidad > Efectos visuales > Efectos de animacion`.
+Diagnostico asistido: `http://127.0.0.1:8010/?mb-debug=video` muestra un panel
+con la razon exacta por la que el hero reproduce o no.
+
 
 ### 4.4 Imágenes de metadatos (no pasan por `config.js`)
 

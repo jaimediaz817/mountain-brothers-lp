@@ -8,6 +8,12 @@ Desktop.ini
 *.swp
 *~
 .vscode/
+# Servidor local con Range (solo dev, no se publica)
+mb-serve.py
+mb-video-diag.mjs
+node_modules/
+package.json
+package-lock.json
 # Temp del proyecto
 mb-preview/
 shots-dom.html

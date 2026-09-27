@@ -88,11 +88,15 @@
         observer.observe(fig);
       });
 
-      MB.util.on('mb:reveal', function (el) {
-        if (el.matches('[data-momento]') || el.closest('[data-momento]')) {
-          var fig = el.matches('[data-momento]') ? el : el.closest('[data-momento]');
-          fig.classList.add('is-visible');
-        }
+      /* Reveal tardío: MB.reveal emite 'mb:reveal' en el nodo revelado y el
+         evento burbujea, así que basta un listener delegado en document.
+         OJO: antes aquí se llamaba a MB.util.on(), que NO existe: el
+         TypeError rompía boot() y dejaba la página sin inicializar. */
+      document.addEventListener('mb:reveal', function (event) {
+        var el = event.target;
+        if (!el || !el.closest) { return; }
+        var fig = el.matches('[data-momento]') ? el : el.closest('[data-momento]');
+        if (fig) { fig.classList.add('is-visible'); }
       });
     }
   };
