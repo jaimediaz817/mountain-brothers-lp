@@ -25,6 +25,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Verificar referencias locales (evita 404 en produccion)
+        run: |
+          set -e
+          cd mountain_brothers
+          # Rutas locales declaradas en el HTML: src, href y poster.
+          grep -oE '(src|href|poster)="assets/[^"]+"' index.html \
+            | sed -E 's/^[a-z]+="//; s/"$//' | sort -u > /tmp/refs.txt
+          echo "Referencias locales unicas: $(wc -l < /tmp/refs.txt)"
+          faltan=0
+          while IFS= read -r ref; do
+            if [ ! -f "$ref" ]; then
+              echo "::error title=Referencia rota::No existe en el repo: $ref (daria 404 en produccion)"
+              faltan=$((faltan+1))
+            fi
+          done < /tmp/refs.txt
+          if [ "$faltan" -ne 0 ]; then
+            echo "::error::Deploy abortado: $faltan referencia(s) apuntan a archivos que no estan en el repositorio."
+            echo "Suele pasar al commitear el HTML sin su JS/CSS: revisa 'git status' y añade los archivos que falten."
+            exit 1
+          fi
+          echo "OK: las $(wc -l < /tmp/refs.txt) referencias locales existen en el repo."
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload site artifact (solo mountain_brothers/)
