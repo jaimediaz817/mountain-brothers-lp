@@ -220,6 +220,7 @@
         <a class="nav-links__item" href="#aprender">Aprender</a>
         <a class="nav-links__item" href="#relatos">Relatos</a>
         <a class="nav-links__item" href="#camino">Tu camino</a>
+        <a class="nav-links__item" href="#altitud">Altitud</a>
         <a class="nav-links__item" href="#recorridos">Recorridos</a>
         <a class="nav-links__item" href="#comunidad">Comunidad</a>
       </nav>
@@ -252,8 +253,9 @@
         <a class="nav-drawer__link" href="#aprender"><span class="nav-drawer__index">02</span>Aprender</a>
         <a class="nav-drawer__link" href="#relatos"><span class="nav-drawer__index">03</span>Relatos</a>
         <a class="nav-drawer__link" href="#camino"><span class="nav-drawer__index">04</span>Tu camino</a>
-        <a class="nav-drawer__link" href="#recorridos"><span class="nav-drawer__index">05</span>Recorridos</a>
-        <a class="nav-drawer__link" href="#comunidad"><span class="nav-drawer__index">06</span>Comunidad</a>
+        <a class="nav-drawer__link" href="#altitud"><span class="nav-drawer__index">05</span>Altitud</a>
+        <a class="nav-drawer__link" href="#recorridos"><span class="nav-drawer__index">06</span>Recorridos</a>
+        <a class="nav-drawer__link" href="#comunidad"><span class="nav-drawer__index">07</span>Comunidad</a>
     </nav>
     <div class="nav-drawer__foot">
       <a class="btn btn--primary" href="#primer-paso">
@@ -763,6 +765,180 @@
             Ver el reto de cumbre
             <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         ALTITUD · Lo que pasa en tu cuerpo (y por qué importa el chequeo)
+         Sección "reality check": ciencia accesible, no alarmismo.
+         Respeta agency: informa, no prohíbe. "Bajo tu responsabilidad" = decisión informada.
+         ====================================================================== -->
+    <section class="altitude section--textured" id="altitud" aria-labelledby="altitud-title">
+      <div class="altitude__bg" aria-hidden="true">
+        <!-- Video de fondo: visualización 3D/animación de pulmones a altitud.
+             Si no carga o prefers-reduced-motion, queda el poster estático. -->
+        <img
+          src="assets/images/altitud-poster.jpg"
+          alt="Ilustración médica estilizada: pulmones con gradiente de oxigenación descendiente al subir de altura."
+          width="1920" height="1080" decoding="async" fetchpriority="high">
+        <video
+          class="altitude__video"
+          data-altitude-video
+          src="assets/videos/altitud-pulmones.mp4"
+          poster="assets/images/altitud-poster.jpg"
+          muted autoplay loop playsinline preload="metadata" disablepictureinpicture
+          aria-hidden="true" tabindex="-1"></video>
+        <div class="altitude__scrim" aria-hidden="true"></div>
+      </div>
+
+      <div class="container">
+        <div class="altitude__grid">
+          <!-- Columna narrativa: texto + revelado progresivo al scroll -->
+          <div class="altitude__narrative" data-reveal>
+            <div class="section-head">
+              <p class="eyebrow eyebrow--bare">Fisiología de altura</p>
+              <h2 class="section-head__title" id="altitud-title">Lo que la altura le hace a tus pulmones.</h2>
+              <p class="lede">
+                No es miedo: es física. Entenderlo te permite decidir con criterio, no con ganas.
+              </p>
+            </div>
+
+            <!-- Steps revelados al scroll via IntersectionObserver -->
+            <ol class="altitude__steps" data-altitude-steps>
+              <li class="altitude__step" data-step="0" data-reveal>
+                <span class="altitude__step-num">01</span>
+                <div class="altitude__step-content">
+                  <h3 class="altitude__step-title">Presión parcial cae en picado</h3>
+                  <p class="altitude__step-text">
+                    A 4.000 m la presión de O₂ es ~60 % de la del nivel del mar. A 5.000 m, ~50 %.
+                    Tu sangre llega a los alvéolos y no encuentra el gradiente que necesita para cargar hemoglobina.
+                  </p>
+                </div>
+              </li>
+
+              <li class="altitude__step" data-step="1" data-reveal>
+                <span class="altitude__step-num">02</span>
+                <div class="altitude__step-content">
+                  <h3 class="altitude__step-title">Ventilación se dispara (hiperventilación)</h3>
+                  <p class="altitude__step-text">
+                    El cuerpo compensa respirando más y más rápido. Pierdes CO₂ → alcalosis respiratoria → mareo, hormigueo, insomnio.
+                    Es la respuesta aguda, no la adaptación.
+                  </p>
+                </div>
+              </li>
+
+              <li class="altitude__step" data-step="2" data-reveal>
+                <span class="altitude__step-num">03</span>
+                <div class="altitude__step-content">
+                  <h3 class="altitude__step-title">Vasoconstricción pulmonar hipóxica</h3>
+                  <p class="altitude__step-text">
+                    Las arteriolas pulmonares se cierran donde hay poco O₂ para redirigir flujo a zonas mejor ventiladas.
+                    Aumenta la presión arterial pulmonar → trabajo extra del ventrículo derecho → riesgo de HAPE (edema pulmonar de altura).
+                  </p>
+                </div>
+              </li>
+
+              <li class="altitude__step" data-step="3" data-reveal>
+                <span class="altitude__step-num">04</span>
+                <div class="altitude__step-content">
+                  <h3 class="altitude__step-title">Eritropoyetina: la apuesta a largo plazo</h3>
+                  <p class="altitude__step-text">
+                    Riñón detecta hipoxia crónica → EPO → más glóbulos rojos. Tarda semanas.
+                    Sin aclimatación progresiva, subes con la maquinaria de nivel del mar.
+                  </p>
+                </div>
+              </li>
+
+              <li class="altitude__step" data-step="4" data-reveal>
+                <span class="altitude__step-num">05</span>
+                <div class="altitude__step-content">
+                  <h3 class="altitude__step-title">Lo que no se ve: variabilidad individual</h3>
+                  <p class="altitude__step-text">
+                    Genética, patologías subclínicas (PFO, hipertensión pulmonar latente), anemia, infección reciente.
+                    Dos personas con mismo entrenamiento responden distinto. El chequeo médico revela lo invisible.
+                  </p>
+                </div>
+              </li>
+            </ol>
+
+            <!-- CTA / disclaimer principal: glass card, alto contraste -->
+            <div class="altitude__verdict" data-reveal>
+              <div class="altitude__verdict-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </div>
+              <div class="altitude__verdict-content">
+                <p class="altitude__verdict-title">Subir sin chequeo médico es apostar a ciegas.</p>
+                <p class="altitude__verdict-text">
+                  Un electrocardiograma, espirometría y hematocrito basal cuestan minutos y detectan lo que el espejo no muestra.
+                  <strong>Si eliges subir sin hacerlo, que sea una decisión consciente, no un olvido.</strong>
+                  Asumes el riesgo con los ojos abiertos: eso es autonomía, no imprudencia.
+                </p>
+              </div>
+              <a class="btn btn--outline altitude__verdict-action" href="#guia" data-altitude-cta>
+                Preparar mi chequeo con el Guía IA
+                <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Columna visual: video interactivo + datos clave -->
+          <div class="altitude__visual" aria-hidden="true">
+            <div class="altitude__video-wrap" data-altitude-player>
+              <!-- El video principal se controla via JS: play/pause al scroll, seek a secciones -->
+              <video
+                class="altitude__player-video"
+                src="assets/videos/altitud-pulmones.mp4"
+                poster="assets/images/altitud-poster.jpg"
+                muted playsinline preload="metadata"
+                aria-label="Animación: cambios pulmonares con la altitud"
+                tabindex="-1"></video>
+              <div class="altitude__player-overlay" aria-hidden="true">
+                <button
+                  class="altitude__play-btn"
+                  type="button"
+                  data-altitude-play
+                  aria-label="Reproducir animación de fisiología de altura">
+                  <svg class="altitude__play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7.8 5.4 18.6 12 7.8 18.6z"/></svg>
+                  <svg class="altitude__pause-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 5.5v13M14.5 5.5v13"/></svg>
+                </button>
+                <div class="altitude__progress" data-altitude-progress role="slider" tabindex="0" aria-label="Progreso de la animación" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <div class="altitude__progress-fill" data-altitude-fill></div>
+                  <div class="altitude__progress-head" data-altitude-head aria-hidden="true"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Métricas rápidas: scannables, sin scroll -->
+            <dl class="altitude__metrics" data-reveal>
+              <div class="altitude__metric">
+                <dt class="altitude__metric-label">SpO₂ en reposo a 4.500 m</dt>
+                <dd class="altitude__metric-value"><span data-altitude-spo2>—</span>%</dd>
+              </div>
+              <div class="altitude__metric">
+                <dt class="altitude__metric-label">Tiempo a aclimatación parcial</dt>
+                <dd class="altitude__metric-value">7–14 <span class="altitude__metric-unit">días</span></dd>
+              </div>
+              <div class="altitude__metric">
+                <dt class="altitude__metric-label">Riesgo HAPE sin aclimatar (>4.500 m)</dt>
+                <dd class="altitude__metric-value"><span class="altitude__metric--warn">Alto</span></dd>
+              </div>
+              <div class="altitude__metric">
+                <dt class="altitude__metric-label">Chequeo básico recomendado</dt>
+                <dd class="altitude__metric-value">ECG + Espirometría + Hemograma</dd>
+              </div>
+            </dl>
+
+            <!-- Disclaimer legal/ético compacto -->
+            <p class="altitude__disclaimer">
+              <svg aria-hidden="true"><use href="#i-info"></use></svg>
+              Esta sección es contenido educativo, no asesoría médica. Los valores son referencias poblacionales; tu respuesta individual puede variar. Consulta siempre a profesional de salud antes de exponerte a altitud significativa.
+            </p>
+          </div>
         </div>
       </div>
     </section>

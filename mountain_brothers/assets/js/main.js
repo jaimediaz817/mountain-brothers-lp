@@ -20,6 +20,7 @@
     MB.carousel.init();
     MB.misc.init();
     MB.toTop.init();
+    MB.altitude.init();
     MB.epline.init();
 
     /* 3 · Producto */

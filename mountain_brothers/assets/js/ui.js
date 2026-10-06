@@ -621,6 +621,139 @@
     }
   };
 
+  /* ------------------------------------------------------------ altitude  */
+  /* Sección de fisiología de altura: video controlado por scroll,
+     revelado escalonado de steps, métricas animadas, player accesible. */
+  MB.altitude = {
+    init: function () {
+      var section = util.qs('#altitud');
+      if (!section) { return; }
+
+      var bgVideo = util.qs('.altitude__video', section);
+      var playerVideo = util.qs('.altitude__player-video', section);
+      var playBtn = util.qs('[data-altitude-play]', section);
+      var progress = util.qs('[data-altitude-progress]', section);
+      var fill = util.qs('[data-altitude-fill]', section);
+      var head = util.qs('[data-altitude-head]', section);
+      var steps = util.qsa('.altitude__step', section);
+      var metrics = util.qs('.altitude__metrics', section);
+      var spo2El = util.qs('[data-altitude-spo2]', section);
+
+      if (!('IntersectionObserver' in window) || util.reducedMotion()) {
+        if (bgVideo) { bgVideo.style.display = 'none'; }
+        if (playerVideo) { playerVideo.style.display = 'none'; }
+        steps.forEach(function (s) { s.classList.add('is-visible'); });
+        if (spo2El) { spo2El.textContent = '82'; }
+        return;
+      }
+
+      /* 1. Background video: play cuando la sección entra en viewport */
+      var bgObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && bgVideo) {
+            bgVideo.classList.add('is-playing');
+            bgVideo.play().catch(function () {});
+            bgObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      if (bgVideo) { bgObserver.observe(section); }
+
+      /* 2. Steps reveal escalonado */
+      var stepObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var idx = Array.prototype.indexOf.call(steps, entry.target);
+            var delay = idx * 120;
+            setTimeout(function () { entry.target.classList.add('is-visible'); }, delay);
+            stepObserver.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -20% 0px', threshold: 0.15 });
+      steps.forEach(function (s) { stepObserver.observe(s); });
+
+      /* 3. Player video: seek sincronizado con scroll dentro de la sección */
+      var playerObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && playerVideo) {
+            var onScroll = function () {
+              var rect = section.getBoundingClientRect();
+              var vh = window.innerHeight;
+              var progressRatio = 1 - Math.max(0, Math.min(1, (rect.bottom - vh * 0.3) / (rect.height + vh * 0.7)));
+              if (playerVideo.duration && !isNaN(playerVideo.duration)) {
+                playerVideo.currentTime = progressRatio * playerVideo.duration;
+                var pct = Math.round(progressRatio * 100);
+                if (fill) { fill.style.width = pct + '%'; }
+                if (head) { head.style.left = pct + '%'; }
+                if (progress) { progress.setAttribute('aria-valuenow', String(pct)); }
+              }
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            playerObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      if (playerVideo) { playerObserver.observe(section); }
+
+      /* 4. Play/pause botón */
+      if (playBtn && playerVideo) {
+        playBtn.addEventListener('click', function () {
+          var playing = playBtn.getAttribute('aria-pressed') === 'true';
+          if (playing) {
+            playerVideo.pause();
+            playBtn.setAttribute('aria-pressed', 'false');
+          } else {
+            playerVideo.play().catch(function () {});
+            playBtn.setAttribute('aria-pressed', 'true');
+          }
+        });
+        playerVideo.addEventListener('play', function () { playBtn.setAttribute('aria-pressed', 'true'); });
+        playerVideo.addEventListener('pause', function () { playBtn.setAttribute('aria-pressed', 'false'); });
+      }
+
+      /* 5. Progress bar: seek al click/teclado */
+      if (progress && playerVideo) {
+        function seekFromEvent(e) {
+          var rect = progress.getBoundingClientRect();
+          var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+          var ratio = Math.max(0, Math.min(1, x / rect.width));
+          playerVideo.currentTime = ratio * (playerVideo.duration || 0);
+        }
+        progress.addEventListener('click', seekFromEvent);
+        progress.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight') { e.preventDefault(); playerVideo.currentTime = Math.min(playerVideo.duration, (playerVideo.currentTime || 0) + 3); }
+          if (e.key === 'ArrowLeft') { e.preventDefault(); playerVideo.currentTime = Math.max(0, (playerVideo.currentTime || 0) - 3); }
+          if (e.key === 'Home') { e.preventDefault(); playerVideo.currentTime = 0; }
+          if (e.key === 'End') { e.preventDefault(); playerVideo.currentTime = playerVideo.duration || 0; }
+        });
+      }
+
+      /* 6. Métrica SpO₂ animada al revelar métricas */
+      if (metrics && spo2El) {
+        var metricObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              var target = 82;
+              var from = 98;
+              var duration = 1800;
+              var start = null;
+              function animate(t) {
+                if (!start) { start = t; }
+                var p = Math.min((t - start) / duration, 1);
+                var eased = 1 - Math.pow(1 - p, 3);
+                spo2El.textContent = Math.round(from + (target - from) * eased);
+                if (p < 1) { requestAnimationFrame(animate); }
+              }
+              requestAnimationFrame(animate);
+              metricObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.3 });
+        metricObserver.observe(metrics);
+      }
+    }
+  };
+
   /* ------------------------------------------------------------- to-top  */
   /* Botón flotante "volver arriba": aparece tras cierto scroll y devuelve
      al inicio con movimiento suave (o inmediato si reduce-motion). Usa
