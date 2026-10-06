@@ -148,8 +148,14 @@
 
       stopsEl.addEventListener('click', function (e) {
         var btn = e.target.closest ? e.target.closest('.epline__stop') : null;
-        if (!btn || !dur()) { return; }
-        seek(parseFloat(btn.getAttribute('data-t')) || 0);
+        if (!btn) { return; }
+        var d = dur();
+        if (!d) {
+          showToast('Audio cargando… espera un momento');
+          return;
+        }
+        var t = parseFloat(btn.getAttribute('data-t'));
+        if (isFinite(t)) { seek(t); }
       });
 
       /* ------------------------------------------------------- estado UI */
@@ -291,7 +297,13 @@
       function seek(t) {
         var d = dur();
         if (!d) { return; }
-        audio.currentTime = Math.min(d - 0.25, Math.max(0, t));
+        var target = Math.min(d - 0.25, Math.max(0, t));
+        try {
+          audio.currentTime = target;
+        } catch (e) {
+          showToast('No se puede saltar aún (buffering)');
+          return;
+        }
         draw();
         updateAll();
       }
@@ -380,6 +392,39 @@
         document.addEventListener('keydown', function (e) {
           if ((e.key === 'Escape' || e.key === 'Esc') && speedMenu.classList.contains('is-open')) {
             setSpeedMenu(false);
+          }
+        });
+
+        /* Navegación por teclado dentro del menú (patrón menú de radio):
+           flechas ↑/↓ (y ←/→) recorren las opciones en bucle; Home/End
+           saltan al principio o al final. Enter activa la opción enfocada. */
+        function focusSpeedOpt(index) {
+          if (!speedOpts.length) { return; }
+          var n = (index + speedOpts.length) % speedOpts.length;
+          speedOpts[n].focus();
+        }
+
+        speedMenu.addEventListener('keydown', function (e) {
+          if (!speedMenu.classList.contains('is-open') || !speedOpts.length) { return; }
+          switch (e.key) {
+            case 'ArrowDown':
+            case 'ArrowRight':
+              e.preventDefault();
+              focusSpeedOpt(speedOpts.indexOf(document.activeElement) + 1);
+              break;
+            case 'ArrowUp':
+            case 'ArrowLeft':
+              e.preventDefault();
+              focusSpeedOpt(speedOpts.indexOf(document.activeElement) - 1);
+              break;
+            case 'Home':
+              e.preventDefault();
+              focusSpeedOpt(0);
+              break;
+            case 'End':
+              e.preventDefault();
+              focusSpeedOpt(speedOpts.length - 1);
+              break;
           }
         });
       }
@@ -557,7 +602,14 @@
       if (epsWrap) {
         epsWrap.addEventListener('click', function (e) {
           var btn = e.target.closest ? e.target.closest('[data-epline-ep]') : null;
-          if (btn) { switchEpisode(btn); }
+          if (!btn) { return; }
+          var epKey = btn.getAttribute('data-epline-ep');
+          var src = (MB.config.audios || {})[epKey];
+          if (!src) {
+            showToast('Episodio no disponible');
+            return;
+          }
+          switchEpisode(btn);
         });
       }
 

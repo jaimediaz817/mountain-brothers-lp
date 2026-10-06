@@ -1067,9 +1067,12 @@
 
 .altitude__verdict {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "icon content"
+    "action action";
   align-items: start;
-  gap: var(--space-md);
+  gap: var(--space-sm) var(--space-md);
   margin-top: var(--space-2xl);
   padding: var(--space-lg);
   border-radius: var(--radius-lg);
@@ -1080,21 +1083,8 @@
   box-shadow: var(--shadow-lift);
 }
 
-@media (max-width: 48rem) {
-  .altitude__verdict {
-    grid-template-columns: auto 1fr;
-    grid-template-areas:
-      "icon title"
-      "icon text"
-      "action action";
-  }
-  .altitude__verdict-icon { grid-area: icon; }
-  .altitude__verdict-content { grid-area: text; }
-  .altitude__verdict-title { grid-area: title; }
-  .altitude__verdict-action { grid-area: action; justify-self: start; }
-}
-
 .altitude__verdict-icon {
+  grid-area: icon;
   flex: none;
   width: 3rem;
   height: 3rem;
@@ -1104,6 +1094,11 @@
   background: linear-gradient(135deg, var(--color-vivo-clay), var(--color-vivo-sun));
   color: var(--color-obsidian);
   svg { width: 1.5rem; height: 1.5rem; }
+}
+
+.altitude__verdict-content {
+  grid-area: content;
+  align-self: center;
 }
 
 .altitude__verdict-title {
@@ -1129,12 +1124,24 @@
 }
 
 .altitude__verdict-action {
-  align-self: center;
+  grid-area: action;
+  justify-self: start;
   flex: none;
+  margin-top: var(--space-2xs);
 }
 
 @media (max-width: 48rem) {
-  .altitude__verdict-action { width: 100%; justify-content: center; }
+  .altitude__verdict {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "icon"
+      "content"
+      "action";
+  }
+  .altitude__verdict-action {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 /* --- Visual: video player controlado --- */
@@ -2750,6 +2757,12 @@
 .epline__stop:hover {
   background-color: var(--surface);
   color: var(--color-warm-white);
+  border-color: var(--line-strong);
+}
+
+.epline__stop:focus-visible {
+  outline: 2px solid var(--color-vivo-sun);
+  outline-offset: 2px;
 }
 
 /* Estado: pasada ✓ */
