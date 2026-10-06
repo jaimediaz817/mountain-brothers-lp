@@ -147,7 +147,8 @@
       }
 
         var btn = e.target.closest(".epline__stop");
-        var btn = e.target.closest ? e.target.closest('.epline__stop') : null;
+      stopsEl.addEventListener('click', function (e) {
+        var btn = e.target.closest(".epline__stop");
         if (!btn) { return; }
         var d = dur();
         if (!d) {
