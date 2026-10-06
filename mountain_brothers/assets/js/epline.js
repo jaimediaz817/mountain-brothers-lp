@@ -156,7 +156,11 @@
           return;
         }
         var t = parseFloat(btn.getAttribute('data-t'));
-        if (isFinite(t)) { seek(t); }
+        if (!isFinite(t)) { return; }
+        /* Feedback inmediato: si ves este toast pero el audio no salta,
+           el clic llega bien y el problema es el seek del navegador/red. */
+        showToast('Saltando → Parte ' + (partIndex(t) + 1) + ' · ' + fmt(t));
+        seek(t);
       });
 
       /* ------------------------------------------------------- estado UI */
