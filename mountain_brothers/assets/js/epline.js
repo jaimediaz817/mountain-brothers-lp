@@ -161,6 +161,7 @@
            el clic llega bien y el problema es el seek del navegador/red. */
         showToast('Saltando → Parte ' + (partIndex(t) + 1) + ' · ' + fmt(t));
         seek(t);
+        debugSeekToast(t);
       });
 
       /* ------------------------------------------------------- estado UI */
@@ -299,6 +300,15 @@
         playBtn.setAttribute('aria-label', playing ? 'Pausar episodio' : 'Reproducir episodio');
       }
 
+      /* Diagnóstico temporal: confirma si currentTime realmente se movió */
+      function debugSeekToast(requested) {
+        window.setTimeout(function () {
+          var got = audio.currentTime || 0;
+          var err = audio.error ? (' · err=' + audio.error.code) : '';
+          showToast('pedido=' + fmt(requested) + ' · reloj=' + fmt(got) + ' · rs=' + audio.readyState + err);
+        }, 450);
+      }
+
       function seek(t) {
         var d = dur();
         if (!d) { return; }
@@ -314,8 +324,8 @@
       }
 
       playBtn.addEventListener('click', togglePlay);
-      if (backBtn) { backBtn.addEventListener('click', function () { seek((audio.currentTime || 0) - 15); }); }
-      if (fwdBtn) { fwdBtn.addEventListener('click', function () { seek((audio.currentTime || 0) + 15); }); }
+      if (backBtn) { backBtn.addEventListener('click', function () { var t = (audio.currentTime || 0) - 15; seek(t); debugSeekToast(t); }); }
+      if (fwdBtn) { fwdBtn.addEventListener('click', function () { var t = (audio.currentTime || 0) + 15; seek(t); debugSeekToast(t); }); }
 
       if (repeatBtn) {
         repeatBtn.addEventListener('click', function () {
