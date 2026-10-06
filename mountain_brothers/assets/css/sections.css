@@ -1163,8 +1163,10 @@
 .altitude__player-overlay {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: var(--space-md);
   pointer-events: none;
   transition: opacity var(--dur-sm) var(--ease-out);
 }
@@ -1176,8 +1178,8 @@
 
 .altitude__play-btn {
   pointer-events: auto;
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 3.2rem;
+  height: 3.2rem;
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -1187,16 +1189,28 @@
   cursor: pointer;
   transition: transform var(--dur-xs) var(--ease-in-out), box-shadow var(--dur-xs) var(--ease-in-out);
   box-shadow: var(--shadow-lift);
+  flex-shrink: 0;
 }
 
 .altitude__play-btn:hover {
-  transform: scale(1.06);
-  box-shadow: 0 0 0 4px rgba(255, 122, 89, 0.3), var(--shadow-lift);
+  transform: scale(1.08);
+  box-shadow: 0 0 0 3px rgba(255, 122, 89, 0.35), var(--shadow-lift);
 }
 
 .altitude__play-btn:focus-visible {
   outline: 2px solid var(--color-vivo-sun);
-  outline-offset: 4px;
+  outline-offset: 3px;
+}
+
+/* Progress bar now sits to the right of play button */
+.altitude__progress-wrap {
+  pointer-events: auto;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-left: var(--space-md);
+  min-width: 0;
 }
 
 .altitude__pause-icon { display: none; }
@@ -1212,34 +1226,35 @@
 
 .altitude__progress {
   pointer-events: auto;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex: 1;
   height: 4px;
   background: rgba(10, 15, 14, 0.6);
+  border-radius: 999px;
   cursor: pointer;
+  position: relative;
 }
 
 .altitude__progress-fill {
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, var(--color-vivo-clay), var(--color-vivo-sun));
+  border-radius: 999px;
   transition: width 0.1s linear;
 }
 
 .altitude__progress-head {
   position: absolute;
-  top: -6px;
+  top: 50%;
   left: 0;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--color-vivo-clay), var(--color-vivo-sun));
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   box-shadow: var(--shadow-soft);
   opacity: 0;
   transition: opacity var(--dur-xs);
+  pointer-events: none;
 }
 
 .altitude__progress:focus-visible .altitude__progress-head,
