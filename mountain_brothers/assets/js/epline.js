@@ -146,7 +146,7 @@
         draw();
       }
 
-      stopsEl.addEventListener('click', function (e) {
+        var btn = e.target.closest(".epline__stop");
         var btn = e.target.closest ? e.target.closest('.epline__stop') : null;
         if (!btn) { return; }
         var d = dur();
@@ -601,7 +601,7 @@
 
       if (epsWrap) {
         epsWrap.addEventListener('click', function (e) {
-          var btn = e.target.closest ? e.target.closest('[data-epline-ep]') : null;
+          var btn = e.target.closest("[data-epline-ep]");
           if (!btn) { return; }
           var epKey = btn.getAttribute('data-epline-ep');
           var src = (MB.config.audios || {})[epKey];
