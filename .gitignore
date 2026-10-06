@@ -11,6 +11,15 @@ Desktop.ini
 # Servidor local con Range (solo dev, no se publica)
 mb-serve.py
 mb-video-diag.mjs
+# Sondas locales de Chrome/Playwright (solo dev, no se publican)
+mb-shot.mjs
+mb-zoom.mjs
+mb-measure.mjs
+mb-verify.mjs
+mb-final.mjs
+mb-mini-test.mjs
+mb-hero-card.mjs
+shots/
 node_modules/
 package.json
 package-lock.json
@@ -22,3 +31,9 @@ final-top.png
 final-tall.png
 # Respaldo pesado fuera de la página (11 MB, nombre con errata)
 mountain_brothers/assets/videos/.orig-respaldo/
+mb-hero-shot.mjs
+mb-contrast-audit.mjs
+mb-white-on-light.mjs
+mb-wol-all.mjs
+mb-sunken-titles.mjs
+mb-sunken-shots.mjs

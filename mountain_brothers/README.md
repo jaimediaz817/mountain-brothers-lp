@@ -44,6 +44,8 @@ mountain_brothers/
 │   │   ├── quiz.js            # Test del aventurero (6 preguntas · 4 perfiles)
 │   │   ├── guide.js           # Mountain AI Guide (chat demostrativo)
 │   │   ├── knowledge.js       # Mountain Knowledge (buscador + fichas <details>)
+│   │   ├── momentos.js        # Vídeos verticales: autoplay por viewport
+│   │   ├── epline.js          # "Línea del Episodio": player de audio automático
 │   │   └── main.js            # Arranque, menú, reveals, scrollspy, cierre
 │   ├── images/                # Logotipo, favicon y placeholders SVG (ver §4)
 │   ├── videos/                # Vídeo intro oficial (intro-mb.mp4) + registro de escalada
@@ -99,7 +101,8 @@ images: {
   'tolima':        'assets/images/tolima.webp',
   'hiking':        'assets/images/hiking.webp',
   'community':     'assets/images/community.webp',
-  'equipment':     'assets/images/equipment.webp'
+  'equipment':     'assets/images/equipment.webp',
+  'podcast-cover': 'assets/images/podcast-cover.jpg'   // cover del programa (Relatos)
 }
 ```
 
@@ -152,13 +155,27 @@ Dos recursos adicionales, usados en la sección homónima (`#relatos`):
 
 | Archivo | Uso | Dónde |
 |---|---|---|
-| `assets/audios/Supervivencia_y_catarsis_en_el_Nevado_Tolima.m4a` | Podcast: episodio 01 del programa | `.podcast__player audio` |
+| `assets/audios/Supervivencia_y_catarsis_en_el_Nevado_Tolima.m4a` | Podcast: episodio 01 del programa | `.epline audio` |
 | `assets/videos/escalando_mb_escalada_tolima_1.mp4` | Registro visual de escalada | `.story__video video` |
 
 Ambos pasan por `MB.config.videos.relatos` y `MB.config.audios.relatos`.
-El audio lleva un temporizador (`MB.podcast.init()` en `ui.js`) que muestra
-`0:00 / 6:00` en tiempo real; el vídeo solo se reproduce por decisión del
-visitante, con controles y póster `tolima.svg`.
+El audio usa el player **"Línea del Episodio"** (`MB.epline.init()` en
+`epline.js`): genera solo entre 4 y 8 partes según la duración real,
+dibuja la onda en canvas conforme suena (AnalyserNode, sin decodificar el
+archivo), ofrece riel de partes con seek, burbuja de preview, velocidad y
+volumen recordados, retomar (`localStorage`), mini-player sticky y
+`mediaSession`. El vídeo solo se reproduce por decisión del visitante, con
+controles y póster `tolima.svg`.
+
+El **mini-player flotante** (`.epline-mini`) es un reproductor completo, no un
+indicador: play/pausa, salto ±15 s, título que devuelve al player, riel de
+posición accionable (clic, arrastre y teclado `role="slider"`) y cierre.
+Aparece solo después de la primera reproducción y mientras el player principal
+esté fuera de pantalla; **se queda visible en pausa** —retomar es su razón de
+ser— y solo se retira si quien visita lo cierra o vuelve a la sección. Como se
+monta en `<body>`, dentro de `.epline-mini` se anclan `--text-muted` y
+`--shadow-lift` a valores de tema oscuro: si no, heredarían los de la raíz y el
+reloj saldría casi negro sobre la barra.
 
 ### 4.3b Videos verticales: Momentos + Comunidad
 
@@ -217,6 +234,91 @@ matchMedia('(prefers-reduced-motion: reduce)').matches
 Si devuelve `true`, windows lo tiene activado en
 `Configuracion > Accesibilidad > Efectos visuales > Efectos de animacion`.
 
+
+### 4.3c Capa cinematográfica del hero
+
+Grano, viñeta, marco de visor y riel numerado sobre `.hero.is-dark`.
+Todo es **CSS puro**: cero JS, cero nodos nuevos (viven en pseudo-elementos) y
+cero peticiones de red (el ruido es un `feTurbulence` en `data:` URI dentro del
+propio CSS). Reparto de pseudo-elementos:
+
+| Elemento | Qué dibuja |
+|---|---|
+| `.hero__scrim` (4ª capa del `background`) | Viñeta cinematográfica |
+| `.hero__scrim::after` | Grano fílmico animado |
+| `.hero::after` | Cuatro esquinas en L (marco de visor) |
+| `.hero__inner::before` | Riel: etiqueta `01 · Inicio` rotada + hairline con chispa |
+
+Detalles de implementacion:
+
+- **La viñeta va en ÚLTIMO lugar de la pila de `background`.** En CSS la primera
+  capa se pinta encima, así que ponerla al final la deja por debajo de los
+  degradados de legibilidad: oscurece las esquinas sin tocar el contraste del
+  texto. No toques ese orden.
+- **Grano al 7 %.** Es deliberadamente imperceptible como textura; se nota en que
+  la imagen "respira", no en que se vea suciedad. Sube `opacity` en
+  `.hero__scrim::after` solo si quieres un look más agresivo.
+- **El grano se mueve por `transform`**, no por `background-position`: el
+  elemento es 3× la caja (`inset: -100%`) y `.hero__scrim` lo recorta con
+  `overflow: hidden`. Así la animación vive en el compositor y no repinta.
+- **El borde superior del marco arranca a 6 rem, no a 1.25 rem.** La barra de
+  navegación mide 89 px y el logo llega hasta y=80. Además, por debajo de ~1280 px
+  el logo se pega al canto izquierdo y chocaría con la esquina. A 6 rem el marco
+  empieza justo donde acaba la barra y nunca se cruza. Los otros tres bordes van
+  a 1.25 rem. **Si cambias la altura del header, ajusta ese 6 rem.**
+- **El riel solo aparece a partir de 80 rem (1280 px).** Vive 2.2 rem a la
+  izquierda del texto, dentro del margen lateral del contenedor
+  (`--container-pad`), y ese margen solo da aire suficiente a partir de ese
+  ancho. Por debajo, el hero se queda limpio sin el riel.
+- **El riel se ancla a `.hero__inner`, no a `.hero`.** Así la separación con el
+  texto es estable en cualquier ancho. Va con `position: absolute` a propósito:
+  `.hero__inner` es `display: grid`, y un `::before` en flujo se convertiría en
+  una celda más y descolocaría todo el hero.
+- **`--hero-hud` y `--hero-hud-spark`** se declaran en `.hero` (derivados de
+  `--color-sand`). Son las que dan color al marco y al riel.
+- **Con `prefers-reduced-motion: reduce`** el grano se congela y la chispa del
+  riel desaparece, pero el marco, el riel y la viñeta se mantienen: son
+  estáticos y no suponen movimiento. El video pasa a póster, como siempre.
+
+
+### 4.3d Layout del hero en desktop
+
+Por debajo de 64 rem el hero es una pila lineal: etiqueta → titular →
+entradilla → botones → tarjeta del podcast. Desde 64 rem pasa a **dos
+columnas** mediante `grid-template-areas` en `.hero__inner`: el texto respira a
+la izquierda y la tarjeta se ancla abajo a la derecha (`align-self: end`), a la
+misma línea de base que los CTA. El orden semántico del HTML no cambia: la
+tarjeta sigue siendo el último hijo, solo cambia su celda.
+
+Detalles que no se deben tocar a la ligera:
+
+- **La columna derecha es `clamp(17rem, 31vw, 21rem)`.** El tope de 21 rem es
+  el ancho máximo que deja al titular espacio suficiente para no partirse mal:
+  «Todo comienza» ocupa 748 px a tamaño máximo, así que la columna izquierda
+  nunca puede bajar de ~775 px en 1440. Si agrandas **la pista**, el titular
+  rompe en «Todo» / «comienza» (la tarjeta, en cambio, puede desbordar su
+  pista hacia la izquierda sin tocar el grid: ver el punto siguiente).
+- **La tarjeta tiene ancho propio: `width: 28rem` + `justify-self: end`.** Es
+  más ancha que su pista (336 px) y desborda hacia la izquierda sin ensanchar
+  la columna del titular ni empujar los botones: el gutter de tinta
+  (botones ↔ tarjeta) queda en ≥43 px en 1440/1920 y ≥53 px en 1280. No quites
+  `max-width: none`: sin él, `100%` la recortaría a la pista.
+- **La tarjeta es una rejilla de dos filas** (`display: grid` +
+  `display: contents` en `.hero__audio-body` y `.hero__audio-line`): fila 1 =
+  eyebrow (izq.) + `21 min` (dcha.); fila 2 = ecualizador + título + play.
+  Con eso el título cabe en **una sola línea** en todos los anchos desktop
+  (intrínseco 300 px) y la tarjeta baja de 113 px a **85 px** de alto. El
+  `line-height: 1.3` de eyebrow y duración evita el interlineado heredado
+  (1.75) que inflaba la fila 1.
+- **Medidas verificadas** (Chrome/Playwright, 1024–1920): tarjeta 448×85,
+  eyebrow y título a 1 línea siempre, sin solape vertical con titular ni
+  entradilla, botones en una fila desde ~1151 px (más abajo se apilan y el
+  gutter crece). La sonda está en `mb-hero-card.mjs` (fuera del repo).
+- **`Episodio&nbsp;01`.** El nbsp impide el corte que dejaba el «01» huérfano
+  en una segunda línea cuando la tarjeta no da abajo para una sola línea.
+- **`max-width: none` en `.hero__inner`** es lo que habilita las dos columnas;
+  el riel `::before` sigue anclado a su borde izquierdo y no entra en el grid
+  (va con `position: absolute`).
 
 ### 4.4 Imágenes de metadatos (no pasan por `config.js`)
 

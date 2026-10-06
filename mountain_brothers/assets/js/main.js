@@ -19,7 +19,8 @@
     MB.video.init();
     MB.carousel.init();
     MB.misc.init();
-    MB.podcast.init();
+    MB.toTop.init();
+    MB.epline.init();
 
     /* 3 · Producto */
     MB.quiz.init();

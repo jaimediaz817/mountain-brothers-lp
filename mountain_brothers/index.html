@@ -75,6 +75,10 @@
       <path d="M12 4.5v15M5.5 13l6.5 6.5L18.5 13"/>
     </symbol>
 
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19.5v-15M5.5 11 12 4.5 18.5 11"/>
+    </symbol>
+
     <symbol id="i-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
       <path d="M9.5 5.5v13M14.5 5.5v13"/>
     </symbol>
@@ -221,7 +225,7 @@
       </nav>
 
       <div class="site-nav__actions">
-        <a class="btn btn--primary btn--sm site-nav__cta" href="#primer-paso">Comenzar</a>
+        <a class="btn btn--primary btn--sm site-nav__cta" href="#primer-paso">Comenzar la aventura</a>
         <button
           class="btn-icon nav-toggle"
           type="button"
@@ -253,7 +257,7 @@
     </nav>
     <div class="nav-drawer__foot">
       <a class="btn btn--primary" href="#primer-paso">
-        Comenzar
+        Comenzar la aventura
         <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg>
       </a>
       <p class="meta">Quindío · Colombia</p>
@@ -311,6 +315,26 @@
             </a>
             <a class="btn btn--on-image btn--lg" href="#explorar">Explorar Mountain Brothers</a>
           </div>
+
+          <!-- Acceso directo al podcast: tarjeta "now playing" que rompe el
+               patrón de los botones y hace visible el programa de audio ya
+               en el primer pantallazo. Toda la tarjeta es el enlace.
+               OJO: el nbsp de "Episodio 01" evita el corte que dejaba el
+               "01" huérfano en una segunda línea del eyebrow. -->
+          <a class="hero__audio" href="#relatos"
+             aria-label="Ir a Relatos de la Montaña: escuchar el episodio 01 del podcast, 21 minutos">
+            <span class="hero__audio-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="hero__audio-body">
+              <span class="hero__audio-eyebrow">Relatos de la Montaña · Episodio&nbsp;01</span>
+              <span class="hero__audio-line">
+                <span class="hero__audio-title">Escucha la montaña antes de subirla</span>
+                <span class="hero__audio-len">21 min</span>
+              </span>
+            </span>
+            <span class="hero__audio-play" aria-hidden="true">
+              <svg><use href="#i-play"></use></svg>
+            </span>
+          </a>
         </div>
 
         <div class="hero__foot">
@@ -1564,48 +1588,135 @@
           </p>
         </div>
 
-        <!-- Podcast: audio que simula una episodio -->
-        <div class="story" data-reveal>
+        <!-- Podcast: audio que simula una episodio.
+             Variante story--podcast: en desktop la columna del player
+             (story__body) es la más ancha para que el reproductor respire. -->
+        <div class="story story--podcast" data-reveal>
           <div class="story__media">
             <div class="story__cover" aria-hidden="true">
-              <svg><use href="#i-audio"></use></svg>
+              <video
+                class="story__cover__video"
+                data-autoplay
+                src="assets/videos/video_podcast_fondo_seccion.mp4"
+                autoplay muted loop playsinline preload="metadata"></video>
+              <span class="story__cover__scrim"></span>
               <span class="story__cover__badge">Podcast</span>
             </div>
           </div>
 
           <div class="story__body">
             <div class="story__meta">
-              <span class="tag">Episodio 01</span>
+              <span class="tag" data-epline-epnum>Episodio 01</span>
               <span class="tag tag--demo">Demostración</span>
-              <span class="meta">· 21 min</span>
+              <span class="meta" data-epline-epmin>· 21 min</span>
             </div>
 
-            <h3 class="story__title">Supervivencia y catarsis en el Nevado del Tolima.</h3>
+            <h3 class="story__title" data-epline-eptitle>Supervivencia y catarsis en el Nevado del Tolima.</h3>
             <p class="story__text">
-              Un relato desde la alta montaña sobre lo que cambia cuando el cuerpo
-              llega a su límite y la mente sigue. No es un manual: es una historia
-              contada con voz propia, con silencios y con ruido de ventisca.
+              No son manuales: son relatos desde la montaña, contados con voz
+              propia, con silencios y con ruido de ventisca. Cada episodio es
+              una pieza de demostración del programa.
             </p>
 
-            <figure class="podcast">
-              <div class="podcast__head">
-                <span class="podcast__live" aria-hidden="true">
-                  <span></span>
-                </span>
-                <span class="podcast__label">Audio</span>
-                <span class="meta" id="relatos-time">0:00 / 20:57</span>
+            <!-- Player "Línea del Episodio": partes autogeneradas según duración,
+                 waveform que se dibuja conforme suena, línea viva y retomar.
+                 Sin JS conserva el <audio controls> nativo (mejora progresiva). -->
+            <figure class="epline" data-epline="relatos">
+              <div class="epline__top">
+                <span class="epline__badge"><span class="epline__eq" aria-hidden="true"><i></i><i></i><i></i></span>Audio</span>
+                <span class="epline__status" data-epline-status role="status" aria-live="polite">Cargando audio…</span>
+                <button type="button" class="epline__resume" data-epline-resume hidden></button>
               </div>
 
-              <div class="podcast__player" data-relatos-audio>
-                <audio
-                  id="relatos-audio-el"
-                  src="assets/audios/Supervivencia_y_catarsis_en_el_Nevado_Tolima.m4a"
-                  preload="metadata"
-                  controls>
-                  Tu navegador no puede reproducir este archivo de audio.
-                  <a href="assets/audios/Supervivencia_y_catarsis_en_el_Nevado_Tolima.m4a">Descargar el audio (M4A)</a>.
-                </audio>
+              <!-- Selector de episodios: lista minimalista, el clic cambia de
+                   episodio y reproduce. Duraciones reales (metadata). -->
+              <div class="epline__eps" data-epline-eps>
+                <p class="epline__eps-label">Episodios</p>
+                <ul class="epline__ep-list">
+                  <li>
+                    <button type="button" class="epline__ep is-active" data-epline-ep="relatos" data-ep-num="01" aria-current="true">
+                      <span class="epline__ep-n">01</span>
+                      <span class="epline__ep-title">Supervivencia y catarsis en el Nevado del Tolima</span>
+                      <span class="epline__ep-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+                      <span class="epline__ep-dur" data-epline-epdur>—:—</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="epline__ep" data-epline-ep="quindio" data-ep-num="02">
+                      <span class="epline__ep-n">02</span>
+                      <span class="epline__ep-title">Tragedia y supervivencia en el Quindío</span>
+                      <span class="epline__ep-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+                      <span class="epline__ep-dur" data-epline-epdur>—:—</span>
+                    </button>
+                  </li>
+                </ul>
               </div>
+
+              <div class="epline__stage">
+                <button type="button" class="epline__play" data-epline-play aria-label="Reproducir episodio">
+                  <svg aria-hidden="true"><use href="#i-play"></use></svg>
+                </button>
+
+                <div class="epline__scrub" data-epline-scrub
+                     role="slider" tabindex="0"
+                     aria-label="Posición del episodio"
+                     aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+                     aria-valuetext="0:00 de 20:57">
+                  <canvas class="epline__wave" data-epline-canvas aria-hidden="true"></canvas>
+                  <span class="epline__cursor" data-epline-cursor aria-hidden="true" hidden></span>
+                  <div class="epline__bubble" data-epline-bubble hidden aria-hidden="true">0:00</div>
+                  <span class="epline__toast" data-epline-toast aria-hidden="true"></span>
+                </div>
+
+                <p class="epline__clock">
+                  <span data-epline-cur>0:00</span><span aria-hidden="true"> / </span><span data-epline-dur>—:—</span>
+                </p>
+              </div>
+
+              <ol class="epline__stops" data-epline-stops aria-label="Partes del episodio"></ol>
+
+              <div class="epline__bar">
+                <button type="button" class="epline__btn" data-epline-back aria-label="Retroceder 15 segundos">
+                  <span aria-hidden="true">−15</span>
+                </button>
+                <button type="button" class="epline__btn" data-epline-fwd aria-label="Adelantar 15 segundos">
+                  <span aria-hidden="true">+15</span>
+                </button>
+                <div class="epline__speed" data-epline-speedwrap>
+                  <button type="button" class="epline__btn epline__btn--speed" data-epline-speed aria-haspopup="true" aria-expanded="false" aria-controls="epline-speed-menu" aria-label="Velocidad de reproducción: 1×">1×</button>
+                  <div class="epline__speed-menu" id="epline-speed-menu" data-epline-speedmenu role="menu" aria-label="Velocidad de reproducción">
+                    <button type="button" class="epline__speed-opt is-active" data-epline-opt="1" role="menuitemradio" aria-checked="true">1× <span class="epline__speed-normal">Normal</span></button>
+                    <button type="button" class="epline__speed-opt" data-epline-opt="1.25" role="menuitemradio" aria-checked="false">1.25×</button>
+                    <button type="button" class="epline__speed-opt" data-epline-opt="1.5" role="menuitemradio" aria-checked="false">1.5×</button>
+                    <button type="button" class="epline__speed-opt" data-epline-opt="2" role="menuitemradio" aria-checked="false">2×</button>
+                  </div>
+                </div>
+                <button type="button" class="epline__btn" data-epline-sleep aria-label="Temporizador de apagado: desactivado">
+                  <span aria-hidden="true">⏻</span>
+                  <span data-epline-sleep-label>Apagar</span>
+                </button>
+                <label class="epline__vol">
+                  <span aria-hidden="true">Vol</span>
+                  <input type="range" data-epline-vol min="0" max="1" step="0.05" value="1" aria-label="Volumen">
+                </label>
+                <span class="epline__hint" data-epline-hint aria-hidden="true">Espacio · ←/→ 15 s</span>
+                <a class="epline__btn" data-epline-dl href="assets/audios/Supervivencia_y_catarsis_en_el_Nevado_Tolima.m4a" download aria-label="Descargar el audio (M4A)">
+                  <svg aria-hidden="true"><use href="#i-arrow-down"></use></svg>
+                </a>
+                <button type="button" class="epline__btn epline__btn--repeat" data-epline-repeat hidden>
+                  <svg aria-hidden="true"><use href="#i-refresh"></use></svg>
+                  <span>Repetir</span>
+                </button>
+              </div>
+
+              <audio
+                data-epline-audio
+                controls
+                preload="metadata"
+                src="assets/audios/Supervivencia_y_catarsis_en_el_Nevado_Tolima.m4a">
+                Tu navegador no puede reproducir este archivo de audio.
+                <a href="assets/audios/Supervivencia_y_catarsis_en_el_Nevado_Tolima.m4a">Descargar el audio (M4A)</a>.
+              </audio>
 
               <figcaption class="meta">
                 Pieza de audio demostrativa del programa Relatos de la Montaña.
@@ -1852,6 +1963,20 @@
   </footer>
 
   <!-- ======================================================================
+       VOLVER ARRIBA · flotante
+       Aparece fijo en la esquina inferior derecha al hacer scroll.
+       Oculto por defecto ([hidden]): si el JS no corre, nunca se muestra.
+       ====================================================================== -->
+  <button
+    class="to-top"
+    type="button"
+    data-to-top
+    hidden
+    aria-label="Volver al inicio de la página">
+    <svg aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+  </button>
+
+  <!-- ======================================================================
        SCRIPTS
        Scripts clásicos con defer: respetan el orden y funcionan abriendo
        index.html directamente (file://), sin servidor ni build.
@@ -1863,6 +1988,7 @@
   <script src="assets/js/guide.js" defer></script>
   <script src="assets/js/knowledge.js" defer></script>
   <script src="assets/js/momentos.js" defer></script>
+  <script src="assets/js/epline.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>

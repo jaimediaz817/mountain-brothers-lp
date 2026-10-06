@@ -31,7 +31,8 @@
       'equipment': 'assets/images/equipment.svg',
       'morrogacho': 'assets/images/morrogacho.png',
       'paramillo': 'assets/images/paramillo.png',
-      'nevado-tolima': 'assets/images/nevado-tolima.png'
+      'nevado-tolima': 'assets/images/nevado-tolima.png',
+      'podcast-cover': 'assets/images/podcast-cover.jpg'
     },
 
     /* Marca */
@@ -67,7 +68,8 @@
 
     /* Mapa semántico de audio: clave → ruta del archivo */
     audios: {
-      relatos: 'assets/audios/Supervivencia_y_catarsis_en_el_Nevado_Tolima.m4a'
+      relatos: 'assets/audios/Supervivencia_y_catarsis_en_el_Nevado_Tolima.m4a',
+      quindio: 'assets/audios/tragedia_y_supervivencia_quindio.m4a'
     }
   };
 

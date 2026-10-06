@@ -89,7 +89,7 @@
 .btn--lg {
   padding: 1.1rem 2rem;
   min-height: 3.4rem;
-  font-size: var(--text-base);
+  font-size: var(--text-body);
 }
 
 /* Enlace con flecha: microinteracción de desplazamiento */
@@ -142,6 +142,73 @@
   border-color: var(--line-strong);
 }
 
+/* --------------------------------------------------------------------------
+   VOLVER ARRIBA · botón flotante
+   Minimalista: pill, un solo icono, sombra sutil. Fijo en la esquina inferior
+   derecha y legible sobre cualquier sección (revierte en la paleta de marca).
+   La visibilidad se controla con .is-visible (vía JS) manteniendo el botón
+   sin puntero y fuera del árbol accesible cuando está oculto.
+   -------------------------------------------------------------------------- */
+.to-top {
+  --to-top-size: clamp(2.75rem, 5.5vw, 3.25rem);
+
+  position: fixed;
+  right: max(var(--space-sm), env(safe-area-inset-right));
+  bottom: max(var(--space-sm), env(safe-area-inset-bottom));
+  /* Justo por encima del contenido (z-sticky) pero bajo nav/overlays/modal */
+  z-index: 150;
+
+  display: grid;
+  place-items: center;
+  width: var(--to-top-size);
+  height: var(--to-top-size);
+
+  color: var(--color-warm-white);
+  background-color: var(--color-mountain);
+  border: var(--hairline) solid rgba(243, 240, 232, 0.2);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lift);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.75rem);
+  pointer-events: none;
+
+  transition:
+    opacity var(--dur-sm) var(--ease-out),
+    transform var(--dur-sm) var(--ease-out),
+    visibility var(--dur-sm) var(--ease-out),
+    background-color var(--dur-sm) var(--ease-out),
+    border-color var(--dur-sm) var(--ease-out);
+}
+
+.to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.to-top svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  transition: transform var(--dur-sm) var(--ease-out);
+}
+
+.to-top:hover,
+.to-top:focus-visible {
+  background-color: var(--color-mountain-deep);
+  border-color: rgba(243, 240, 232, 0.34);
+}
+
+.to-top:hover svg { transform: translateY(-2px); }
+
+/* Foco accesible: refuerza el anillo del color vivo sin romper la estética */
+.to-top:focus-visible {
+  outline: 2px solid var(--color-vivo-leaf);
+  outline-offset: 3px;
+}
+
 /* ==========================================================================
    TAGS · LABELS · PRODUCT TAGS
    ========================================================================== */
@@ -164,6 +231,13 @@
 .tag--demo {
   color: var(--accent);
   border-style: dashed;
+}
+
+/* En secciones forest el accent (sand) daba 4.43:1 sobre surface+mountain;
+   sand-soft lo sube a 5.96:1. Hoy solo aparece en #reto y #relatos (ambas
+   oscuras), pero el alcance se limita a forest por si se reutiliza en una clara. */
+.is-forest .tag--demo {
+  color: var(--color-sand-soft);
 }
 
 .tag svg { width: 0.85rem; height: 0.85rem; }
@@ -405,6 +479,19 @@
 .nav-links__item:hover { color: var(--color-warm-white); }
 .nav-links__item:hover::after { transform: scaleX(1); }
 
+.nav-links__item[aria-current="true"] {
+  color: var(--accent-strong);
+}
+.nav-links__item[aria-current="true"]::after { transform: scaleX(1); }
+
+.nav-drawer__link[aria-current="true"] {
+  color: var(--accent-strong);
+}
+
+.nav-drawer__link[aria-current="true"] .nav-drawer__index {
+  color: var(--accent-strong);
+}
+
 .site-nav__actions {
   display: flex;
   align-items: center;
@@ -572,7 +659,7 @@ body[data-nav-open="true"] { overflow: hidden; }
   flex: 1 1 auto;
   min-width: 0;
   padding-block: 0.75rem;
-  font-size: var(--text-base);
+  font-size: var(--text-body);
   color: var(--text-base);
   background: none;
   border: 0;
@@ -669,7 +756,7 @@ body[data-nav-open="true"] { overflow: hidden; }
 .quiz-option__label {
   padding-right: 2rem;
   font-family: var(--font-display);
-  font-size: var(--text-base);
+  font-size: var(--text-body);
   font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-snug);
 }
@@ -1037,12 +1124,14 @@ body[data-nav-open="true"] { overflow: hidden; }
   border: var(--hairline) solid var(--line);
   border-radius: var(--radius-md);
   background-color: var(--surface);
-  transition: border-color var(--dur-sm) var(--ease-out), transform var(--dur-sm) var(--ease-out);
+  transition: border-color var(--dur-sm) var(--ease-out), transform var(--dur-sm) var(--ease-out), box-shadow var(--dur-sm) var(--ease-out);
 }
 
-.profile:hover {
-  transform: translateY(-3px);
+.profile:hover,
+.profile:focus-within {
+  transform: translateY(-4px);
   border-color: var(--line-strong);
+  box-shadow: var(--shadow-lift);
 }
 
 /* Perfil coincidente con el resultado del test */

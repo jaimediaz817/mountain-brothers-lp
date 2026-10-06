@@ -201,6 +201,36 @@
     }
   };
 
+  /* Active nav link based on scroll position */
+  MB.nav.setActiveLink = function () {
+    var links = util.qsa('.nav-links__item[href^="#"], .nav-drawer__link[href^="#"]');
+    if (!links.length) { return; }
+
+    var sections = links.map(function (link) {
+      var id = link.getAttribute('href');
+      return util.qs(id);
+    }).filter(Boolean);
+
+    if (!sections.length) { return; }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var id = entry.target.id;
+        var link = util.qs('.nav-links__item[href="#' + id + '"], .nav-drawer__link[href="#' + id + '"]');
+        if (link) {
+          if (entry.isIntersecting) {
+            links.forEach(function (l) { l.removeAttribute('aria-current'); });
+            link.setAttribute('aria-current', 'true');
+          }
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.1 });
+
+    sections.forEach(function (sec) { observer.observe(sec); });
+  };
+
+  MB.nav.setActiveLink();
+
   /* ------------------------------------------------------------ parallax */
   MB.parallax = {
     /**
@@ -571,42 +601,67 @@
     init: function () {
       var year = util.qs('[data-year]');
       if (year) { year.textContent = String(new Date().getFullYear()); }
+
+      /* Oculta el indicador de scroll tras la primera interacción */
+      var scrollCue = util.qs('.scroll-cue');
+      if (scrollCue) {
+        var hidden = false;
+        function hideCue() {
+          if (!hidden) {
+            hidden = true;
+            scrollCue.hidden = true;
+            window.removeEventListener('scroll', onScroll, { passive: true });
+          }
+        }
+        function onScroll() {
+          if (window.scrollY > 100) { hideCue(); }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
     }
   };
 
-  /* ----------------------------------------------------- podcast timer  */
-  /**
-   * Temporizador del reproductor de audio de Relatos de la Montaña.
-   * Muestra el progreso en tiempo real (0:00 / 6:00) sin depender de JS
-   * para la reproducción: si el navegador no puede reproducir, el etiquetado
-   * de estado sigue visible.
-   */
-  MB.podcast = {
+  /* ------------------------------------------------------------- to-top  */
+  /* Botón flotante "volver arriba": aparece tras cierto scroll y devuelve
+     al inicio con movimiento suave (o inmediato si reduce-motion). Usa
+     requestAnimationFrame para no saturar el hilo principal al hacer scroll. */
+  MB.toTop = {
+    THRESHOLD: 480,
+
     init: function () {
-      var audio = document.getElementById('relatos-audio-el');
-      var label = document.getElementById('relatos-time');
-      if (!audio || !label) { return; }
+      var btn = util.qs('[data-to-top]');
+      if (!btn) { return; }
 
-      function fmt(seconds) {
-        seconds = Math.max(0, Math.floor(seconds || 0));
-        var m = Math.floor(seconds / 60);
-        var s = seconds % 60;
-        return m + ':' + (s < 10 ? '0' : '') + s;
+      /* Sin rAF el botón queda con [hidden]: nunca se muestra ante fallos. */
+      if (!(window.requestAnimationFrame && 'scrollTo' in window)) { return; }
+
+      /* Desbloquea el botón; la visibilidad la decide .is-visible en CSS. */
+      btn.hidden = false;
+
+      var ticking = false;
+
+      function readScroll() {
+        ticking = true;
+        window.requestAnimationFrame(function () {
+          var top = window.pageYOffset ||
+                    document.documentElement.scrollTop ||
+                    document.body.scrollTop ||
+                    0;
+          btn.classList.toggle('is-visible', top > MB.toTop.THRESHOLD);
+          ticking = false;
+        });
       }
 
-      function update() {
-        var current = audio.duration && isFinite(audio.duration)
-          ? fmt(audio.currentTime)
-          : '0:00';
-        var total = audio.duration && isFinite(audio.duration)
-          ? fmt(audio.duration)
-          : '0:00';
-        label.textContent = current + ' / ' + total;
+      function goTop() {
+        var behavior = util.reducedMotion() ? 'auto' : 'smooth';
+        window.scrollTo({ top: 0, left: 0, behavior: behavior });
       }
 
-      audio.addEventListener('timeupdate', update);
-      audio.addEventListener('loadedmetadata', update);
-      audio.addEventListener('durationchange', update);
+      window.addEventListener('scroll', readScroll, { passive: true });
+      btn.addEventListener('click', goTop);
+
+      /* Estado inicial (p. ej. recarga con la página a mitad de scroll) */
+      readScroll();
     }
   };
 })(window.MB = window.MB || {});

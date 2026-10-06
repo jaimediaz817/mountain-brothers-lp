@@ -18,6 +18,10 @@
   overflow: hidden;
   color: var(--color-warm-white);
   background-color: var(--color-obsidian);
+  /* HUD del hero · esquinas de visor y hairline del riel.
+     Derivados de --color-sand, el acento de las secciones .is-dark. */
+  --hero-hud: rgba(182, 165, 139, 0.58);
+  --hero-hud-spark: rgba(207, 192, 168, 0.95);
 }
 
 .hero__bg {
@@ -70,10 +74,16 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+  /* Recorta el grano de .hero__scrim::after, que es mayor que su caja. */
+  overflow: hidden;
   background:
     linear-gradient(to bottom, rgba(10, 15, 14, 0.78) 0%, rgba(10, 15, 14, 0.32) 42%, rgba(10, 15, 14, 0.94) 100%),
     linear-gradient(to right, rgba(10, 15, 14, 0.68) 0%, transparent 62%),
-    radial-gradient(120% 60% at 50% 100%, rgba(10, 15, 14, 0.55) 0%, transparent 70%);
+    radial-gradient(120% 60% at 50% 100%, rgba(10, 15, 14, 0.55) 0%, transparent 70%),
+    /* Viñeta cinematográfica: cierra las esquinas y concentra la mirada en el
+       centro. Va en ÚLTIMO lugar de la pila para quedar por DEBAJO de los
+       degradados de legibilidad: el contraste del texto no se altera. */
+    radial-gradient(122% 122% at 50% 46%, transparent 44%, rgba(10, 15, 14, 0.62) 100%);
   pointer-events: none;
 }
 
@@ -83,6 +93,23 @@
   display: grid;
   gap: var(--space-lg);
   max-width: 52rem;
+}
+
+/* Refuerzo de legibilidad: gradiente solo detrás del bloque de texto.
+   No oscurece la imagen completa, solo el área donde hay contenido. */
+.hero__inner::before {
+  content: "";
+  position: absolute;
+  inset: -2rem;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 15, 14, 0.55) 0%,
+    rgba(10, 15, 14, 0.25) 40%,
+    transparent 70%
+  );
+  border-radius: var(--radius-lg);
+  pointer-events: none;
 }
 
 .hero__label {
@@ -118,6 +145,200 @@
   flex-wrap: wrap;
   gap: var(--space-sm);
   margin-top: var(--space-2xs);
+}
+
+/* Acceso directo al podcast: tarjeta "now playing" (patrón roto a propósito
+   frente a los botones de navegación). Glass sobre scrim: obsidian 85% +
+   blur — verificado en peor caso (fondo blanco puro debajo):
+   warm-white 11.24:1 · sand 5.33:1 · len 6.14:1 (mínimo exigido 4.5:1). */
+.hero__audio {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  max-width: 25rem;
+  min-height: 52px;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  border: var(--hairline) solid rgba(243, 240, 232, 0.24);
+  background-color: rgba(10, 15, 14, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--color-warm-white);
+  text-decoration: none;
+  box-shadow: var(--shadow-soft);
+  transition: border-color 0.25s var(--ease-in-out), transform 0.25s var(--ease-in-out),
+    background-color 0.25s var(--ease-in-out);
+}
+
+.hero__audio:hover {
+  border-color: var(--color-sand);
+  background-color: rgba(10, 15, 14, 0.92);
+  transform: translateY(-2px);
+}
+
+.hero__audio:focus-visible {
+  outline: 2px solid var(--color-sand);
+  outline-offset: 3px;
+}
+
+/* Ecualizador (mismo lenguaje que el player de #relatos) */
+.hero__audio-eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 15px;
+  flex: none;
+}
+
+.hero__audio-eq i {
+  width: 3px;
+  border-radius: 2px;
+  background-color: var(--color-vivo-clay);
+  transform-origin: bottom;
+}
+
+.hero__audio-eq i:nth-child(1) { height: 40%; }
+.hero__audio-eq i:nth-child(2) { height: 85%; }
+.hero__audio-eq i:nth-child(3) { height: 55%; }
+
+.hero__audio:hover .hero__audio-eq i,
+.hero__audio:focus-visible .hero__audio-eq i {
+  animation: epline-eq 0.85s var(--ease-in-out) infinite alternate;
+}
+
+.hero__audio:hover .hero__audio-eq i:nth-child(2),
+.hero__audio:focus-visible .hero__audio-eq i:nth-child(2) { animation-delay: 0.18s; }
+
+.hero__audio:hover .hero__audio-eq i:nth-child(3),
+.hero__audio:focus-visible .hero__audio-eq i:nth-child(3) { animation-delay: 0.36s; }
+
+.hero__audio-body {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 0.1rem;
+}
+
+.hero__audio-eyebrow {
+  font-size: 0.625rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--color-sand);
+}
+
+.hero__audio-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.hero__audio-title {
+  font-size: 0.8125rem;
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+}
+
+.hero__audio-len {
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  color: rgba(243, 240, 232, 0.68);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero__audio-play {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--color-sand);
+  color: var(--color-obsidian);
+  transition: transform 0.2s var(--ease-in-out), background-color 0.2s var(--ease-in-out);
+}
+
+.hero__audio-play svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.hero__audio:hover .hero__audio-play {
+  background-color: var(--color-warm-white);
+  transform: scale(1.08);
+}
+
+@media (max-width: 30rem) {
+  .hero__audio {
+    max-width: 100%;
+    border-radius: var(--radius-lg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   DESKTOP · la tarjeta del podcast sube a la columna derecha
+   Por defecto el hero es una pila lineal: etiqueta → titular → entradilla →
+   botones → tarjeta, con la tarjeta pegada al CTA y todo el peso visual
+   acumulado en una sola columna. Desde 64rem el contenedor tiene ancho de
+   sobra, así que el hero pasa a dos columnas: el texto respira a la
+   izquierda y la tarjeta se ancla abajo a la derecha, a la altura de los
+   botones (misma línea de base que el CTA, sin competir con él).
+   Las áreas nombradas dejan el orden semántico del HTML intacto: la tarjeta
+   sigue siendo el último hijo, solo cambia su celda.
+   -------------------------------------------------------------------------- */
+@media (min-width: 64rem) {
+  .hero__inner {
+    /* La 2ª columna es fluida y se topa en 21rem: es el ancho máximo que
+       el titular sigue teniendo a la izquierda para no partirse mal
+       («Todo comienza» ocupa 748px a tamaño máximo → la columna izquierda
+       nunca baja de ~775px en 1440). */
+    grid-template-columns: minmax(0, 1fr) clamp(17rem, 31vw, 21rem);
+    grid-template-areas:
+      "label   audio"
+      "title   audio"
+      "subhead audio"
+      "actions audio";
+    column-gap: clamp(var(--space-lg), 4vw, 4.5rem);
+    max-width: none;
+  }
+
+  .hero__label { grid-area: label; }
+  .hero__title { grid-area: title; }
+  .hero__subhead { grid-area: subhead; }
+  .hero__actions { grid-area: actions; }
+
+  .hero__audio {
+    grid-area: audio;
+    align-self: end;
+    /* Ancho propio, mayor que la pista (336px) y justificado a la derecha:
+       desborda hacia la izquierda sin ensanchar la columna del titular ni
+       empujar los botones (gutter ≥43px a 1440 · ≥52px a 1280). */
+    justify-self: end;
+    width: 28rem;
+    max-width: none;
+    /* Dos filas en vez del apilado flex:
+       fila 1 = eyebrow (izq.) + duración (dcha.)
+       fila 2 = ecualizador + título (1 línea) + play. */
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "eyebrow eyebrow len"
+      "eq      title   play";
+    align-items: center;
+    column-gap: var(--space-sm);
+    row-gap: 0.1rem;
+  }
+
+  /* Los hijos del body (y de la línea) pasan a ser celdas directas de la tarjeta */
+  .hero__audio-body,
+  .hero__audio-line { display: contents; }
+  .hero__audio-eyebrow { grid-area: eyebrow; }
+  .hero__audio-eq { grid-area: eq; }
+  .hero__audio-title { grid-area: title; }
+  .hero__audio-len { grid-area: len; justify-self: end; }
+  .hero__audio-play { grid-area: play; }
 }
 
 .hero__foot {
@@ -168,6 +389,170 @@
   50% {
     transform: translateY(3px);
     opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   HERO · capa cinematográfica
+   Grano fílmico, viñeta (arriba, en .hero__scrim), marco de visor y riel.
+   Todo decorativo y sin nodos nuevos: vive en pseudo-elementos, va con
+   pointer-events:none y se apaga por completo con prefers-reduced-motion.
+   Reparto:
+     .hero__scrim::after   → grano
+     .hero::after          → esquinas en L (marco de visor)
+     .hero__inner::before  → riel: etiqueta rotada + hairline con chispa
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   GRANO
+   Rompe la uniformidad digital del video: un plano oscuro con ruido fino se
+   lee como material filmado, no como archivo plano. La copia al 7% es
+   deliberadamente imperceptible: se nota en que la imagen "respira", no en
+   que se vea suciedad.
+   El elemento es 3x la caja y se mueve por transform (solo compositor, sin
+   repintar); .hero__scrim lo recorta.
+   -------------------------------------------------------------------------- */
+.hero__scrim::after {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  z-index: 0;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  pointer-events: none;
+  will-change: transform;
+  animation: mb-grain 7s steps(6) infinite;
+}
+
+/* Saltos discretos y cortos: el grano debe vibrar, no desplazarse. */
+@keyframes mb-grain {
+
+  0%,
+  100% { transform: translate3d(0, 0, 0); }
+
+  17% { transform: translate3d(-1.2%, 0.8%, 0); }
+
+  33% { transform: translate3d(0.9%, -1.1%, 0); }
+
+  50% { transform: translate3d(-0.8%, -0.7%, 0); }
+
+  67% { transform: translate3d(1.2%, 0.5%, 0); }
+
+  83% { transform: translate3d(-0.5%, 1.1%, 0); }
+}
+
+/* --------------------------------------------------------------------------
+   MARCO DE VISOR
+   Cuatro esquinas en L sin cerrar el rectángulo: lee como objetivo de
+   cámara o instrumento de campo, que es de lo que va la marca.
+   El borde SUPERIOR arranca a 6rem, por debajo de la barra de navegación
+   (89px de alto, con el logo hasta y=80): así el marco empieza donde acaba
+   la barra y nunca se cruza con el logo, que en pantallas estrechas se pega
+   al canto izquierdo. Los otros tres bordes van a 1.25rem y no le comen
+   aire al contenido.
+   El color es --color-sand (el acento de las secciones .is-dark).
+   -------------------------------------------------------------------------- */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 6rem 1.25rem 1.25rem;
+  z-index: 3;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--hero-hud), var(--hero-hud)),
+    linear-gradient(var(--hero-hud), var(--hero-hud)),
+    linear-gradient(var(--hero-hud), var(--hero-hud)),
+    linear-gradient(var(--hero-hud), var(--hero-hud)),
+    linear-gradient(var(--hero-hud), var(--hero-hud)),
+    linear-gradient(var(--hero-hud), var(--hero-hud)),
+    linear-gradient(var(--hero-hud), var(--hero-hud)),
+    linear-gradient(var(--hero-hud), var(--hero-hud));
+  background-size:
+    22px 1px, 1px 22px,
+    22px 1px, 1px 22px,
+    22px 1px, 1px 22px,
+    22px 1px, 1px 22px;
+  background-position:
+    left top, left top,
+    right top, right top,
+    left bottom, left bottom,
+    right bottom, right bottom;
+  background-repeat: no-repeat;
+}
+
+/* --------------------------------------------------------------------------
+   RIEL
+   Etiqueta rotada que extiende la numeración 01-06 que ya usa el menú móvil
+   (.nav-drawer__index): el hero pasa a declararse "pantalla 01 · Inicio".
+   Se ancla a .hero__inner (position:absolute → no entra en su grid) para que
+   la separación con el texto sea estable en cualquier ancho, y lleva una
+   hairline con una chispa que recorre de arriba abajo, en el mismo lenguaje
+   que .scroll-cue: "sigue bajando".
+   -------------------------------------------------------------------------- */
+.hero__inner::before {
+  content: "01 · Inicio";
+  position: absolute;
+  left: -2.2rem;
+  top: 50%;
+  z-index: 1;
+  transform: translateY(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  padding-right: 0.7rem;
+  /* Alargan la caja en vertical para que la hairline (1px x 100%) se lea
+     como riel y no como un tick corto. Al ser iguales arriba y abajo, el
+     giro de 180deg no descentra la etiqueta. */
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  font-family: var(--font-body);
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(243, 240, 232, 0.46);
+  pointer-events: none;
+  /* Capa 1: la chispa (recorre la hairline). Capa 2: la hairline quieta. */
+  background-image:
+    linear-gradient(to bottom, transparent, var(--hero-hud-spark), transparent),
+    linear-gradient(to bottom, var(--hero-hud), var(--hero-hud));
+  background-size: 1px 2.4rem, 1px 100%;
+  background-repeat: no-repeat;
+  background-position: 100% -2.4rem, 100% 0;
+  animation: mb-rail 5.5s var(--ease-in-out) infinite;
+}
+
+@keyframes mb-rail {
+
+  0% { background-position: 100% -2.4rem, 100% 0; }
+
+  100% { background-position: 100% 100%, 100% 0; }
+}
+
+/* El riel vive 2.2rem a la izquierda del texto, dentro del margen lateral del
+   contenedor (--container-pad). Ese margen solo alcanza 3.2rem cuando el
+   viewport llega a 80rem (1280px); por debajo el riel quedaría pegado al canto
+   o directamente fuera de pantalla, así que desaparece y el hero queda limpio. */
+@media (max-width: 79.99rem) {
+  .hero__inner::before { content: none; }
+}
+
+/* En pantallas de poca altura el marco se acerca a los cantos laterales e
+   inferior, pero el borde superior sigue respetando la barra de navegación. */
+@media (max-height: 34rem) {
+  .hero::after { inset: 5.5rem 0.75rem 0.75rem; }
+}
+
+/* Sin movimiento: el grano se queda fijo y la chispa del riel desaparece.
+   El marco, el riel y la viñeta son estáticos y se mantienen. */
+@media (prefers-reduced-motion: reduce) {
+  .hero__scrim::after { animation: none; }
+
+  .hero__inner::before {
+    background-image: linear-gradient(to bottom, var(--hero-hud), var(--hero-hud));
+    background-size: 1px 100%;
+    background-position: 100% 0;
+    animation: none;
   }
 }
 
@@ -290,6 +675,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Texto de respaldo del <video> («Tu navegador no puede reproducir…»):
+     por defecto heredaba negro sobre el obsidian del frame → 1.17:1. */
+  color: var(--color-warm-white);
 }
 
 /* ==========================================================================
@@ -1385,29 +1773,54 @@
   border: var(--hairline) solid var(--line);
 }
 
-/* Cover del podcast: bloque oscuro con icono y badge */
+/* Cover del podcast: video de fondo en bucle + veladura oscura + badge.
+   El gradiente de fondo queda como respaldo mientras carga el video. */
 .story__cover {
-  display: grid;
-  place-items: center;
-  gap: var(--space-sm);
+  position: relative;
+  overflow: hidden;
   aspect-ratio: 1 / 1;
   background:
     radial-gradient(circle at 32% 28%, rgba(201, 169, 126, 0.18), transparent 55%),
     linear-gradient(160deg, var(--surface-raised), var(--color-obsidian));
 }
 
-.story__cover svg {
-  width: clamp(3rem, 9vw, 4.5rem);
-  height: clamp(3rem, 9vw, 4.5rem);
-  color: var(--color-sand);
+.story__cover__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Veladura oscura de contraste: oscurece la base del encuadre para que el
+   badge y, si lo hubiera, otro contenido siempre tengan respaldo. */
+.story__cover__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 15, 14, 0.38) 0%,
+    rgba(10, 15, 14, 0.6) 55%,
+    rgba(10, 15, 14, 0.82) 100%
+  );
 }
 
 .story__cover__badge {
+  position: absolute;
+  left: var(--space-md);
+  bottom: var(--space-md);
+  z-index: 2;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: var(--hairline) solid rgba(243, 240, 232, 0.28);
+  /* 0.85 garantiza sand ≥5.3:1 incluso sobre la zona más clara del video */
+  background-color: rgba(10, 15, 14, 0.85);
   font-size: var(--text-eyebrow);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--color-sand);
 }
 
 .story__video {
@@ -1448,7 +1861,7 @@
 }
 
 .story__text {
-  font-size: var(--text-base);
+  font-size: var(--text-body);
   line-height: var(--leading-relaxed);
   color: var(--text-muted);
   max-width: 58ch;
@@ -1481,55 +1894,816 @@
   margin-top: var(--space-3xl);
 }
 
-/* --- Podcast player --- */
-.podcast {
+/* --- Línea del Episodio: player automático (partes + waveform) ---
+   Tarjeta oscura autocontenida: redeclara la paleta oscura localmente
+   (misma estrategia que .is-dark) para no heredar los verdes de .is-forest.
+   Contraste verificado sobre obsidian / obsidian-soft y también sobre el
+   fondo mountain de la sección: figcaption, barra y lista viajan dentro de
+   <figure> sin la superficie de la tarjeta debajo.
+   muted ≥5.5:1 · faint ≥4.87:1 · sand 7.49:1 · clay 7.01:1 (mín. 4.5:1).
+   faint subió de 0.54 → 0.62: con 0.54 caía a 4.10:1 sobre surface+mountain. */
+.epline {
   display: grid;
-  gap: var(--space-sm);
+  gap: var(--space-md);
   margin-top: var(--space-md);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  border: var(--hairline) solid var(--line);
+  background:
+    radial-gradient(120% 90% at 85% -10%, rgba(182, 165, 139, 0.12), transparent 60%),
+    linear-gradient(165deg, var(--color-obsidian-soft), var(--color-obsidian));
+  color: var(--color-warm-white);
+  box-shadow: var(--shadow-lift);
+  --text-muted: rgba(243, 240, 232, 0.68);
+  --text-faint: rgba(243, 240, 232, 0.62);
+  --line: rgba(243, 240, 232, 0.16);
+  --line-strong: rgba(243, 240, 232, 0.32);
+  --surface: rgba(243, 240, 232, 0.045);
+  --accent: var(--color-sand);
 }
 
-.podcast__head {
+.epline :focus-visible {
+  outline: 2px solid var(--color-sand);
+  outline-offset: 2px;
+}
+
+.epline__top {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-sm);
 }
 
-.podcast__live {
+.epline__badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-}
-
-.podcast__live span {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background-color: var(--accent);
-  animation: mb-pulse 1.6s var(--ease-in-out) infinite;
-}
-
-.podcast__label {
+  gap: 0.4rem;
   font-size: var(--text-eyebrow);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
+  color: var(--color-sand);
+}
+
+/* Ecualizador del badge: 3 barritas que bailan solo mientras suena */
+.epline__eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.epline__eq i {
+  width: 3px;
+  border-radius: 1px;
+  background-color: var(--color-vivo-clay);
+  transform-origin: bottom;
+}
+
+.epline__eq i:nth-child(1) { height: 35%; }
+.epline__eq i:nth-child(2) { height: 70%; }
+.epline__eq i:nth-child(3) { height: 45%; }
+
+.epline.is-playing .epline__eq i {
+  animation: epline-eq 0.85s var(--ease-in-out) infinite alternate;
+}
+
+.epline.is-playing .epline__eq i:nth-child(2) { animation-delay: 0.18s; }
+.epline.is-playing .epline__eq i:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes epline-eq {
+  from { transform: scaleY(0.35); }
+  to { transform: scaleY(1); }
+}
+
+.epline__status {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-warm-white);
+  font-variant-numeric: tabular-nums;
+}
+
+.epline__resume {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 36px;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: var(--hairline) solid var(--color-sand);
+  background: transparent;
+  color: var(--color-sand);
+  font: inherit;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-in-out), color 0.2s var(--ease-in-out);
+}
+
+.epline__resume:hover {
+  background-color: var(--color-sand);
+  color: var(--color-obsidian);
+}
+
+/* Selector de episodios: filas minimalistas (nº · título · EQ · duración) */
+.epline__eps {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.epline__eps-label {
+  margin: 0;
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-sand);
+}
+
+.epline__ep-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.epline__ep {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 13px auto;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  min-height: 48px;
+  padding: 0.4rem 0.75rem;
+  border: var(--hairline) solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-in-out), border-color 0.2s var(--ease-in-out),
+    color 0.2s var(--ease-in-out);
+}
+
+.epline__ep:hover {
+  background-color: var(--surface);
+  color: var(--color-warm-white);
+}
+
+.epline__ep.is-active {
+  background-color: var(--surface);
+  border-color: rgba(243, 240, 232, 0.28);
+  color: var(--color-warm-white);
+}
+
+.epline__ep-n {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+
+.epline__ep.is-active .epline__ep-n {
+  color: var(--color-sand);
+}
+
+.epline__ep-title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.epline__ep-dur {
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mini-EQ de la fila: visible solo en el episodio activo, baila si suena */
+.epline__ep-eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+  width: 13px;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-in-out);
+}
+
+.epline__ep.is-active .epline__ep-eq {
+  opacity: 1;
+}
+
+.epline__ep-eq i {
+  width: 3px;
+  border-radius: 1px;
+  background-color: var(--color-vivo-clay);
+  transform-origin: bottom;
+}
+
+.epline__ep-eq i:nth-child(1) { height: 45%; }
+.epline__ep-eq i:nth-child(2) { height: 90%; }
+.epline__ep-eq i:nth-child(3) { height: 60%; }
+
+.epline.is-playing .epline__ep.is-active .epline__ep-eq i {
+  animation: epline-eq 0.85s var(--ease-in-out) infinite alternate;
+}
+
+.epline.is-playing .epline__ep.is-active .epline__ep-eq i:nth-child(2) { animation-delay: 0.18s; }
+.epline.is-playing .epline__ep.is-active .epline__ep-eq i:nth-child(3) { animation-delay: 0.36s; }
+
+/* Fila: play · scrub · reloj */
+.epline__stage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.epline__play {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-sand);
+  color: var(--color-obsidian);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.15s var(--ease-in-out), background-color 0.2s var(--ease-in-out);
+}
+
+.epline__play:hover {
+  background-color: var(--color-warm-white);
+  transform: scale(1.04);
+}
+
+.epline__play:active {
+  transform: scale(0.96);
+}
+
+.epline__play svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.epline__scrub {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 64px;
+  border-radius: var(--radius-md);
+  background-color: rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  touch-action: none;
+  overflow: hidden;
+}
+
+.epline__wave {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.epline__bubble {
+  position: absolute;
+  top: 4px;
+  transform: translateX(-50%);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background-color: var(--color-obsidian-deep);
+  border: var(--hairline) solid var(--line-strong);
+  color: var(--color-warm-white);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+/* Línea de cursor que sigue al puntero sobre la onda */
+.epline__cursor {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: rgba(243, 240, 232, 0.45);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Toast breve al cruzar de parte (y avisos del temporizador) */
+.epline__toast {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background-color: rgba(10, 15, 14, 0.92);
+  border: var(--hairline) solid var(--color-sand);
+  color: var(--color-warm-white);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+  z-index: 2;
+}
+
+.epline__toast.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+.epline__clock {
+  flex: none;
+  margin: 0;
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Riel de partes: autogenerado (4–8 según duración) */
+.epline__stops {
+  position: relative;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+/* Progreso acumulado sobre la línea base del riel (--rail lo pinta JS) */
+.epline__stops::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: var(--rail, 0%);
+  max-width: 100%;
+  height: 2px;
+  background-color: var(--color-sand);
+  pointer-events: none;
+}
+
+.epline__stops::-webkit-scrollbar {
+  display: none;
+}
+
+.epline__stops li {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 68px;
+}
+
+.epline__stops li::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--line);
+}
+
+.epline__stops li:first-child::before {
+  left: 50%;
+}
+
+.epline__stops li:last-child::before {
+  right: 50%;
+}
+
+.epline__stop {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 0.3rem;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 0.25rem 0.35rem;
+  border: var(--hairline) solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-in-out), color 0.2s var(--ease-in-out);
+}
+
+.epline__stop::before {
+  content: "";
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background-color: var(--color-obsidian);
+  border: 2px solid var(--line-strong);
+}
+
+.epline__stop b {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  line-height: 1.1;
+}
+
+.epline__stop i {
+  font-style: normal;
+  font-size: 0.6875rem;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.epline__stop:hover {
+  background-color: var(--surface);
+  color: var(--color-warm-white);
+}
+
+/* Estado: pasada ✓ */
+.epline__stop.is-past::before {
+  background-color: var(--color-sand);
+  border-color: var(--color-sand);
+}
+
+.epline__stop.is-past {
+  color: var(--text-faint);
+}
+
+/* Estado: actual — resaltada con pulso */
+.epline__stop.is-current {
+  background-color: var(--surface);
+  border-color: rgba(243, 240, 232, 0.28);
+  color: var(--color-warm-white);
+}
+
+.epline__stop.is-current::before {
+  background-color: var(--color-vivo-clay);
+  border-color: var(--color-vivo-clay);
+  animation: epline-pulse 1.8s var(--ease-in-out) infinite;
+}
+
+.epline__stop.is-current i {
+  color: var(--color-sand);
+}
+
+/* Barra de controles */
+.epline__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.epline__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.8rem;
+  border-radius: 999px;
+  border: var(--hairline) solid var(--line);
+  background-color: var(--surface);
+  color: var(--color-warm-white);
+  font: inherit;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.2s var(--ease-in-out), background-color 0.2s var(--ease-in-out);
+}
+
+.epline__btn:hover {
+  border-color: var(--color-sand);
+}
+
+.epline__btn svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.epline__btn--repeat {
+  margin-left: auto;
+  border-color: var(--color-sand);
+  color: var(--color-sand);
+}
+
+.epline__btn--repeat:hover {
+  background-color: var(--color-sand);
+  color: var(--color-obsidian);
+}
+/* Velocidad · menú emergente de opciones (incluye 1× normal) */
+.epline__speed {
+  position: relative;
+}
+
+.epline__speed-menu {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  left: 0;
+  min-width: 9rem;
+  padding: var(--space-2xs);
+  border: var(--hairline) solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-obsidian);
+  box-shadow: var(--shadow-lift);
+  z-index: 20;
+}
+
+.epline__speed-menu:not(.is-open) {
+  display: none;
+}
+
+.epline__speed-opt {
+  display: block;
+  width: 100%;
+  padding: 0.4rem 0.7rem;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-in-out), color 0.2s var(--ease-in-out);
+}
+
+.epline__speed-opt:hover,
+.epline__speed-opt:focus-visible {
+  background-color: var(--surface);
+  color: var(--color-warm-white);
+}
+
+.epline__speed-opt.is-active {
+  background-color: var(--surface);
+  color: var(--color-sand);
+}
+
+.epline__speed-normal {
+  display: inline-block;
+  margin-inline-start: 0.4rem;
+  font-size: 0.6875rem;
+  color: var(--text-faint);
+}
+
+.epline__vol {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 0.4rem;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
   color: var(--text-muted);
 }
 
-.podcast__player {
-  background-color: var(--surface);
-  border: var(--hairline) solid var(--line);
-  border-radius: var(--radius-md);
-  padding: var(--space-sm) var(--space-md);
+.epline__vol input[type="range"] {
+  width: 96px;
+  accent-color: var(--color-sand);
+  cursor: pointer;
 }
 
-.podcast__player audio {
+/* Chip de atajos: se muestra los primeros 8 s y desaparece para siempre */
+.epline__hint {
+  margin-left: auto;
+  align-self: center;
+  padding: 0.25rem 0.65rem;
+  border: var(--hairline) dashed var(--line-strong);
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  white-space: nowrap;
+  transition: opacity 0.4s var(--ease-out);
+}
+
+.epline__hint.is-off {
+  opacity: 0;
+}
+
+/* Mejora progresiva: con JS activo se oculta el control nativo */
+html[data-mb="ready"] .epline audio {
+  display: none;
+}
+
+.epline audio {
   width: 100%;
-  height: 2rem;
 }
 
-@keyframes mb-pulse {
+.epline.is-error .epline__status {
+  color: var(--color-vivo-clay);
+}
+
+/* Mini-player sticky: barra de control que se ancla abajo cuando el player
+   principal sale de pantalla. Es un reproductor en miniatura, no un
+   indicador: play/pausa · ±15 s · título (vuelve al player) · riel de
+   posición accionable (clic, arrastre y teclado) · cierre.
+   Una vez iniciado el episodio se queda visible en pausa, así que `is-on`
+   ya no depende de `!audio.paused`. `visibility` viaja en la transición
+   para que, al ocultarse, sus botones salgan del tab-order en lugar de
+   quedar enfocables fuera de pantalla. */
+.epline-mini {
+  /* El flotante se monta en <body> y su superficie es SIEMPRE oscura, así
+     que aquí se anclan los tokens que, si no, heredarían el tema claro de
+     la raíz: --text-muted salía casi negro (el reloj no se leía) y
+     --shadow-lift, demasiado suave para flotar sobre cualquier sección. */
+  --text-muted: rgba(243, 240, 232, 0.68);
+  --shadow-lift:
+    0 2px 6px rgba(0, 0, 0, 0.34),
+    0 28px 60px -28px rgba(0, 0, 0, 0.8);
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%) translateY(120%);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  width: min(600px, calc(100vw - 24px));
+  padding: 0.5rem 0.6rem;
+  border-radius: 999px;
+  border: var(--hairline) solid rgba(243, 240, 232, 0.22);
+  background: linear-gradient(160deg, rgba(22, 32, 29, 0.97), rgba(10, 15, 14, 0.97));
+  color: var(--color-warm-white);
+  box-shadow: var(--shadow-lift);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.35s var(--ease-out, ease-out),
+    opacity 0.35s var(--ease-out, ease-out),
+    visibility 0.35s;
+}
+
+.epline-mini.is-on {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.epline-mini__play {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-sand);
+  color: var(--color-obsidian);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background-color var(--dur-xs) var(--ease-in-out);
+}
+
+.epline-mini__play:hover { background-color: var(--color-warm-white); }
+
+.epline-mini__play svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* Atajos ±15 s: mismo lenguaje chip que .epline__btn, pero sin relleno
+   para que no compitan con el play. */
+.epline-mini__skip {
+  flex: none;
+  min-height: 32px;
+  padding: 0 0.55rem;
+  border-radius: 999px;
+  border: var(--hairline) solid rgba(243, 240, 232, 0.28);
+  background-color: transparent;
+  color: var(--color-sand);
+  font: inherit;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-xs) var(--ease-in-out),
+    background-color var(--dur-xs) var(--ease-in-out);
+}
+
+.epline-mini__skip:hover {
+  border-color: var(--color-sand);
+  background-color: rgba(182, 165, 139, 0.16);
+}
+
+/* El título es un botón: saltar al player completo es una acción, y así
+   queda en el tab-order con una etiqueta accesible. */
+.epline-mini__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.epline-mini__title:hover { color: var(--color-sand); }
+
+/* Riel de posición: trazo de 4 px, zona de clic de 26 px. El ::before
+   amplía el área de interacción sin engordar la barra; el fill lleva su
+   propio radio porque la caja no recorta (overflow visible). */
+.epline-mini__track {
+  position: relative;
+  flex: 0 1 104px;
+  min-width: 56px;
+  height: 4px;
+  border-radius: 999px;
+  background-color: rgba(243, 240, 232, 0.18);
+  cursor: pointer;
+  touch-action: none;
+}
+
+.epline-mini__track::before {
+  content: "";
+  position: absolute;
+  inset: -11px 0;
+}
+
+.epline-mini__fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background-color: var(--color-sand);
+  transition: background-color var(--dur-sm) var(--ease-in-out);
+}
+
+/* En pausa el progreso se apaga: el color sigue siendo la señal de estado. */
+.epline-mini.is-paused .epline-mini__fill { background-color: var(--text-muted); }
+
+.epline-mini__time {
+  flex: none;
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+.epline-mini__close {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: rgba(243, 240, 232, 0.72);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition:
+    color var(--dur-xs) var(--ease-in-out),
+    background-color var(--dur-xs) var(--ease-in-out);
+}
+
+.epline-mini__close:hover {
+  color: var(--color-warm-white);
+  background-color: rgba(243, 240, 232, 0.12);
+}
+
+.epline-mini__close svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.epline-mini button:focus-visible,
+.epline-mini__track:focus-visible {
+  outline: 2px solid var(--color-sand);
+  outline-offset: 3px;
+}
+
+/* En móvil sobra el salto ±15 s: el riel y el play siguen disponibles. */
+@media (max-width: 30rem) {
+  .epline-mini__skip { display: none; }
+
+  .epline-mini__track { flex-basis: 72px; }
+}
+
+@keyframes epline-pulse {
 
   0%,
   100% {
@@ -1655,6 +2829,15 @@
 @media (min-width: 62rem) {
   .story {
     grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2.5rem, 5vw, 5rem);
+  }
+
+  /* Bloque del podcast: el player es el protagonista, por eso el body
+     (story__body, que contiene el figure.epline) recibe la columna ancha
+     y el video de fondo la angosta. El order de .story__media (2) mantiene
+     media a la derecha / body a la izquierda, solo cambian las proporciones. */
+  .story--podcast {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
     gap: clamp(2.5rem, 5vw, 5rem);
   }
 
