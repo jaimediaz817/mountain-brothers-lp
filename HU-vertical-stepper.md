@@ -24,7 +24,7 @@ Crear un stepper vertical flotante, colapsable, solo desktop, que complemente al
 ## Principios UX/UI (tendencias 2025-2026)
 
 1. **Dot-rail expandible, no lista permanente** — patrón Linear/Vercel/docs: puntos finos; solo el activo muestra etiqueta; el resto la revela en hover/foco como tooltip pill. Evita una columna de 14 filas.
-2. **2 estados + memoria** — expandido (pill glass con etiquetas) / colapsado (solo riel). `localStorage mb-stepper-collapsed`. Default: expandido en `≥1280px`, colapsado en `960–1279px`.
+2. **2 estados + memoria** — expandido (pill glass con etiquetas) / colapsado (solo riel). `localStorage mb-stepper-collapsed`. Default: **siempre colapsado**; expandir es a petición del usuario.
 3. **Feedback doble** — punto activo (`--color-sand`) + barra de progreso vertical de página (scroll real, no solo índice). `prefers-reduced-motion`: sin smooth, sin transiciones.
 4. **No estorbar la lectura** — fijo derecha-centro (`z-index:140`, bajo `to-top:150` y `nav:200`), `max-height:70vh` con scroll interno, `opacity` atenuada en scroll y plena en hover/foco/parada.
 5. **Progresiva** — sin JS: sin stepper (`[hidden]` por defecto, JS lo desbloquea como hace `to-top`). Nunca contenido invisible por fallo (fail-open).
@@ -75,6 +75,8 @@ Crear un stepper vertical flotante, colapsable, solo desktop, que complemente al
 ### PASO 2 — CSS: `assets/css/components.css`, bloque `VERTICAL STEPPER`
 - Fijo: `right: max(var(--space-sm), env(safe-area-inset-right))`, `top:50%`, `translateY(-50%)`, `z-index:140`.
 - Glass como nav scrolled: `rgba(11,16,15,0.78) + blur(16px)`, borde pill, `color: warm-white` siempre (legible sobre sección clara/oscura/bosque).
+- Geometría con variables (`--sdot/--strack/--srow`): la línea va centrada al centro exacto de los dots (`left = sdot/2 - strack/2`, `top/bottom = srow/2`), sin valores a ojo. Filas compactas (`--srow:1.7rem`) para que las 14 quepan sin scroll interno; el `overflow:auto` queda solo como seguridad.
+- Etiquetas `text-eyebrow` (11px) `medium`, activa en `semibold` + blanca.
 - Track vertical 2px + fill `--color-sand` con altura = progreso real de scroll.
 - Dot 10px, activo 12px sand + anillo; label `text-xs uppercase tracking-wide`.
 - Expandido: labels visibles. Colapsado (`[data-collapsed="true"]`): labels ocultas salvo activa en tooltip + cualquier item muestra tooltip pill en `:hover/:focus-visible`.
@@ -83,7 +85,7 @@ Crear un stepper vertical flotante, colapsable, solo desktop, que complemente al
 - Solo tokens, sin hex nuevos. Convención pill = interactivo.
 
 ### PASO 3 — JS: `MB.stepper` en `assets/js/ui.js` + wiring en `main.js`
-- `MB.stepper.init()`: desbloquea `[hidden]`, restaura colapso (`localStorage` o `innerWidth<1280`), toggle con `aria-expanded` + persistencia, **scrollspy por posición en `rAF`** (última sección con `top <= 40% viewport`) que actualiza **a la vez** stepper + `.nav-links__item` + `.nav-drawer__link` (`aria-current`), progreso vía `scrollY/(doc-vh)`, `is-dim` con timeout 1.8s. NOTA: no se usa `IntersectionObserver` con `threshold:0.1` + banda `-40%/-55%` porque las secciones miden 900-3200px y el ratio visible nunca alcanza 0.1 — ese observer jamás dispara (bug heredado de `MB.nav.setActiveLink`, que se deja intacto).
+- `MB.stepper.init()`: desbloquea `[hidden]`, restaura colapso (`localStorage`; default colapsado salvo `'0'` explícito), toggle con `aria-expanded` + persistencia, **scrollspy por posición en `rAF`** (última sección con `top <= 40% viewport`) que actualiza **a la vez** stepper + `.nav-links__item` + `.nav-drawer__link` (`aria-current`), progreso vía `scrollY/(doc-vh)`, `is-dim` con timeout 1.8s. NOTA: no se usa `IntersectionObserver` con `threshold:0.1` + banda `-40%/-55%` porque las secciones miden 900-3200px y el ratio visible nunca alcanza 0.1 — ese observer jamás dispara (bug heredado de `MB.nav.setActiveLink`, que se deja intacto).
 - Fallback: sin `IntersectionObserver` → marca primera sección, sin romper.
 - `main.js`: llamar `MB.stepper.init()` en comportamiento transversal. Mantener `MB.nav.setActiveLink()` como estaba (el stepper lo reutiliza, no lo duplica).
 - Clicks: comportamiento ancla nativo (ya hay `scroll-behavior:smooth` + `scroll-padding-top:6rem` + respeta `reduced-motion`).

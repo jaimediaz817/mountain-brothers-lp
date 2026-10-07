@@ -237,8 +237,8 @@
    * textual + progreso real de página + colapso persistente.
    * - Desbloquea [hidden] solo con JS (sin JS no existe, como to-top).
    * - Un único IntersectionObserver sincroniza stepper + nav principal.
-   * - Colapso: localStorage 'mb-stepper-collapsed'; default expandido en
-   *   >=1280px y colapsado en 960-1279px. En móvil el CSS lo oculta.
+   * - Colapso: localStorage 'mb-stepper-collapsed'; por defecto SIEMPRE
+   *   colapsado (el expandido es a petición). En móvil el CSS lo oculta.
    */
   MB.stepper = {
     KEY: 'mb-stepper-collapsed',
@@ -276,7 +276,8 @@
         }
       }
 
-      var collapsed = stored === '1' ? true : stored === '0' ? false : window.innerWidth < 1280;
+      /* Por defecto colapsado: solo '0' explícito lo expande */
+      var collapsed = stored !== '0';
       applyCollapsed(collapsed);
 
       if (toggle) {
@@ -288,12 +289,8 @@
         });
       }
 
-      /* Sin preferencia guardada: seguir el breakpoint al redimensionar */
-      window.addEventListener('resize', function () {
-        if (stored !== null) { return; }
-        if (window.innerWidth < 960) { return; }
-        applyCollapsed(window.innerWidth < 1280);
-      }, { passive: true });
+      /* Sin preferencia guardada no se sigue el breakpoint: el default
+         es colapsado en cualquier ancho; el usuario decide expandir. */
 
       function setActive(id) {
         links.forEach(function (link) {

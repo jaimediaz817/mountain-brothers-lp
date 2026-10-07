@@ -2148,11 +2148,12 @@
   <nav
     class="vertical-stepper"
     data-stepper
-    data-collapsed="false"
+    data-collapsed="true"
     aria-label="Navegación por secciones"
     hidden>
-    <span class="vertical-stepper__track" aria-hidden="true"><span class="vertical-stepper__fill" data-stepper-fill></span></span>
-    <ol class="vertical-stepper__list" id="stepper-list">
+    <div class="vertical-stepper__body">
+      <span class="vertical-stepper__track" aria-hidden="true"><span class="vertical-stepper__fill" data-stepper-fill></span></span>
+      <ol class="vertical-stepper__list" id="stepper-list">
       <li><a class="vertical-stepper__item" href="#top" data-stepper-link="top"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Inicio</span></a></li>
       <li><a class="vertical-stepper__item" href="#primer-paso" data-stepper-link="primer-paso"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Primer paso</span></a></li>
       <li><a class="vertical-stepper__item" href="#perfil" data-stepper-link="perfil"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Perfil</span></a></li>
@@ -2168,13 +2169,14 @@
       <li><a class="vertical-stepper__item" href="#relatos" data-stepper-link="relatos"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Relatos</span></a></li>
       <li><a class="vertical-stepper__item" href="#momentos" data-stepper-link="momentos"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Momentos</span></a></li>
     </ol>
+    </div>
     <button
       class="vertical-stepper__toggle"
       type="button"
       data-stepper-toggle
-      aria-expanded="true"
+      aria-expanded="false"
       aria-controls="stepper-list"
-      aria-label="Contraer navegación por secciones">
+      aria-label="Expandir navegación por secciones">
       <svg aria-hidden="true"><use href="#i-chevron-down"></use></svg>
     </button>
   </nav>
