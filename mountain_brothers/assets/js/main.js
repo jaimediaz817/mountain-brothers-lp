@@ -15,6 +15,7 @@
     /* 2 · Comportamiento transversal */
     MB.reveal.init();
     MB.nav.init();
+    MB.stepper.init();
     MB.parallax.init();
     MB.video.init();
     MB.carousel.init();

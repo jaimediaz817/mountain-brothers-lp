@@ -210,6 +210,173 @@
 }
 
 /* ==========================================================================
+   STEPPER VERTICAL · rail flotante colapsable (desktop)
+   Dot-rail con vista previa textual: solo el activo muestra etiqueta fija,
+   el resto la revela en hover/foco. Glass oscuro siempre legible sobre
+   sección clara, oscura o bosque. z-index:140 bajo to-top(150) y nav(200).
+   ========================================================================== */
+.vertical-stepper {
+  position: fixed;
+  right: max(var(--space-sm), env(safe-area-inset-right));
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 140;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2xs);
+  max-height: 70vh;
+  padding: var(--space-sm) var(--space-sm) var(--space-2xs);
+
+  color: var(--color-warm-white);
+  background-color: rgba(11, 16, 15, 0.78);
+  border: var(--hairline) solid rgba(243, 240, 232, 0.14);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lift);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+
+  transition: opacity var(--dur-md) var(--ease-out), transform var(--dur-md) var(--ease-out);
+}
+
+/* Atenuado durante el scroll, pleno al interactuar */
+.vertical-stepper.is-dim { opacity: 0.55; }
+.vertical-stepper:hover,
+.vertical-stepper:focus-within { opacity: 1; }
+
+.vertical-stepper__track {
+  position: absolute;
+  left: calc(var(--space-sm) + 0.3rem);
+  top: var(--space-sm);
+  bottom: 3.25rem;
+  width: 2px;
+  overflow: hidden;
+  background-color: rgba(243, 240, 232, 0.16);
+  border-radius: var(--radius-pill);
+}
+
+.vertical-stepper__fill {
+  display: block;
+  width: 100%;
+  height: 0%;
+  background-color: var(--color-sand);
+  border-radius: inherit;
+}
+
+.vertical-stepper__list {
+  display: grid;
+  gap: 0.15rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-left: 0.15rem;
+  /* Sin esto el item flex nunca cede y el panel supera max-height */
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+.vertical-stepper__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: 1.9rem;
+  padding: 0.2rem 0.6rem 0.2rem 0;
+  border-radius: var(--radius-pill);
+}
+
+.vertical-stepper__dot {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 0.625rem;
+  height: 0.625rem;
+  margin-left: 0.05rem;
+  border-radius: 50%;
+  background-color: transparent;
+  border: var(--hairline) solid rgba(243, 240, 232, 0.55);
+  transition:
+    background-color var(--dur-sm) var(--ease-out),
+    border-color var(--dur-sm) var(--ease-out),
+    transform var(--dur-sm) var(--ease-out),
+    box-shadow var(--dur-sm) var(--ease-out);
+}
+
+.vertical-stepper__item:hover .vertical-stepper__dot { border-color: var(--color-warm-white); transform: scale(1.15); }
+
+.vertical-stepper__label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(243, 240, 232, 0.72);
+  transition: color var(--dur-sm) var(--ease-out), opacity var(--dur-sm) var(--ease-out);
+}
+
+.vertical-stepper__item:hover .vertical-stepper__label { color: var(--color-warm-white); }
+
+/* Activo: dot sólido sand + etiqueta plena */
+.vertical-stepper__item[aria-current="true"] .vertical-stepper__dot {
+  background-color: var(--color-sand);
+  border-color: var(--color-sand);
+  transform: scale(1.2);
+  box-shadow: 0 0 0 3px rgba(182, 165, 139, 0.25);
+}
+
+.vertical-stepper__item[aria-current="true"] .vertical-stepper__label { color: var(--color-warm-white); }
+
+/* --- Estado colapsado: solo riel, etiquetas como tooltip pill --- */
+.vertical-stepper[data-collapsed="true"] { padding-right: var(--space-2xs); }
+.vertical-stepper[data-collapsed="true"] .vertical-stepper__label {
+  position: absolute;
+  right: calc(100% + 0.6rem);
+  top: 50%;
+  transform: translateY(-50%) translateX(4px);
+  padding: 0.35rem 0.7rem;
+  color: var(--color-warm-white);
+  background-color: rgba(11, 16, 15, 0.92);
+  border: var(--hairline) solid rgba(243, 240, 232, 0.18);
+  border-radius: var(--radius-pill);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--dur-sm) var(--ease-out), transform var(--dur-sm) var(--ease-out), visibility var(--dur-sm);
+}
+
+.vertical-stepper[data-collapsed="true"] .vertical-stepper__item:hover .vertical-stepper__label,
+.vertical-stepper[data-collapsed="true"] .vertical-stepper__item:focus-visible .vertical-stepper__label,
+.vertical-stepper[data-collapsed="true"] .vertical-stepper__item[aria-current="true"] .vertical-stepper__label {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* --- Toggle contraer/retraer --- */
+.vertical-stepper__toggle {
+  display: inline-grid;
+  place-items: center;
+  align-self: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-top: var(--space-2xs);
+  color: rgba(243, 240, 232, 0.72);
+  border: var(--hairline) solid rgba(243, 240, 232, 0.18);
+  border-radius: var(--radius-pill);
+  transition: color var(--dur-sm) var(--ease-out), border-color var(--dur-sm) var(--ease-out), transform var(--dur-md) var(--ease-out);
+}
+
+.vertical-stepper__toggle:hover { color: var(--color-warm-white); border-color: rgba(243, 240, 232, 0.4); }
+.vertical-stepper__toggle:focus-visible { outline: 2px solid var(--color-sand); outline-offset: 2px; }
+.vertical-stepper__toggle svg { width: 0.95rem; height: 0.95rem; transform: rotate(90deg); }
+.vertical-stepper[data-collapsed="true"] .vertical-stepper__toggle svg { transform: rotate(-90deg); }
+
+/* Solo desktop: el drawer móvil ya cubre la navegación */
+@media (max-width: 59.99rem) {
+  .vertical-stepper { display: none; }
+}
+
+/* ==========================================================================
    TAGS · LABELS · PRODUCT TAGS
    ========================================================================== */
 

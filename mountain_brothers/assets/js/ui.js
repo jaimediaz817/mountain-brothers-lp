@@ -231,6 +231,150 @@
 
   MB.nav.setActiveLink();
 
+  /* ---------------------------------------------------------- stepper  */
+  /**
+   * Stepper vertical flotante (14 secciones). Dot-rail con vista previa
+   * textual + progreso real de página + colapso persistente.
+   * - Desbloquea [hidden] solo con JS (sin JS no existe, como to-top).
+   * - Un único IntersectionObserver sincroniza stepper + nav principal.
+   * - Colapso: localStorage 'mb-stepper-collapsed'; default expandido en
+   *   >=1280px y colapsado en 960-1279px. En móvil el CSS lo oculta.
+   */
+  MB.stepper = {
+    KEY: 'mb-stepper-collapsed',
+
+    init: function () {
+      var root = util.qs('[data-stepper]');
+      if (!root) { return; }
+      if (window.innerWidth < 960) { return; }
+
+      /* Sin rAF/scrollTo el rail no aporta: no desbloquear. */
+      if (!(window.requestAnimationFrame && 'scrollTo' in window)) { return; }
+
+      root.hidden = false;
+
+      var toggle = util.qs('[data-stepper-toggle]', root);
+      var fill = util.qs('[data-stepper-fill]', root);
+      var links = util.qsa('[data-stepper-link]', root);
+      if (!links.length) { return; }
+
+      var sections = links.map(function (link) {
+        return util.qs('#' + link.getAttribute('data-stepper-link'));
+      }).filter(Boolean);
+      if (!sections.length) { return; }
+
+      var stored = null;
+      try { stored = window.localStorage.getItem(MB.stepper.KEY); } catch (e) {}
+
+      function applyCollapsed(collapsed) {
+        root.setAttribute('data-collapsed', collapsed ? 'true' : 'false');
+        if (toggle) {
+          toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+          toggle.setAttribute('aria-label', collapsed
+            ? 'Expandir navegación por secciones'
+            : 'Contraer navegación por secciones');
+        }
+      }
+
+      var collapsed = stored === '1' ? true : stored === '0' ? false : window.innerWidth < 1280;
+      applyCollapsed(collapsed);
+
+      if (toggle) {
+        toggle.addEventListener('click', function () {
+          collapsed = root.getAttribute('data-collapsed') !== 'true';
+          applyCollapsed(collapsed);
+          try { window.localStorage.setItem(MB.stepper.KEY, collapsed ? '1' : '0'); } catch (e) {}
+          stored = collapsed ? '1' : '0';
+        });
+      }
+
+      /* Sin preferencia guardada: seguir el breakpoint al redimensionar */
+      window.addEventListener('resize', function () {
+        if (stored !== null) { return; }
+        if (window.innerWidth < 960) { return; }
+        applyCollapsed(window.innerWidth < 1280);
+      }, { passive: true });
+
+      function setActive(id) {
+        links.forEach(function (link) {
+          if (link.getAttribute('data-stepper-link') === id) {
+            link.setAttribute('aria-current', 'true');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+        /* Sincroniza el nav principal + drawer con la misma sección.
+           El nav solo cubre 7 de 14 secciones: si la activa no tiene link,
+           se conserva el último resaltado en vez de dejarlo vacío. */
+        var navLinks = util.qsa('.nav-links__item[href^="#"], .nav-drawer__link[href^="#"]');
+        var hasNavMatch = navLinks.some(function (link) {
+          return link.getAttribute('href') === '#' + id;
+        });
+        if (hasNavMatch) {
+          navLinks.forEach(function (link) {
+            if (link.getAttribute('href') === '#' + id) {
+              link.setAttribute('aria-current', 'true');
+            } else {
+              link.removeAttribute('aria-current');
+            }
+          });
+        }
+      }
+
+      /* Scrollspy por posición (no por IntersectionObserver con umbral:
+         las secciones miden 900-3200px y la banda -40%/-55% solo deja ~5%
+         del viewport: el ratio nunca alcanza threshold 0.1 y el observer
+         jamás dispara — bug heredado de MB.nav.setActiveLink).
+         Activa = última sección cuyo top superó la línea del 40% viewport. */
+      var currentId = null;
+
+      function detectActive() {
+        var line = window.innerHeight * 0.4;
+        var active = sections[0].id;
+        for (var i = 0; i < sections.length; i++) {
+          if (sections[i].getBoundingClientRect().top <= line) {
+            active = sections[i].id;
+          } else {
+            break;
+          }
+        }
+        if (active !== currentId) {
+          currentId = active;
+          setActive(active);
+        }
+      }
+
+      /* Progreso real de página + atenuado durante el scroll */
+      var ticking = false;
+      var dimTimer = null;
+
+      function updateProgress() {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        var ratio = max > 0 ? Math.max(0, Math.min(1, window.scrollY / max)) : 0;
+        if (fill) { fill.style.height = (ratio * 100).toFixed(1) + '%'; }
+      }
+
+      function onScroll() {
+        if (ticking) { return; }
+        ticking = true;
+        window.requestAnimationFrame(function () {
+          ticking = false;
+          updateProgress();
+          detectActive();
+          root.classList.add('is-dim');
+          if (dimTimer) { window.clearTimeout(dimTimer); }
+          dimTimer = window.setTimeout(function () {
+            root.classList.remove('is-dim');
+          }, 1800);
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      updateProgress();
+      detectActive();
+    }
+  };
+
   /* ------------------------------------------------------------ parallax */
   MB.parallax = {
     /**

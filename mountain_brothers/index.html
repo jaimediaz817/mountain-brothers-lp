@@ -2141,6 +2141,45 @@
   </footer>
 
   <!-- ======================================================================
+       STEPPER VERTICAL · flotante colapsable
+       Rail de 14 secciones con vista previa textual. Oculto por defecto
+       ([hidden]): MB.stepper lo desbloquea solo en desktop con JS.
+       ====================================================================== -->
+  <nav
+    class="vertical-stepper"
+    data-stepper
+    data-collapsed="false"
+    aria-label="Navegación por secciones"
+    hidden>
+    <span class="vertical-stepper__track" aria-hidden="true"><span class="vertical-stepper__fill" data-stepper-fill></span></span>
+    <ol class="vertical-stepper__list" id="stepper-list">
+      <li><a class="vertical-stepper__item" href="#top" data-stepper-link="top"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Inicio</span></a></li>
+      <li><a class="vertical-stepper__item" href="#primer-paso" data-stepper-link="primer-paso"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Primer paso</span></a></li>
+      <li><a class="vertical-stepper__item" href="#perfil" data-stepper-link="perfil"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Perfil</span></a></li>
+      <li><a class="vertical-stepper__item" href="#guia" data-stepper-link="guia"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Guía IA</span></a></li>
+      <li><a class="vertical-stepper__item" href="#camino" data-stepper-link="camino"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Tu camino</span></a></li>
+      <li><a class="vertical-stepper__item" href="#altitud" data-stepper-link="altitud"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Altitud</span></a></li>
+      <li><a class="vertical-stepper__item" href="#territorio" data-stepper-link="territorio"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Territorio</span></a></li>
+      <li><a class="vertical-stepper__item" href="#recorridos" data-stepper-link="recorridos"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Recorridos</span></a></li>
+      <li><a class="vertical-stepper__item" href="#explorar" data-stepper-link="explorar"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Explorar</span></a></li>
+      <li><a class="vertical-stepper__item" href="#aprender" data-stepper-link="aprender"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Aprender</span></a></li>
+      <li><a class="vertical-stepper__item" href="#reto" data-stepper-link="reto"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Reto</span></a></li>
+      <li><a class="vertical-stepper__item" href="#comunidad" data-stepper-link="comunidad"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Comunidad</span></a></li>
+      <li><a class="vertical-stepper__item" href="#relatos" data-stepper-link="relatos"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Relatos</span></a></li>
+      <li><a class="vertical-stepper__item" href="#momentos" data-stepper-link="momentos"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Momentos</span></a></li>
+    </ol>
+    <button
+      class="vertical-stepper__toggle"
+      type="button"
+      data-stepper-toggle
+      aria-expanded="true"
+      aria-controls="stepper-list"
+      aria-label="Contraer navegación por secciones">
+      <svg aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+    </button>
+  </nav>
+
+  <!-- ======================================================================
        VOLVER ARRIBA · flotante
        Aparece fijo en la esquina inferior derecha al hacer scroll.
        Oculto por defecto ([hidden]): si el JS no corre, nunca se muestra.
