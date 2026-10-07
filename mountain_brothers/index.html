@@ -2170,6 +2170,13 @@
       <li><a class="vertical-stepper__item" href="#momentos" data-stepper-link="momentos"><span class="vertical-stepper__dot" aria-hidden="true"></span><span class="vertical-stepper__label">Momentos</span></a></li>
     </ol>
     </div>
+    <!-- Popup compartido: vive FUERA de la lista con scroll para que el
+         overflow nunca lo recorte. Lo posiciona MB.stepper vía --py.
+         aria-hidden porque es decorativo: el nombre ya lo da el enlace. -->
+    <div class="vertical-stepper__popup" data-stepper-popup aria-hidden="true">
+      <span class="vertical-stepper__popup-index" data-stepper-popup-index>01</span>
+      <span class="vertical-stepper__popup-label" data-stepper-popup-label>Inicio</span>
+    </div>
     <button
       class="vertical-stepper__toggle"
       type="button"

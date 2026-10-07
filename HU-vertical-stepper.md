@@ -24,7 +24,7 @@ Crear un stepper vertical flotante, colapsable, solo desktop, que complemente al
 ## Principios UX/UI (tendencias 2025-2026)
 
 1. **Dot-rail expandible, no lista permanente** — patrón Linear/Vercel/docs: puntos finos; solo el activo muestra etiqueta; el resto la revela en hover/foco como tooltip pill. Evita una columna de 14 filas.
-2. **2 estados + memoria** — expandido (pill glass con etiquetas) / colapsado (solo riel). `localStorage mb-stepper-collapsed`. Default: **siempre colapsado**; expandir es a petición del usuario.
+2. **2 estados + memoria** — expandido (pill glass con etiquetas) / colapsado (solo riel). `localStorage mb-stepper-collapsed`. Default: **siempre colapsado**; expandir es a petición del usuario. En colapsado, un **popup compartido** posicionado por JS (fuera de la lista con scroll para que el `overflow` nunca lo recorte) muestra número tabular en sand + nombre al hover/foco de cada dot y sigue a la sección activa en reposo; flecha anclada al dot, aparición con 120ms (anti-flash) y ocultado con 60ms, `aria-hidden` por ser decorativo.
 3. **Feedback doble** — punto activo (`--color-sand`) + barra de progreso vertical de página (scroll real, no solo índice). `prefers-reduced-motion`: sin smooth, sin transiciones.
 4. **No estorbar la lectura** — fijo derecha-centro (`z-index:140`, bajo `to-top:150` y `nav:200`), `max-height:70vh` con scroll interno, `opacity` atenuada en scroll y plena en hover/foco/parada.
 5. **Progresiva** — sin JS: sin stepper (`[hidden]` por defecto, JS lo desbloquea como hace `to-top`). Nunca contenido invisible por fallo (fail-open).

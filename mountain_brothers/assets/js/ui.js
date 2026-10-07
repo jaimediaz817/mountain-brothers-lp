@@ -274,6 +274,7 @@
             ? 'Expandir navegación por secciones'
             : 'Contraer navegación por secciones');
         }
+        if (collapsed) { showActivePopup(); } else { hidePopup(); }
       }
 
       /* Por defecto colapsado: solo '0' explícito lo expande */
@@ -291,6 +292,84 @@
 
       /* Sin preferencia guardada no se sigue el breakpoint: el default
          es colapsado en cualquier ancho; el usuario decide expandir. */
+
+      /* -------------------------------------------------- popup  */
+      /**
+       * Popup compartido del modo colapsado: un solo nodo fuera de la
+       * lista con scroll (el overflow la recortaría). Muestra número +
+       * nombre al hover/foco de cada dot y sigue a la sección activa
+       * cuando nadie interactúa. aria-hidden: es decorativo, el nombre
+       * accesible ya lo aporta cada enlace.
+       */
+      var popup = util.qs('[data-stepper-popup]', root);
+      var popupIndex = util.qs('[data-stepper-popup-index]', root);
+      var popupLabel = util.qs('[data-stepper-popup-label]', root);
+      var hoverLink = null;
+      var focusLink = null;
+      var popupLink = null;
+
+      function isCollapsed() {
+        return root.getAttribute('data-collapsed') === 'true';
+      }
+
+      function placePopup(link) {
+        if (!popup || !link || !isCollapsed()) { return; }
+        var pos = links.indexOf(link) + 1;
+        if (popupIndex) {
+          popupIndex.textContent = (pos < 10 ? '0' : '') + pos;
+        }
+        if (popupLabel) {
+          popupLabel.textContent = link.textContent.replace(/\s+/g, ' ').trim();
+        }
+        var navRect = root.getBoundingClientRect();
+        var rect = link.getBoundingClientRect();
+        popup.style.setProperty(
+          '--py', (rect.top + rect.height / 2 - navRect.top) + 'px'
+        );
+        popupLink = link;
+        popup.classList.add('is-visible');
+      }
+
+      function hidePopup() {
+        if (popup) { popup.classList.remove('is-visible'); }
+        popupLink = null;
+      }
+
+      function showActivePopup() {
+        if (!isCollapsed() || hoverLink || focusLink) { return; }
+        var active = util.qs(
+          '[data-stepper-link][aria-current="true"]', root
+        );
+        if (active) { placePopup(active); } else { hidePopup(); }
+      }
+
+      links.forEach(function (link) {
+        link.addEventListener('mouseenter', function () {
+          hoverLink = link;
+          placePopup(link);
+        });
+        link.addEventListener('mouseleave', function () {
+          hoverLink = null;
+          if (focusLink) { placePopup(focusLink); }
+          else { showActivePopup(); }
+        });
+        link.addEventListener('focus', function () {
+          focusLink = link;
+          placePopup(link);
+        });
+        link.addEventListener('blur', function () {
+          focusLink = null;
+          if (hoverLink) { placePopup(hoverLink); }
+          else { showActivePopup(); }
+        });
+      });
+
+      /* Si el layout cambia con el popup visible, recolocarlo */
+      window.addEventListener('resize', function () {
+        if (popupLink && popup.classList.contains('is-visible')) {
+          placePopup(popupLink);
+        }
+      }, { passive: true });
 
       function setActive(id) {
         links.forEach(function (link) {
@@ -338,6 +417,8 @@
         if (active !== currentId) {
           currentId = active;
           setActive(active);
+          /* El popup sigue a la sección salvo interacción en curso */
+          showActivePopup();
         }
       }
 
@@ -358,10 +439,12 @@
           ticking = false;
           updateProgress();
           detectActive();
+          hidePopup();
           root.classList.add('is-dim');
           if (dimTimer) { window.clearTimeout(dimTimer); }
           dimTimer = window.setTimeout(function () {
             root.classList.remove('is-dim');
+            showActivePopup();
           }, 1800);
         });
       }
@@ -369,6 +452,7 @@
       window.addEventListener('scroll', onScroll, { passive: true });
       updateProgress();
       detectActive();
+      showActivePopup();
     }
   };
 
