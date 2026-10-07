@@ -285,11 +285,17 @@
   display: grid;
   gap: 0.1rem;
   overflow-y: auto;
-  scrollbar-width: thin;
+  /* Sin barra visible jamás (en Windows 1px de redondeo ya la pinta):
+     el scroll queda solo como respaldo en viewports muy bajos.
+     El teclado sigue funcionando: el foco hace scroll automático. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   /* Sin esto el item flex nunca cede y el panel supera max-height */
   min-height: 0;
   flex: 1 1 auto;
 }
+
+.vertical-stepper__list::-webkit-scrollbar { display: none; }
 
 .vertical-stepper__item {
   position: relative;
