@@ -13,14 +13,43 @@ sistema de archivos o servirla con cualquier servidor estático.
 
 ## 1. Cómo abrirla
 
-```bash
-# Opción A · doble clic sobre index.html (funciona por file://)
+La página se abre de dos formas: doble clic sin servidor, o con un servidor
+local (recomendado para desarrollar, revisar con DevTools y reproducir vídeo/audio).
 
-# Opción B · servidor local (recomendado para revisar con DevTools)
-cd mountain_brothers
-python -m http.server 8080
-# → http://localhost:8080
+### Opción A · doble clic sobre index.html
+
+Abre `mountain_brothers/index.html` directamente desde el explorador. Funciona por
+`file://`, pero algunos navegadores pueden bloquear el `autoplay` del audio/vídeo.
+
+### Opción B · servidor local (recomendado)
+
+Cualquiera de estas tres formas sirve `mountain_brothers/` con soporte
+**Range/206**, necesario para que el navegador pueda *seek* dentro del vídeo/audio
+sin tener que descargarlo todo antes de reproducirlo.
+
+**Windows** — `server-mb.bat` (CMD o Git Bash):
+```bat
+server-mb.bat
+# → http://localhost:8080/
 ```
+
+**Git Bash / Linux / macOS** — `server-mb.sh` (primero: `chmod +x server-mb.sh`):
+```bash
+./server-mb.sh
+# → http://localhost:8080/
+```
+
+**Node.js** — `dev-server.js` (con Range incluido; la opción más portable):
+```bash
+node dev-server.js 8080
+# → http://localhost:8080/
+```
+
+> `mb-serve.py` es un helper de desarrollo que **no se sube a git** (`.gitignore`);
+> si lo tienes local, `server-mb.bat`/`.sh` lo usan. `dev-server.js` ya incluye el
+> `Range`, de modo que funciona sin depender de Python. `python -m http.server` en
+> cambio **no responde `206` a `Range:`**, por lo que no es adecuado para vídeo/audio
+> en streaming.
 
 No hay paso de instalación ni de compilación: no existe `package.json` a propósito.
 
