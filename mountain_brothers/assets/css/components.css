@@ -222,6 +222,9 @@
   --sdot: 0.625rem;
   --strack: 2px;
   --srow: 1.7rem;
+  /* Aire a la izquierda: el dot activo escala a 1.2 + anillo de 3px,
+     así nada se recorta contra el borde (4px exactos). */
+  --sgutter: 0.25rem;
 
   position: fixed;
   right: max(var(--space-sm), env(safe-area-inset-right));
@@ -264,7 +267,7 @@
 
 .vertical-stepper__track {
   position: absolute;
-  left: calc(var(--sdot) / 2 - var(--strack) / 2);
+  left: calc(var(--sgutter) + var(--sdot) / 2 - var(--strack) / 2);
   top: calc(var(--srow) / 2);
   bottom: calc(var(--srow) / 2);
   width: var(--strack);
@@ -284,6 +287,7 @@
 .vertical-stepper__list {
   display: grid;
   gap: 0.1rem;
+  padding-left: var(--sgutter);
   overflow-y: auto;
   /* Sin barra visible jamás (en Windows 1px de redondeo ya la pinta):
      el scroll queda solo como respaldo en viewports muy bajos.
@@ -327,7 +331,7 @@
 
 .vertical-stepper__label {
   font-size: var(--text-eyebrow);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-regular);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   white-space: nowrap;
@@ -347,7 +351,6 @@
 
 .vertical-stepper__item[aria-current="true"] .vertical-stepper__label {
   color: var(--color-warm-white);
-  font-weight: var(--weight-semibold);
 }
 
 /* --- Estado colapsado: solo riel, etiquetas como tooltip pill --- */

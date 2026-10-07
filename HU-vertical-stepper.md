@@ -75,8 +75,8 @@ Crear un stepper vertical flotante, colapsable, solo desktop, que complemente al
 ### PASO 2 — CSS: `assets/css/components.css`, bloque `VERTICAL STEPPER`
 - Fijo: `right: max(var(--space-sm), env(safe-area-inset-right))`, `top:50%`, `translateY(-50%)`, `z-index:140`.
 - Glass como nav scrolled: `rgba(11,16,15,0.78) + blur(16px)`, borde pill, `color: warm-white` siempre (legible sobre sección clara/oscura/bosque).
-- Geometría con variables (`--sdot/--strack/--srow`): la línea va centrada al centro exacto de los dots (`left = sdot/2 - strack/2`, `top/bottom = srow/2`), sin valores a ojo. Filas compactas (`--srow:1.7rem`) para que las 14 quepan sin scroll interno; el `overflow:auto` queda solo como respaldo en viewports muy bajos y con barra oculta (`scrollbar-width:none` + `::-webkit-scrollbar`) para que jamás se vea una barra.
-- Etiquetas `text-eyebrow` (11px) `medium`, activa en `semibold` + blanca.
+- Geometría con variables (`--sdot/--strack/--srow/--sgutter`): la línea va centrada al centro exacto de los dots (`left = sgutter + sdot/2 - strack/2`, `top/bottom = srow/2`), sin valores a ojo; `--sgutter:4px` da aire para que el anillo del dot activo nunca se recorte. Filas compactas (`--srow:1.7rem`) para que las 14 quepan sin scroll interno; el `overflow:auto` queda solo como respaldo en viewports muy bajos y con barra oculta (`scrollbar-width:none` + `::-webkit-scrollbar`) para que jamás se vea una barra.
+- Etiquetas `text-eyebrow` (11px) en peso `regular` — sin negritas; la activa se distingue solo por color blanco + dot sólido.
 - Track vertical 2px + fill `--color-sand` con altura = progreso real de scroll.
 - Dot 10px, activo 12px sand + anillo; label `text-xs uppercase tracking-wide`.
 - Expandido: labels visibles. Colapsado (`[data-collapsed="true"]`): labels ocultas salvo activa en tooltip + cualquier item muestra tooltip pill en `:hover/:focus-visible`.
